@@ -2,7 +2,7 @@
 <html>
 <!-- Início do cabeçalho -->
 	<head>
-		<title>Titulo da pag</title>
+		<title>Cadastro</title>
 		<meta charset="utf-8">
 		
 		<!-- Linkando as tagas a pasta css que conterá os estilos.css -->
@@ -11,17 +11,25 @@
 <!-- Fim do cabeçalho -->
 
 <!-- Início do corpo -->
-	<body>
-		<figure id="figureFloat">
-				<img id="narancia" src = "Images/narancia.jpg" alt = "Foto do Narancia gato chorando pelo Abaccio">
-				<figcaption>This is a caption for image</figcaption>
-		</figure>
-	
-		<h1>Titulo de maior importancia do html</h1>
-		<h2>Titulo de menor importancia do htlm, indo do 1 ao 5</h2>
+	<body>	
+		<h1>Cadastro</h1>
+    <form action="/action_page.php" class="form">
+      Nome<br>
+			<input type="text" name="nome" value="Ex: JV"><br>
+			Email<br>
+			<input type="text" name="email" value="Ex: lixo@uece.com"><br>
+			Senha<br>
+      <input type="password" name="senha" value=""><br><br>
+			Instituição<br>
+			<input type="text" name="instituicao" value=""><br><br>
+			<input type="submit" value="Cadastrar">
+		</form>
+
+		<br>
+		<!-- <h2>Titulo de menor importancia do htlm, indo do 1 ao 5</h2>
 		<p>Um parágrafo de texto</p>
 		<p><strong>Texto usando strong</strong></p>
-		<p id="endLine"><em>Textando usando em</em></p>
+		<p id="endLine"><em>Textando usando em</em></p> -->
 		
 		<p>Click <a href="about.html">aqui</a> e vá para o sobre</p>
 		
