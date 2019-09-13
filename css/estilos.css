@@ -1,0 +1,72 @@
+h1
+{
+	font-family: serif;
+}
+
+h2
+{
+	font-family: sans-serif;
+}
+
+p
+{
+	text-align: left;
+	font-family: serif;
+	color: black;
+	/* background-color: white; */
+	
+	/* line-height: 3px; */ /* tamanho da altura de cada linha */
+	/* letter-spacing: 3px; */ /* tamanho do espaço entre cada letra */
+	/* word-spacing: 5px; */ /* tamanho do espaço entre cada palavra */
+	/* text-indent: 30px; */ /* tamanho da margem da primeira linha do texto */
+	
+	padding: 3px;
+	margin: 0 0 10px 10px;
+}
+
+body
+{
+	font-family: "Arial", "Helvetica", sans-serif;
+	 
+	/* Bordas declarando separados */
+	/*border-color: red;
+	border-style: solid;
+	border-width: 1px;*/
+	 
+	/* Bordas declarando de uma vez */
+	border: 6px double #ccc;
+	
+	/* Declarando background de uma tag */
+	/* background-image: url(background.jpg); */
+	/* background-color: gold; */
+	background-color: rgb(209, 247, 254);
+}
+
+figure
+{
+	background-color: #f2eded;
+	border: 1px solid #ccc;
+	text-align: center;
+}
+
+figcaption
+{
+	font-style: italic;
+}
+
+#narancia
+{
+	width: 300px;
+	height: 337px;
+}
+
+#figureFloat
+{
+	float: right;
+	margin: 0 0 10px 10px;
+}
+
+#endLine
+{
+	margin: 0 0 110px 10px;
+}
