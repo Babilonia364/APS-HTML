@@ -1,40 +1,18 @@
 <!DOCTYPE html>
 <html>
-<!-- Início do cabeçalho -->
 	<head>
-		<title>Cadastro</title>
 		<meta charset="utf-8">
-		
-		<!-- Linkando as tagas a pasta css que conterá os estilos.css -->
+		<title>Login Form Tutorial</title>
 		<link rel="stylesheet" href="css/estilos.css">
 	</head>
-<!-- Fim do cabeçalho -->
-
-<!-- Início do corpo -->
-	<body>	
-		<h1>Cadastro</h1>
-    <form action="/action_page.php" class="form">
-      Nome<br>
-			<input type="text" name="nome" value="Ex: JV"><br>
-			Email<br>
-			<input type="text" name="email" value="Ex: lixo@uece.com"><br>
-			Senha<br>
-      <input type="password" name="senha" value=""><br><br>
-			Instituição<br>
-			<input type="text" name="instituicao" value=""><br><br>
-			<input type="submit" value="Cadastrar">
-		</form>
-
-		<br>
-		<!-- <h2>Titulo de menor importancia do htlm, indo do 1 ao 5</h2>
-		<p>Um parágrafo de texto</p>
-		<p><strong>Texto usando strong</strong></p>
-		<p id="endLine"><em>Textando usando em</em></p> -->
-		
-		<p>Click <a href="about.html">aqui</a> e vá para o sobre</p>
-		
-		
+	<body>
+		<div class="login-form">
+			<h1>Login Form</h1>
+			<form action="auth" method="POST">
+				<input type="text" name="username" placeholder="Username" required>
+				<input type="password" name="password" placeholder="Password" required>
+				<input type="submit">
+			</form>
+		</div>
 	</body>
-<!-- Fim do corpo -->
-
 </html>
