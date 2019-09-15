@@ -1,76 +1,29 @@
-h1
-{
-	font-family: serif;
-}
-
-h2
-{
-	font-family: sans-serif;
-}
-
-p
-{
-	text-align: left;
-	font-family: serif;
-	color: black;
-	/* background-color: white; */
-	
-	/* line-height: 3px; */ /* tamanho da altura de cada linha */
-	/* letter-spacing: 3px; */ /* tamanho do espaço entre cada letra */
-	/* word-spacing: 5px; */ /* tamanho do espaço entre cada palavra */
-	/* text-indent: 30px; */ /* tamanho da margem da primeira linha do texto */
-	
-	padding: 3px;
-	margin: 0 0 10px 10px;
-}
-
-body
-{
-	font-family: "Arial", "Helvetica", sans-serif;
-	 
-	/* Bordas declarando separados */
-	/*border-color: red;
-	border-style: solid;
-	border-width: 1px;*/
-	 
-	/* Bordas declarando de uma vez */
-	border: 6px double #ccc;
-	
-	/* Declarando background de uma tag */
-	/* background-image: url(background.jpg); */
-	/* background-color: gold; */
-	background-color: rgb(209, 247, 254);
-}
-
-figure
-{
-	background-color: #f2eded;
-	border: 1px solid #ccc;
-	text-align: center;
-}
-
-figcaption
-{
-	font-style: italic;
-}
-
-#narancia
-{
+.login-form {
 	width: 300px;
-	height: 337px;
+	margin: 0 auto;
+	font-family: Tahoma, Geneva, sans-serif;
 }
-
-#figureFloat
-{
-	float: right;
-	margin: 0 0 10px 10px;
+.login-form h1 {
+	text-align: center;
+	color: #4d4d4d;
+	font-size: 24px;
+	padding: 20px 0 20px 0;
 }
-
-#endLine
-{
-	margin: 0 0 110px 10px;
+.login-form input[type="password"],
+.login-form input[type="text"] {
+	width: 100%;
+	padding: 15px;
+	border: 1px solid #dddddd;
+	margin-bottom: 15px;
+	box-sizing:border-box;
 }
-
-.form{
-	margin-left: 1em;
+.login-form input[type="submit"] {
+	width: 100%;
+	padding: 15px;
+	background-color: #535b63;
+	border: 0;
+	box-sizing: border-box;
+	cursor: pointer;
+	font-weight: bold;
+	color: #ffffff;
 }
