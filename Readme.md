@@ -1,7 +1,7 @@
 instale o node js
 cmd
 Express - Instale com o comando: npm install express .
-Sessıes Expressas - Instale com o comando: npm install express-session .
+Sess√µes Expressas - Instale com o comando: npm install express-session .
 MySQL para Node.js - Instale com o comando: npm install mysql .
 
 carregar o arquivo bancoAps.sql no mysql na parte de dataimport
