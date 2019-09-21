@@ -5,6 +5,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+//mudar o usuario e a senha de acordo com o seu mysql
 const connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
@@ -29,7 +30,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
-//para usar o css colocar o diretorio onde ele está
+//para usar o css,imagens,etc colocar o diretorio onde as pastas estao
  app.use(express.static("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML"));
 
 //ler html
@@ -57,16 +58,16 @@ app.post('/auth', function(request, response) {
 	}
 });
 
-
-app.post('/login', (req, res) =>{
-    var nome = request.body.nome;
-	var password = request.body.password;
-	var email = request.body.email;
-	var matricula = request.body.matricula;
-	var instituicao = request.body.instituicao;
-    connection.query('INSERT INTO aluno(nome, password, email, matricula, instituicao) VALUES('${nome}','${password}', '${email}', '${matricula}', '${instituicao}')', res);
-    response.redirect('/');
-});
+//Colocar cadastro no bd, n funfando
+// app.post('/login', (req, res) =>{
+//     var nome = request.body.nome;
+// 	var password = request.body.password;
+// 	var email = request.body.email;
+// 	var matricula = request.body.matricula;
+// 	var instituicao = request.body.instituicao;
+//     connection.query('INSERT INTO aluno(nome, password, email, matricula, instituicao) VALUES('${nome}','${password}', '${email}', '${matricula}', '${instituicao}')', res);
+//     response.redirect('/');
+// });
 
 
 app.get("/cadastroAluno",function(req,res){
