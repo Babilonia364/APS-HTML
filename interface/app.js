@@ -7,9 +7,9 @@ const path = require('path');
 
 const connection = mysql.createConnection({
 	host     : 'localhost',
-	user     : 'rid10882200_root',
-	password : 'mazdarx8',
-	database : 'id10882200_apsjob'
+	user     : 'root',
+	password : '',
+	database : 'apsjob'
 });
 
 connection.connect(function(err){
@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 
 
 app.get("/",function(req,res){
-    res.sendfile("index.html" );
+    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\interface\\index.html" );
 });
 
 app.post('/auth', function(request, response) {
@@ -54,17 +54,9 @@ app.post('/auth', function(request, response) {
 	}
 });
 
-app.get('/home', function(request, response) {
-	if (request.session.loggedin) {
-		response.send('Welcome back, ' + request.session.username + '!');
-	} else {
-		response.send('Please login to view this page!');
-	}
-	response.end();
+app.get("/home",function(req,res){
+    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\interface\\cadastro.html" );
 });
-
-
-
 
 
 app.listen(8081, function(){console.log("Servidor ligado");});

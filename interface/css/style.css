@@ -85,12 +85,12 @@ input[type=submit]:hover {
 
 @font-face {
   font-family: myFirstFont;
-  src: url(Walkway_Oblique.ttf);
+  src: url(fontes/Walkway_Oblique.ttf);
 }
 
 @font-face {
   font-family: walknegrito;
-  src: url(Walkway_Bold.ttf);
+  src: url(fontes/Walkway_Bold.ttf);
 }
 
 .content {

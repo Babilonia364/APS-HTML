@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
-		<title>Login Form Tutorial</title>
-		<link rel="stylesheet" href="css/estilos.css">
+		<title>Login</title>
+		<link rel="stylesheet" href="css/style.css">
 	</head>
+
+
 	<body>
-		<div class="login-form">
-			<h1>Login Form</h1>
-			<form action="auth" method="POST">
+
+		<div class="sidenav">
+			<img src="imagens/icone_artigo.png" alt="Articles Center">
+  		</div>
+
+		<div class="content">
+			<h1>Login </h1>
+
+			<form action="auth" method="POST" class="form">
 				<input type="text" name="username" placeholder="Username" required>
-				<input type="password" name="password" placeholder="Password" required>
-				<input type="submit">
+				<input type="password" name="password" placeholder="Password" required><br>
+				<input type="submit" class="sombra" value="Login">
 			</form>
+
 		</div>
 	</body>
 </html>
