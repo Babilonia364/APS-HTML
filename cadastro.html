@@ -2,36 +2,41 @@
 <html>
 <!-- Início do cabeçalho -->
 	<head>
+		
 		<title>Cadastro</title>
 		<meta charset="utf-8">
 		
-		<!-- Linkando as tagas a pasta css que conterá os estilos.css -->
-		<link rel="stylesheet" href="css/estilos.css">
+		<!-- Linkando as tag a pasta css que conterá os estilos.css -->
+		<link rel="stylesheet" type='text/css' href="css/style.css"/>
 	</head>
+
 <!-- Fim do cabeçalho -->
 
 <!-- Início do corpo -->
 	<body>	
-		<h1>Cadastro</h1>
-    <form action="/action_page.php" class="form">
-      Nome<br>
-			<input type="text" name="nome" value="Ex: JV"><br>
-			Email<br>
-			<input type="text" name="email" value="Ex: lixo@uece.com"><br>
-			Senha<br>
-      <input type="password" name="senha" value=""><br><br>
-			Instituição<br>
-			<input type="text" name="instituicao" value=""><br><br>
-			<input type="submit" value="Cadastrar">
-		</form>
 
-		<br>
-		<!-- <h2>Titulo de menor importancia do htlm, indo do 1 ao 5</h2>
-		<p>Um parágrafo de texto</p>
-		<p><strong>Texto usando strong</strong></p>
-		<p id="endLine"><em>Textando usando em</em></p> -->
-		
-		<p>Click <a href="about.html">aqui</a> e vá para o sobre</p>
+		<div class="sidenav">
+			<img src="imagens/icone_artigo.png" alt="Articles Center">
+  		</div>
+
+  		<div class="content">
+	  		<h1>Cadastro Aluno</h1>
+			
+	    	<form action="/action_page.php" class="form">
+	     		<label>Nome:</label><br>
+				<input type="text" name="nome" value=""><br>
+	            <label>Senha:</label><br>
+	      		<input type="password" name="senha" value=""><br>
+				<label>Email:</label><br>
+				<input type="text" name="email" value=""><br>
+	            <label>Matricula:</label><br>
+	            <input type="text" name="matricula" value=""><br>
+	            <label>Instituição:</label><br>
+				<input type="text" name="instituicao" value=""><br><br>
+				<input type="submit" class="sombra "value="Cadastrar">
+				
+			</form>
+		</div>
 		
 		
 	</body>
