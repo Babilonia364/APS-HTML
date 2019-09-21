@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 //para usar o css,imagens,etc colocar o diretorio onde as pastas estao
  app.use(express.static("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML"));
 
-//ler html
+//ler html, colocar o diretorio e indicar o arquivo html
 app.get("/login",function(req,res){
     res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\index.html");
 });
@@ -59,6 +59,7 @@ app.post('/auth', function(request, response) {
 });
 
 //Colocar cadastro no bd, n funfando
+
 // app.post('/login', (req, res) =>{
 //     var nome = request.body.nome;
 // 	var password = request.body.password;
@@ -77,6 +78,11 @@ app.get("/cadastroAluno",function(req,res){
 app.get("/cadastroProfessor",function(req,res){
     res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\cadastroProfessor.html" );
 });
+
+app.get("/home",function(req,res){
+    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\home.html" );
+});
+
 
 
 

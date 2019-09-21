@@ -12,7 +12,9 @@
   cursor: pointer;
 }
 
+
 .sombra:hover {box-shadow: 0 7px 7px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);}
+
 
 label{font-family: walknegrito;font-size: 20px;}
 
@@ -37,6 +39,8 @@ input[type=text], select {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
+
 input[type=password], select {
   width: 500px;
   height:30px;
@@ -47,6 +51,7 @@ input[type=password], select {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
 
 input[type=submit] {
  
@@ -63,9 +68,8 @@ input[type=submit] {
   border-radius: 12px;
   font-family: walknegrito;
   font-size: 20px;
-
-
 }
+
 
 input[type=submit]:hover {
   background-color: #45a049;
@@ -81,6 +85,15 @@ input[type=submit]:hover {
   left: 0;
   background-image: linear-gradient(to top, #a8ff78, #78ffd6);
   overflow-x: hidden;
+}
+
+.sidenav img {
+  max-width: 30%;
+  height: auto;
+  position:relative;
+  left:35%;
+  top:30%;
+
 }
 
 @font-face {
@@ -99,14 +112,16 @@ input[type=submit]:hover {
   background-color: white;
   font-family: myFirstFont;
 }
-.sidenav img {
-  max-width: 30%;
-  height: auto;
-  position:relative;
-  left:35%;
-  top:30%;
 
+.header{
+  background-color: green;
+  padding: 15px;
+  text-align: center; 
+  border: 1px solid green;
 }
 
+#area-menu{
+  padding: 10px;
+}
 
 
