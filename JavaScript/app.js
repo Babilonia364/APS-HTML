@@ -29,9 +29,12 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
+//para usar o css colocar o diretorio onde ele está
+ app.use(express.static("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML"));
 
-app.get("/",function(req,res){
-    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\interface\\index.html" );
+//ler html
+app.get("/login",function(req,res){
+    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\index.html");
 });
 
 app.post('/auth', function(request, response) {
@@ -54,9 +57,26 @@ app.post('/auth', function(request, response) {
 	}
 });
 
-app.get("/home",function(req,res){
-    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\interface\\cadastro.html" );
+
+app.post('/login', (req, res) =>{
+    var nome = request.body.nome;
+	var password = request.body.password;
+	var email = request.body.email;
+	var matricula = request.body.matricula;
+	var instituicao = request.body.instituicao;
+    connection.query('INSERT INTO aluno(nome, password, email, matricula, instituicao) VALUES('${nome}','${password}', '${email}', '${matricula}', '${instituicao}')', res);
+    response.redirect('/');
 });
+
+
+app.get("/cadastroAluno",function(req,res){
+    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\cadastroAluno.html" );
+});
+
+app.get("/cadastroProfessor",function(req,res){
+    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\cadastroProfessor.html" );
+});
+
 
 
 app.listen(8081, function(){console.log("Servidor ligado");});
