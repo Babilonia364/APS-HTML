@@ -1,4 +1,4 @@
-const express =require('express');
+const express =require('express'); //para fzr o backend
 const app = express();
 const mysql = require('mysql');
 const session = require('express-session');
@@ -60,15 +60,18 @@ app.post('/auth', function(request, response) {
 
 //Colocar cadastro no bd, n funfando
 
-// app.post('/login', (req, res) =>{
+// app.post('/login', function(req, res) {
 //     var nome = request.body.nome;
 // 	var password = request.body.password;
 // 	var email = request.body.email;
 // 	var matricula = request.body.matricula;
 // 	var instituicao = request.body.instituicao;
-//     connection.query('INSERT INTO aluno(nome, password, email, matricula, instituicao) VALUES('${nome}','${password}', '${email}', '${matricula}', '${instituicao}')', res);
-//     response.redirect('/');
+//     connection.query('INSERT INTO login(usuario, senha, tipo_user) VALUES(?,?,?)', 
+//     	[nome, password, email],
+//     function (error, results, fields){}
+//     )
 // });
+
 
 
 app.get("/cadastroAluno",function(req,res){
