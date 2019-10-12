@@ -120,7 +120,6 @@ app.put('/updA', function (req, res) {
 		if (err) throw err;
     });
     
-    UPDATE `apsjob`.`login` SET `usuario` = 'jv' WHERE (`usuario` = 'glo')
 	connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email.toString(), senha.toString()], function (err, result) {
 		if (err) throw err;
 	});
