@@ -5,6 +5,8 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+var alunoAtual;
+
 //mudar o usuario e a senha de acordo com o seu mysql
 const connection = mysql.createConnection({
 	host: 'localhost',
@@ -47,7 +49,11 @@ app.get("/cadastroprof", function (req, res) {
 });
 
 app.get("/home", function (req, res) {
-	res.sendFile(path.resolve("../../view/home.html"));
+    res.sendFile(path.resolve("../../view/home.html"));
+});
+
+app.get("/editarCadastro", function (req, res) {
+	res.sendFile(path.resolve("../../view/editarCadastro.html"));
 });
 
 // POST
@@ -58,15 +64,16 @@ app.post('/auth', function (request, response) {
 		connection.query('SELECT * FROM login WHERE usuario = ? AND senha = ?', [username, password], function (error, results, fields) {
 			if (results.length > 0) {
 				request.session.loggedin = true;
-				request.session.username = username;
+                request.session.username = username;
+                alunoAtual = username;
 				response.redirect('/home');
 			} else {
-				response.send('Incorrect Username and/or Password!');
+				response.send('Usuário ou senha incorreto');
 			}
 			response.end();
 		});
 	} else {
-		response.send('Please enter Username and Password!');
+		response.send('Digite usuário ou senha');
 		response.end();
 	}
 });
@@ -109,23 +116,22 @@ app.post('/cadasP', function (req, res) {
 });
 
 // PUT
-app.put('/updA', function (req, res) {
+app.put('/editarA', function (req, res) {
 	var nome = req.body.nome;
 	var email = req.body.email;
 	var senha = req.body.senha;
 	var instituicao = req.body.instituicao;
 	var matricula = req.body.matricula;
 
-	connection.query("UPDATE `aluno` SET (nome, email,instituicao,matricula) VALUES (?,?,?,?)", [nome.toString(), email.toString(), instituicao.toString(), matricula.toString()], function (err, result) {
+	connection.query("UPDATE `aluno` SET (nome, email,instituicao,matricula) VALUES (?,?,?,?) WHERE 'aluno' ==" [alunoAtual], [nome.toString(), email.toString(), instituicao.toString(), matricula.toString()], function (err, result) {
 		if (err) throw err;
     });
     
-    UPDATE `apsjob`.`login` SET `usuario` = 'jv' WHERE (`usuario` = 'glo')
-	connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email.toString(), senha.toString()], function (err, result) {
+	connection.query("UPDATE `login` SET (usuario, senha) VALUES (?,?) WHERE `login` == " [alunoAtual], [email.toString(), senha.toString()], function (err, result) {
 		if (err) throw err;
 	});
 
-	res.redirect('/login');
+	res.redirect('/home');
 });
 
 // PORTA
