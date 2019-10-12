@@ -35,14 +35,14 @@ app.use(express.static(path.resolve("../../")));
 
 //  GETS
 app.get("/login", function (req, res) {
-	res.sendFile("index.html");
+	res.sendFile(path.resolve("../../index.html"));
 });
 
 app.get("/cadastroaluno", function (req, res) {
 	res.sendFile(path.resolve("../../view/cadastroAluno.html"));
 });
 
-app.get("/cadastrarprof", function (req, res) {
+app.get("/cadastroprof", function (req, res) {
 	res.sendFile(path.resolve("../../view/cadastroProf.html"));
 });
 
@@ -50,7 +50,7 @@ app.get("/home", function (req, res) {
 	res.sendFile(path.resolve("../../view/home.html"));
 });
 
-// POSTS
+// POST
 app.post('/auth', function (request, response) {
 	var username = request.body.username;
 	var password = request.body.password;
