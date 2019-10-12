@@ -108,5 +108,25 @@ app.post('/cadasP', function (req, res) {
 	res.redirect('/login');
 });
 
+// PUT
+app.put('/updA', function (req, res) {
+	var nome = req.body.nome;
+	var email = req.body.email;
+	var senha = req.body.senha;
+	var instituicao = req.body.instituicao;
+	var matricula = req.body.matricula;
+
+	connection.query("UPDATE `aluno` SET (nome, email,instituicao,matricula) VALUES (?,?,?,?)", [nome.toString(), email.toString(), instituicao.toString(), matricula.toString()], function (err, result) {
+		if (err) throw err;
+    });
+    
+    UPDATE `apsjob`.`login` SET `usuario` = 'jv' WHERE (`usuario` = 'glo')
+	connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email.toString(), senha.toString()], function (err, result) {
+		if (err) throw err;
+	});
+
+	res.redirect('/login');
+});
+
 // PORTA
 app.listen(8081, function () { console.log("Servidor ligado"); });
