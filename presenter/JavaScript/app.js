@@ -50,6 +50,12 @@ app.get("/home", function (req, res) {
 	res.sendFile(path.resolve("../../view/home.html"));
 });
 
+app.get("/subArtigo", function (req, res) {
+	res.sendFile(path.resolve("../../view/subArtigo.html"));
+});
+
+
+
 // POST
 app.post('/auth', function (request, response) {
 	var username = request.body.username;
@@ -97,35 +103,29 @@ app.post('/cadasP', function (req, res) {
 	var instituicao = req.body.instituicao;
 	var areadepesquisa = req.body.areadepesquisa;
 
-	connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email, senha], function (err, result) {
-		if (err) throw err;
-	});
-
 	connection.query("INSERT INTO `professor` (nome, email,instituicao,titulacao,area_pesq) VALUES (?,?,?,?,?)", [nome, email, instituicao, titulacao, areadepesquisa], function (err, result) {
 		if (err) throw err;
 	});
 
-	res.redirect('/login');
-});
-
-// PUT
-app.put('/updA', function (req, res) {
-	var nome = req.body.nome;
-	var email = req.body.email;
-	var senha = req.body.senha;
-	var instituicao = req.body.instituicao;
-	var matricula = req.body.matricula;
-
-	connection.query("UPDATE `aluno` SET (nome, email,instituicao,matricula) VALUES (?,?,?,?)", [nome.toString(), email.toString(), instituicao.toString(), matricula.toString()], function (err, result) {
-		if (err) throw err;
-    });
-    
-	connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email.toString(), senha.toString()], function (err, result) {
+	connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email, senha], function (err, result) {
 		if (err) throw err;
 	});
 
 	res.redirect('/login');
 });
 
+app.post('/subArtigo', function (req, res) {
+
+	var titulo = req.body.titulo;
+	var nome = req.body.nome;
+	var email = req.body.email;
+	var resumo = req.body.resumo;
+
+	connection.query("INSERT INTO `artigo` (titulo, resumo,nome,email) VALUES (?,?,?,?)", [titulo, nome, email, resumo], function (err, result) {
+		if (err) throw err;
+	});
+
+	res.redirect('/home');
+});
 // PORTA
 app.listen(8081, function () { console.log("Servidor ligado"); });

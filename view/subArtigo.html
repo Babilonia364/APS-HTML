@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<!-- Início do cabeçalho -->
+
+<head>
+    <title>Submeter Artigo</title>
+    <meta charset="utf-8">
+
+    <!-- Linkando as tagas a pasta css que conterá os estilos.css -->
+    <link rel="stylesheet" type='text/css' href="view/component/css/styleSubArtigo.css">
+    <link rel="icon" href="resources/imagens/favicon.ico" type="image/x-icon">
+</head>
+
+<!-- Fim do cabeçalho -->
+
+<!-- Início do corpo -->
+
+<body>
+
+    <div class="sidenav">
+        <img src="../resources/imagens/icone_artigo.png" alt="Articles Center">
+    </div>
+
+    <div class="content">
+        <h1>Submeter Artigo</h1>
+
+        <form action="subArtigo" method="POST" class="form">
+            <label>Título:</label><br>
+            <input type="text" name="titulo" value="" required><br>
+            <label>Autores</label><br><br>
+            <label>Nome:</label><br>
+            <input type="text" name="nome" value="" required><br>
+            <label>Email:</label><br>
+            <input type="text" name="email" value="" required><br>
+            <label>Resumo:</label><br>
+            <input type="text" name="resumo" value="" required><br>
+            <label>Selecione o arquivo:</label> <input type="file" name="myFile"><br>
+            <input type="submit" class="sombra " value="Submeter">
+
+        </form>
+    </div>
+
+    <br>
+
+</body>
+<!-- Fim do corpo -->
+
+</html>
