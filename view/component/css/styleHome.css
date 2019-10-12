@@ -10,13 +10,15 @@
         background:  #78ffd6;
         /* border-radius: 50%; */
         width: 10%;
-        height: 8.2%;
+        height: 8.9%;
         position: fixed;
         top: 0;
         left: 0;
+        border: 1px solid red;
     }
 
     .hamburguer {
+        border: 1px solid red;
         position: relative;
         display: block;
         background: #000;
@@ -46,7 +48,7 @@
         bottom: -10px;
     }
 
-    input {
+    input[type=checkbox] {
         display: none;
     }
 
@@ -112,6 +114,7 @@
       }
 
 .sidenav {
+    border: 1px solid red;
     height: 10%;
     max-width: 100%;
     z-index: 1;
@@ -120,4 +123,61 @@
     top:20%;
     background-image: linear-gradient(to left, #a8ff78, #78ffd6);
     overflow-x: hidden;
-  }
+
+}
+
+input[type=text], select {
+    width: 500px;
+    height:30px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+
+    background-image: white;
+    border: none;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    font-family: walknegrito;
+    font-size: 20px;
+    }
+
+.pesquisa{
+    /* float: right; */
+    border: 1px solid red;
+    position: relative;
+    /* margin: 50%; */
+    padding: 2em 40em;
+    /* text-align: center; */
+}
+
+table{
+	width: 100%;
+	margin-bottom : .5em;
+    table-layout: fixed;
+
+}
+
+td, th {
+	padding: .7em;
+	margin: 0;
+	border: 1px solid #ccc;
+	text-align: center;
+}
+
+th{
+	font-weight: bold;
+	background-color: #EEE;
+}
