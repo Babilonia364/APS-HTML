@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8">
-		<title>Login</title>
-		<link rel="stylesheet" href="view/component/css/style.css">
-	</head>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type='text/css' href="view/component/css/styleLog.css" />
+	<title>Login</title>
+</head>
 
+<body>
+	<div class="sidenav">
+		<img src="resources/imagens/icone_artigo.png" alt="Articles Center">
+	</div>
+	<div class="content ">
+		<h1>Login</h1>
+		<form action="auth" method="POST">
+			<input type="text" name="username" placeholder="Usuário" required>
+			<input type="password" name="password" placeholder="Senha" required><br>
+			<div class="content3"><input type="submit" class="sombra " value="Entrar"></div>
+		</form>
+	</div>
 
-	<body>
+	<div class="content2 ">
+		<h1>Cadastre-se</h1>
+		<form action="cadastrarprof" class="form">
+			<input type="submit" class="sombra " value="Professor">
+		</form>
+		</form>
+		<form action="cadastroaluno" class="form">
+			<div class="content4"><input type="submit" class="sombra " value="Aluno"></div>
+		</form>
+	</div>
 
-		<div class="sidenav">
-			<img src="resources/imagens/icone_artigo.png" alt="Articles Center">
-  		</div>
+</body>
 
-		<div class="content">
-			<h1>Login </h1>
-
-			<form action="auth" method="POST" class="form">
-				<input type="text" name="username" placeholder="Username" required>
-				<input type="password" name="password" placeholder="Password" required><br>
-				<input type="submit" class="sombra" value="Login">
-			</form>
-			<hr>
-			<h2>Cadastre-se</h2>
-			<form action="view/cadastroProfessor.html" class="form">
-				<input  type="submit" class="sombra" value="Professor">
-				
-			</form>
-			<form action="view/cadastroAluno.html" class="form">
-				<input  type="submit" class="sombra" value="Aluno">
-			</form>
-		</div>
-	</body>
 </html>

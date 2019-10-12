@@ -31,14 +31,14 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
 //para usar o css,imagens,etc colocar o diretorio onde as pastas estao
- app.use(express.static("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML"));
+ app.use(express.static("C:\\Users\\João Victor\\Desktop\\APS-HTML-developer"));
 
 //ler html, colocar o diretorio e indicar o arquivo html
 app.get("/login",function(req,res){
-    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\index.html");
+    res.sendFile("C:\\Users\\João Victor\\Desktop\\APS-HTML-developer\\index.html");
 });
 
-app.post('/auth', function(request, response) {
+app.post('/auth', function(request, response){
 	var username = request.body.username;
 	var password = request.body.password;
 	if (username && password) {
@@ -58,35 +58,56 @@ app.post('/auth', function(request, response) {
 	}
 });
 
-//Colocar cadastro no bd, n funfando
 
-// app.post('/login', function(req, res) {
-//     var nome = request.body.nome;
-// 	var password = request.body.password;
-// 	var email = request.body.email;
-// 	var matricula = request.body.matricula;
-// 	var instituicao = request.body.instituicao;
-//     connection.query('INSERT INTO login(usuario, senha, tipo_user) VALUES(?,?,?)', 
-//     	[nome, password, email],
-//     function (error, results, fields){}
-//     )
-// });
+app.post('/cadasA', function(req,res) {
+  var nome = req.body.nome;
+	var email = req.body.email;
+	var senha = req.body.senha;
+	var instituicao = req.body.instituicao;
+	var matricula = req.body.matricula;
 
+	connection.query("INSERT INTO `aluno` (nome, email,instituicao,matricula) VALUES (?,?,?,?)", [nome.toString(), email.toString(),instituicao.toString(),matricula.toString()], function(err, result) {
+		if(err) throw err;
+	});
 
-
-app.get("/cadastroAluno",function(req,res){
-    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\cadastroAluno.html" );
+	connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email.toString(), senha.toString()], function(err, result) {
+    if(err) throw err;
+	});
+	
+  res.redirect('/login');
 });
 
-app.get("/cadastroProfessor",function(req,res){
-    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\cadastroProfessor.html" );
+app.post('/cadasP', function(req,res) {
+	var nome = req.body.nome;
+var email = req.body.email;
+var senha = req.body.senha;
+var titulacao = req.body.titulacao;
+var instituicao = req.body.instituicao;
+var areadepesquisa = req.body.areadepesquisa;
+
+	connection.query("INSERT INTO `professor` (nome, email,instituicao,titulacao,area_pesq) VALUES (?,?,?,?,?)", [nome, email,instituicao,titulacao,areadepesquisa], function(err, result) {
+			if(err) throw err;
+});
+
+connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email, senha], function(err, result) {
+			if(err) throw err;
+});
+
+	res.redirect('/login');
+});
+
+
+app.get("/cadastroaluno",function(req,res){
+    res.sendFile("C:\\Users\\João Victor\\Desktop\\APS-HTML-developer\\view\\cadastroAluno.html" );
+});
+
+app.get("/cadastrarprof",function(req,res){
+    res.sendFile("C:\\Users\\João Victor\\Desktop\\APS-HTML-developer\\view\\cadastroProf.html" );
 });
 
 app.get("/home",function(req,res){
-    res.sendfile("C:\\Users\\João Victor\\Desktop\\APSFINAL\\APS-HTML\\home.html" );
+    res.sendFile("C:\\Users\\João Victor\\Desktop\\APS-HTML-developer\\view\\home.html" );
 });
-
-
 
 
 app.listen(8081, function(){console.log("Servidor ligado");});
