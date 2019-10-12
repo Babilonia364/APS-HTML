@@ -1,13 +1,15 @@
--- MySQL dump 10.13  Distrib 5.7.24, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `apsjob` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `apsjob`;
+-- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: apsjob
 -- ------------------------------------------------------
--- Server version	5.7.24
+-- Server version	5.7.26
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,15 +23,19 @@
 
 DROP TABLE IF EXISTS `aluno`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `aluno` (
   `idAluno` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
+  `senha` varchar(45) DEFAULT NULL,
   `instituicao` varchar(45) DEFAULT NULL,
-  `matricula` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idAluno`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `matricula` varchar(45) DEFAULT NULL,
+  `aLogin` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idAluno`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `fk_Login_idx` (`aLogin`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +53,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `artigo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `artigo` (
   `idArtigo` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(45) DEFAULT NULL,
@@ -56,7 +62,7 @@ CREATE TABLE `artigo` (
   `arquivo` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idArtigo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +80,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `eventos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `eventos` (
   `ev_id` int(11) NOT NULL AUTO_INCREMENT,
   `nome_ev` varchar(45) DEFAULT NULL,
@@ -87,7 +93,7 @@ CREATE TABLE `eventos` (
   `area_conc` varchar(45) DEFAULT NULL,
   `situacao` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ev_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,14 +111,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `login`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `login` (
+  `idUser` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(45) NOT NULL,
-  `senha` varchar(45) DEFAULT NULL,
-  `tipo_user` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`usuario`),
-  UNIQUE KEY `senha_UNIQUE` (`senha`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `senha` varchar(45) NOT NULL,
+  `tipo_user` varchar(45) DEFAULT 'aluno',
+  PRIMARY KEY (`idUser`),
+  UNIQUE KEY `usuario_UNIQUE` (`usuario`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +128,6 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES ('jv','pirocadegato','aluno');
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,16 +137,18 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `professor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `professor` (
-  `idProfessor` int(11) NOT NULL AUTO_INCREMENT,
+  `idprofessor` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `instituicao` varchar(45) DEFAULT NULL,
   `titulacao` varchar(45) DEFAULT NULL,
   `area_pesq` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idProfessor`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `pLogin` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idprofessor`),
+  KEY `fk_login_idx` (`pLogin`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,10 +159,6 @@ LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'apsjob'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -165,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-14 20:40:00
+-- Dump completed on 2019-10-12 20:46:22

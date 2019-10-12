@@ -97,11 +97,11 @@ app.post('/cadasP', function (req, res) {
 	var instituicao = req.body.instituicao;
 	var areadepesquisa = req.body.areadepesquisa;
 
-	connection.query("INSERT INTO `professor` (nome, email,instituicao,titulacao,area_pesq) VALUES (?,?,?,?,?)", [nome, email, instituicao, titulacao, areadepesquisa], function (err, result) {
+	connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email, senha], function (err, result) {
 		if (err) throw err;
 	});
 
-	connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email, senha], function (err, result) {
+	connection.query("INSERT INTO `professor` (nome, email,instituicao,titulacao,area_pesq) VALUES (?,?,?,?,?)", [nome, email, instituicao, titulacao, areadepesquisa], function (err, result) {
 		if (err) throw err;
 	});
 
