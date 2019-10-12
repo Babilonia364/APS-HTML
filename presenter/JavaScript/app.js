@@ -50,6 +50,12 @@ app.get("/home", function (req, res) {
 	res.sendFile(path.resolve("../../view/home.html"));
 });
 
+app.get("/subArtigo", function (req, res) {
+	res.sendFile(path.resolve("../../view/subArtigo.html"));
+});
+
+
+
 // POST
 app.post('/auth', function (request, response) {
 	var username = request.body.username;
@@ -108,5 +114,18 @@ app.post('/cadasP', function (req, res) {
 	res.redirect('/login');
 });
 
+app.post('/subArtigo', function (req, res) {
+
+	var titulo = req.body.titulo;
+	var nome = req.body.nome;
+	var email = req.body.email;
+	var resumo = req.body.resumo;
+
+	connection.query("INSERT INTO `artigo` (titulo, resumo,nome,email) VALUES (?,?,?,?)", [titulo, nome, email, resumo], function (err, result) {
+		if (err) throw err;
+	});
+
+	res.redirect('/home');
+});
 // PORTA
 app.listen(8081, function () { console.log("Servidor ligado"); });
