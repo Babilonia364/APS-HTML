@@ -49,6 +49,10 @@ app.get("/cadastroprof", function (req, res) {
     res.sendFile(path.resolve("../../view/cadastroProf.html"));
 });
 
+app.get("/cadastroadmin", function (req, res) {
+    res.sendFile(path.resolve("../../view/cadastroAdmin.html"));
+});
+
 app.get("/homeAluno", function (req, res) {
     res.sendFile(path.resolve("../../view/homeAluno.html"));
 });
@@ -128,7 +132,7 @@ app.post('/cadasA', function (req, res) {
 	var instituicao = req.body.instituicao;
 	var matricula = req.body.matricula;
 
-	connection.query("INSERT INTO `aluno` (nome, email, senha, instituicao,matricula) VALUES (?,?,?,?,?)", [nome.toString(), email.toString(), senha.toString(), instituicao.toString(), matricula.toString()], function (err, result) {
+	connection.query("INSERT INTO `aluno` (nome, email, instituicao,matricula) VALUES (?,?,?,?,?)", [nome.toString(), email.toString(), instituicao.toString(), matricula.toString()], function (err, result) {
 		if (err) throw err;
 	});
 
@@ -158,7 +162,22 @@ app.post('/cadasP', function (req, res) {
     res.redirect('/login');
 });
 
-// PUT
+app.post('/cadasADM', function (req, res) {
+    var nome = req.body.nome;
+	var email = req.body.email;
+
+    connection.query("INSERT INTO `admin` (nome, email) VALUES (?,?)", [nome, email], function (err, result) {
+        if (err) throw err;
+    });
+
+    connection.query("INSERT INTO `login` (usuario, senha, tipo_user) VALUES (?,?, ?)", [email.toString(), senha.toString(), "admin"], function (err, result) {
+        if (err) throw err;
+    });
+
+    res.redirect('/login');
+});
+
+// EDIT
 
 app.post('/editarA', function (req, res) {
     var nome = req.body.nome;
