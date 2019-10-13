@@ -72,17 +72,17 @@ function setNome1(nome) {
 app.post('/auth', function (request, response) {
     var username = request.body.username;
     var password = request.body.password;
-    var tipo = connection.query('SELECT tipo_user FROM login WHERE usuario = ? AND senha = ?', [username, password]);
+
     if (username && password) {
         connection.query('SELECT * FROM login WHERE usuario = ? AND senha = ?', [username, password], function (error, results, fields) {
-            // tipo = connection.query('SELECT tipo_user FROM login WHERE usuario = ? AND senha = ?', [username, password]);
+    
             if (results.length > 0) {
                 request.session.loggedin = true;
                 request.session.username = username;
                 setNome1(username);
-                if(tipo == 'aluno') {
+                if (results[0].tipo_user == 'aluno') {
                     response.redirect('/homeAluno');
-                } else if(tipo == 'professor') {
+                } else if (results[0].tipo_user == 'professor') {
                     response.redirect('/homeProf');
                 }
             } else {
@@ -149,7 +149,7 @@ app.post('/editarA', function (req, res) {
     connection.query("UPDATE login SET usuario=?, senha=? WHERE usuario = ?", [email.toString(), senha.toString(), nome_usuario.toString()], function (err, result) {
         if (err) throw err;
     });
-    res.redirect('/home');
+    res.redirect('/homeAluno');
 });
 
 app.post('/editarP', function (req, res) {
@@ -167,9 +167,9 @@ app.post('/editarP', function (req, res) {
     connection.query("UPDATE login SET usuario=?, senha=? WHERE usuario = ?", [email.toString(), senha.toString(), nome_usuario.toString()], function (err, result) {
         if (err) throw err;
     });
-    res.redirect('/home');
+    res.redirect('/homeProf');
 });
 
 
 // PORTA
-app.listen(8081, function () { console.log("Servidor ligado"); });
+app.listen(8081, function () { console.log("Servidor ligado") });
