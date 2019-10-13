@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<!-- Início do cabeçalho -->
+
+<head>
+	<title>Cadastro</title>
+	<meta charset="utf-8">
+
+    <!-- Linkando as tagas a pasta css que conterá os estilos.css -->
+		<link rel="stylesheet" type='text/css' href="view/component/css/styleProf.css">
+		<link rel="icon" href="resources/imagens/favicon.ico" type="image/x-icon">
+</head>
+
+<!-- Fim do cabeçalho -->
+
+<!-- Início do corpo -->
+
+<body>
+
+	<div class="sidenav">
+		<img src="../resources/imagens/icone_artigo.png" alt="Articles Center">
+	</div>
+
+	<div class="content">
+		<h1>Editar Cadastro Professor</h1>
+
+		<form action="editarP" method="POST" class="form">
+			<label>Nome:</label><br>
+			<input type="text" name="nome" value="" required><br>
+			<label>Senha:</label><br>
+			<input type="password" name="senha" value="" required><br>
+			<label>Email:</label><br>
+			<input type="text" name="email" value=""><br>
+			<label>Titulação:</label><br>
+			<input type="text" name="titulacao" value="" required><br>
+			<label>Instituição:</label><br>
+			<input type="text" name="instituicao" value="" required><br>
+			<label>Área de pesquisa:</label><br>
+			<input type="text" name="areadepesquisa" value="" required><br><br>
+			<input type="submit" class="sombra " value="Editar">
+		</form>
+	</div>
+
+	<br>
+
+</body>
+<!-- Fim do corpo -->
+
+</html>
