@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `apsjob` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `apsjob`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: apsjob
@@ -146,6 +148,7 @@ CREATE TABLE `professor` (
   `idprofessor` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
+  `senha` varchar(45) DEFAULT NULL,
   `instituicao` varchar(45) DEFAULT NULL,
   `titulacao` varchar(45) DEFAULT NULL,
   `area_pesq` varchar(45) DEFAULT NULL,
@@ -161,7 +164,7 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (1,'casa','casa','casa',NULL,'casa',NULL),(2,'caes','case','case',NULL,'acse',NULL),(3,'Marcos','Negreiso@MelhorProfessor.com','Paraíso',NULL,'Pesquisa Operacional',NULL);
+INSERT INTO `professor` VALUES (1,'casa','casa',NULL,'casa',NULL,'casa',NULL),(2,'caes','case',NULL,'case',NULL,'acse',NULL),(3,'Marcos','Negreiso@MelhorProfessor.com',NULL,'Paraíso',NULL,'Pesquisa Operacional',NULL);
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,4 +204,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
 -- Dump completed on 2019-10-13 15:14:27
+=======
+-- Dump completed on 2019-10-13 15:18:31
+>>>>>>> developer
