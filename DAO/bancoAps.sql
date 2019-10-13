@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `apsjob` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `apsjob`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: apsjob
@@ -35,7 +33,7 @@ CREATE TABLE `aluno` (
   PRIMARY KEY (`idAluno`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_Login_idx` (`aLogin`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +42,7 @@ CREATE TABLE `aluno` (
 
 LOCK TABLES `aluno` WRITE;
 /*!40000 ALTER TABLE `aluno` DISABLE KEYS */;
+INSERT INTO `aluno` VALUES (1,'asas','asas',NULL,'asas','asas',NULL);
 /*!40000 ALTER TABLE `aluno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,9 +56,10 @@ DROP TABLE IF EXISTS `artigo`;
 CREATE TABLE `artigo` (
   `idArtigo` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(45) DEFAULT NULL,
-  `autores` varchar(45) DEFAULT NULL,
+  `nome` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
   `resumo` text,
-  `arquivo` varchar(45) DEFAULT NULL,
+  `arquivo` varbinary(16000) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idArtigo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -119,7 +119,7 @@ CREATE TABLE `login` (
   `tipo_user` varchar(45) DEFAULT 'aluno',
   PRIMARY KEY (`idUser`),
   UNIQUE KEY `usuario_UNIQUE` (`usuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,6 +128,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
+INSERT INTO `login` VALUES (6,'casa','casa','aluno'),(7,'asas','asas','aluno'),(8,'case','caes','aluno'),(9,'Negreiso@MelhorProfessor.com','12345','aluno');
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +149,7 @@ CREATE TABLE `professor` (
   `pLogin` int(11) DEFAULT NULL,
   PRIMARY KEY (`idprofessor`),
   KEY `fk_login_idx` (`pLogin`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,6 +158,7 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
+INSERT INTO `professor` VALUES (1,'casa','casa','casa',NULL,'casa',NULL),(2,'caes','case','case',NULL,'acse',NULL),(3,'Marcos','Negreiso@MelhorProfessor.com','Paraíso',NULL,'Pesquisa Operacional',NULL);
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -169,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-12 20:46:22
+-- Dump completed on 2019-10-12 21:15:26
