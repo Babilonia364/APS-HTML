@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `apsjob` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `apsjob`;
 -- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: apsjob
@@ -33,7 +35,7 @@ CREATE TABLE `aluno` (
   PRIMARY KEY (`idAluno`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_Login_idx` (`aLogin`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +44,7 @@ CREATE TABLE `aluno` (
 
 LOCK TABLES `aluno` WRITE;
 /*!40000 ALTER TABLE `aluno` DISABLE KEYS */;
-INSERT INTO `aluno` VALUES (1,'asas','asas',NULL,'asas','asas',NULL);
+INSERT INTO `aluno` VALUES (1,'asas','asas',NULL,'asas','asas',NULL),(2,'jv','jv@lixo.br',NULL,'UECE','12331321',NULL),(3,'jv2','jv@uece.br','pirocadegato','UECE','1245543',NULL);
 /*!40000 ALTER TABLE `aluno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +64,7 @@ CREATE TABLE `artigo` (
   `arquivo` varbinary(16000) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idArtigo`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,6 +73,7 @@ CREATE TABLE `artigo` (
 
 LOCK TABLES `artigo` WRITE;
 /*!40000 ALTER TABLE `artigo` DISABLE KEYS */;
+INSERT INTO `artigo` VALUES (1,'jv piroca de gato','Lima@gmail.com','Prova de que o jv tem piroca de gato','Mateus',NULL,NULL);
 /*!40000 ALTER TABLE `artigo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,18 +85,19 @@ DROP TABLE IF EXISTS `eventos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `eventos` (
-  `ev_id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome_ev` varchar(45) DEFAULT NULL,
+  `idEvento` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) DEFAULT NULL,
   `sigla` varchar(45) DEFAULT NULL,
   `data_in` date DEFAULT NULL,
   `data_fn` date DEFAULT NULL,
   `data_sub_in` date DEFAULT NULL,
   `data_sub_fn` date DEFAULT NULL,
-  `palavra_chave` varchar(250) DEFAULT NULL,
   `area_conc` varchar(45) DEFAULT NULL,
   `situacao` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`ev_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `eTag` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idEvento`),
+  KEY `fk_tag_idx` (`eTag`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,6 +106,7 @@ CREATE TABLE `eventos` (
 
 LOCK TABLES `eventos` WRITE;
 /*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
+INSERT INTO `eventos` VALUES (1,'Balbúrdia','BBD','2019-10-15','2019-10-31','2019-10-17','2019-10-29',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +124,7 @@ CREATE TABLE `login` (
   `tipo_user` varchar(45) DEFAULT 'aluno',
   PRIMARY KEY (`idUser`),
   UNIQUE KEY `usuario_UNIQUE` (`usuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +133,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (6,'casa','casa','aluno'),(7,'asas','asas','aluno'),(8,'case','caes','aluno'),(9,'Negreiso@MelhorProfessor.com','12345','aluno');
+INSERT INTO `login` VALUES (6,'casa','casa','aluno'),(7,'asas','asas','aluno'),(8,'case','caes','aluno'),(9,'Negreiso@MelhorProfessor.com','12345','aluno'),(10,'jv@lixo.br','pirocadegato','aluno'),(11,'jv@uece.br','pirocadegato','aluno');
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,6 +148,7 @@ CREATE TABLE `professor` (
   `idprofessor` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
+  `senha` varchar(45) DEFAULT NULL,
   `instituicao` varchar(45) DEFAULT NULL,
   `titulacao` varchar(45) DEFAULT NULL,
   `area_pesq` varchar(45) DEFAULT NULL,
@@ -158,9 +164,36 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (1,'casa','casa','casa',NULL,'casa',NULL),(2,'caes','case','case',NULL,'acse',NULL),(3,'Marcos','Negreiso@MelhorProfessor.com','Paraíso',NULL,'Pesquisa Operacional',NULL);
+INSERT INTO `professor` VALUES (1,'casa','casa',NULL,'casa',NULL,'casa',NULL),(2,'caes','case',NULL,'case',NULL,'acse',NULL),(3,'Marcos','Negreiso@MelhorProfessor.com',NULL,'Paraíso',NULL,'Pesquisa Operacional',NULL);
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `tag`
+--
+
+DROP TABLE IF EXISTS `tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tag` (
+  `idTag` int(11) NOT NULL AUTO_INCREMENT,
+  `tag` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idTag`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tag`
+--
+
+LOCK TABLES `tag` WRITE;
+/*!40000 ALTER TABLE `tag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping events for database 'apsjob'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -171,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-12 21:15:26
+-- Dump completed on 2019-10-13 15:18:31
