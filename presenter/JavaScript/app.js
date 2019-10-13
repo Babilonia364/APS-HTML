@@ -89,7 +89,7 @@ app.post('/cadasA', function (req, res) {
 	var instituicao = req.body.instituicao;
 	var matricula = req.body.matricula;
 
-	connection.query("INSERT INTO `aluno` (nome, email,instituicao,matricula) VALUES (?,?,?,?)", [nome.toString(), email.toString(), instituicao.toString(), matricula.toString()], function (err, result) {
+	connection.query("INSERT INTO `aluno` (nome, email, senha, instituicao,matricula) VALUES (?,?,?,?,?)", [nome.toString(), email.toString(), senha.toString(), instituicao.toString(), matricula.toString()], function (err, result) {
 		if (err) throw err;
 	});
 
