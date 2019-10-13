@@ -5,7 +5,8 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-var alunoAtual;
+var tipo_user_atual;
+
 
 //mudar o usuario e a senha de acordo com o seu mysql
 const connection = mysql.createConnection({
@@ -56,18 +57,17 @@ app.get("/homeProf", function (req, res) {
     res.sendFile(path.resolve("../../view/homeProf.html"));
 });
 
+app.get("/homeAdmin", function (req, res) {
+    res.sendFile(path.resolve("../../view/homeAdmin.html"));
+});
+
 app.get("/editarCadastroA", function (req, res) {
     res.sendFile(path.resolve("../../view/editarCadastroAluno.html"));
 });
+
 app.get("/editarCadastroP", function (req, res) {
     res.sendFile(path.resolve("../../view/editarCadastroProf.html"));
 });
-
-
-function setNome1(nome) {
-    nome_usuario = nome; // nome_usuario foi criada no escopo global
-}
-
 
 app.get("/subArtigo", function (req, res) {
 	res.sendFile(path.resolve("../../view/subArtigo.html"));
@@ -77,6 +77,12 @@ app.get("/subArtigo", function (req, res) {
 app.get("/cadastrarEvento", function (req, res) {
 	res.sendFile(path.resolve("../../view/cadastroEventoView.html"));
 });
+
+
+
+function setNome1(nome) {
+    nome_usuario = nome; // nome_usuario foi criada no escopo global
+}
 
 
 
@@ -91,10 +97,15 @@ app.post('/auth', function (request, response) {
                 request.session.loggedin = true;
                 request.session.username = username;
                 setNome1(username);
+                //seta  o user global
+                tipo_user_atual = results[0].tipo_user;
+
                 if (results[0].tipo_user == 'aluno') {
                     response.redirect('/homeAluno');
                 } else if (results[0].tipo_user == 'professor') {
                     response.redirect('/homeProf');
+                }else if (results[0].tipo_user == 'admin') {
+                    response.redirect('/homeAdmin');
                 }
             } else {
                 response.send('Incorrect Username and/or Password!');
@@ -192,8 +203,11 @@ app.post('/subArtigo', function (req, res) {
 	connection.query("INSERT INTO `artigo` (titulo, resumo,nome,email) VALUES (?,?,?,?)", [titulo, nome, email, resumo], function (err, result) {
 		if (err) throw err;
 	});
-
-	res.redirect('/home');
+    if(tipo_user_atual == "aluno"){
+        res.redirect('/homeAluno');
+    } else if(tipo_user_atual == "professor"){
+        response.redirect('/homeProf');
+    }
 });
 
 app.post('/cadasE', function (req, res) {
@@ -211,7 +225,7 @@ app.post('/cadasE', function (req, res) {
 		if (err) throw err;
 	});
 
-	res.redirect('/home');
+	res.redirect('/homeAdmin');
 });
 
 // PORTA
