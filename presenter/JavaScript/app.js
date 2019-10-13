@@ -78,6 +78,9 @@ app.get("/cadastrarEvento", function (req, res) {
 	res.sendFile(path.resolve("../../view/cadastroEventoView.html"));
 });
 
+app.get("/verEventos", function (req, res) {
+	res.sendFile(path.resolve("../../view/eventView.html"));
+});
 
 
 function setNome1(nome) {
