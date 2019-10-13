@@ -48,28 +48,43 @@ app.get("/cadastroprof", function (req, res) {
     res.sendFile(path.resolve("../../view/cadastroProf.html"));
 });
 
-app.get("/home", function (req, res) {
-    res.sendFile(path.resolve("../../view/home.html"));
+app.get("/homeAluno", function (req, res) {
+    res.sendFile(path.resolve("../../view/homeAluno.html"));
 });
 
-app.get("/editarCadastro", function (req, res) {
-    res.sendFile(path.resolve("../../view/editarCadastro.html"));
+app.get("/homeProf", function (req, res) {
+    res.sendFile(path.resolve("../../view/homeProf.html"));
+});
+
+app.get("/editarCadastroA", function (req, res) {
+    res.sendFile(path.resolve("../../view/editarCadastroAluno.html"));
+});
+app.get("/editarCadastroP", function (req, res) {
+    res.sendFile(path.resolve("../../view/editarCadastroProf.html"));
 });
 
 
 function setNome1(nome) {
     nome_usuario = nome; // nome_usuario foi criada no escopo global
 }
+
+
 app.post('/auth', function (request, response) {
     var username = request.body.username;
     var password = request.body.password;
+    var tipo = connection.query('SELECT tipo_user FROM login WHERE usuario = ? AND senha = ?', [username, password]);
     if (username && password) {
         connection.query('SELECT * FROM login WHERE usuario = ? AND senha = ?', [username, password], function (error, results, fields) {
+            // tipo = connection.query('SELECT tipo_user FROM login WHERE usuario = ? AND senha = ?', [username, password]);
             if (results.length > 0) {
                 request.session.loggedin = true;
                 request.session.username = username;
                 setNome1(username);
-                response.redirect('/home');
+                if(tipo == 'aluno') {
+                    response.redirect('/homeAluno');
+                } else if(tipo == 'professor') {
+                    response.redirect('/homeProf');
+                }
             } else {
                 response.send('Incorrect Username and/or Password!');
             }
@@ -92,7 +107,7 @@ app.post('/cadasA', function (req, res) {
         if (err) throw err;
     });
 
-    connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email.toString(), senha.toString()], function (err, result) {
+    connection.query("INSERT INTO `login` (usuario, senha, tipo_user) VALUES (?,?,?)", [email.toString(), senha.toString(), "aluno"], function (err, result) {
         if (err) throw err;
     });
 
@@ -111,7 +126,7 @@ app.post('/cadasP', function (req, res) {
         if (err) throw err;
     });
 
-    connection.query("INSERT INTO `login` (usuario, senha) VALUES (?,?)", [email, senha], function (err, result) {
+    connection.query("INSERT INTO `login` (usuario, senha, tipo_user) VALUES (?,?, ?)", [email.toString(), senha.toString(), "professor"], function (err, result) {
         if (err) throw err;
     });
 
@@ -137,6 +152,23 @@ app.post('/editarA', function (req, res) {
     res.redirect('/home');
 });
 
+app.post('/editarP', function (req, res) {
+    var nome = req.body.nome;
+    var email = req.body.email;
+    var senha = req.body.senha;
+    var titulacao = req.body.titulacao;
+    var instituicao = req.body.instituicao;
+    var areadepesquisa = req.body.areadepesquisa;
+
+    connection.query("UPDATE professor SET nome = ?, email= ?,titulacao = ?, instituicao= ?,areadepesquisa=? WHERE email = ? ", [nome.toString(), email.toString(), titulacao.toString(), instituicao.toString(), areadepesquisa.toString(), nome_usuario.toString()], function (err, result) {
+        if (err) throw err;
+    });
+
+    connection.query("UPDATE login SET usuario=?, senha=? WHERE usuario = ?", [email.toString(), senha.toString(), nome_usuario.toString()], function (err, result) {
+        if (err) throw err;
+    });
+    res.redirect('/home');
+});
 
 
 // PORTA
