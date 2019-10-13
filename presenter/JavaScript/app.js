@@ -56,12 +56,27 @@ app.get("/homeProf", function (req, res) {
     res.sendFile(path.resolve("../../view/homeProf.html"));
 });
 
+app.get("/homeAdmin", function (req, res) {
+    res.sendFile(path.resolve("../../view/homeAdmin.html"));
+});
+
 app.get("/editarCadastroA", function (req, res) {
     res.sendFile(path.resolve("../../view/editarCadastroAluno.html"));
 });
 app.get("/editarCadastroP", function (req, res) {
     res.sendFile(path.resolve("../../view/editarCadastroProf.html"));
 });
+
+app.get("/subArtigo", function (req, res) {
+	res.sendFile(path.resolve("../../view/subArtigo.html"));
+
+});
+
+app.get("/cadastrarEvento", function (req, res) {
+	res.sendFile(path.resolve("../../view/cadastroEventoView.html"));
+});
+
+
 
 
 function setNome1(nome) {
@@ -167,6 +182,38 @@ app.post('/editarP', function (req, res) {
         if (err) throw err;
     });
     res.redirect('/homeProf');
+});
+
+app.post('/subArtigo', function (req, res) {
+
+	var titulo = req.body.titulo;
+	var nome = req.body.nome;
+	var email = req.body.email;
+	var resumo = req.body.resumo;
+
+	connection.query("INSERT INTO `artigo` (titulo, resumo,nome,email) VALUES (?,?,?,?)", [titulo, nome, email, resumo], function (err, result) {
+		if (err) throw err;
+	});
+
+	res.redirect('/home');
+});
+
+app.post('/cadasE', function (req, res) {
+
+	var nome = req.body.nome;
+	var sigla = req.body.sigla;
+	var data_in = req.body.data_in;
+	var data_fn = req.body.data_fn;
+	var data_sub_in = req.body.data_sub_in;
+	var data_sub_fn = req.body.data_sub_fn;
+	var area_conc = req.body.area_conc;
+	var situacao = req.body.situaco;
+
+	connection.query("INSERT INTO `eventos` (nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao) VALUES (?,?,?,?,?,?,?,?)", [nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao], function (err, result) {
+		if (err) throw err;
+	});
+
+	res.redirect('/home');
 });
 
 
