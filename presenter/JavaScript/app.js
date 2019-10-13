@@ -75,7 +75,6 @@ app.post('/auth', function (request, response) {
 
     if (username && password) {
         connection.query('SELECT * FROM login WHERE usuario = ? AND senha = ?', [username, password], function (error, results, fields) {
-    
             if (results.length > 0) {
                 request.session.loggedin = true;
                 request.session.username = username;
@@ -160,11 +159,11 @@ app.post('/editarP', function (req, res) {
     var instituicao = req.body.instituicao;
     var areadepesquisa = req.body.areadepesquisa;
 
-    connection.query("UPDATE professor SET nome = ?, email= ?,titulacao = ?, instituicao= ?,areadepesquisa=? WHERE email = ? ", [nome.toString(), email.toString(), titulacao.toString(), instituicao.toString(), areadepesquisa.toString(), nome_usuario.toString()], function (err, result) {
+    connection.query("UPDATE professor SET nome = ?, email = ?, titulacao = ?, instituicao = ?, area_pesq = ? WHERE email = ? ", [nome.toString(), email.toString(), titulacao.toString(), instituicao.toString(), areadepesquisa.toString(), nome_usuario.toString()], function (err, result) {
         if (err) throw err;
     });
 
-    connection.query("UPDATE login SET usuario=?, senha=? WHERE usuario = ?", [email.toString(), senha.toString(), nome_usuario.toString()], function (err, result) {
+    connection.query("UPDATE login SET usuario = ?, senha = ? WHERE usuario = ?", [email.toString(), senha.toString(), nome_usuario.toString()], function (err, result) {
         if (err) throw err;
     });
     res.redirect('/homeProf');
