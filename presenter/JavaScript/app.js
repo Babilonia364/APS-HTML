@@ -5,8 +5,8 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+//Global var
 var tipo_user_atual;
-
 
 //mudar o usuario e a senha de acordo com o seu mysql
 const connection = mysql.createConnection({
@@ -85,6 +85,38 @@ app.get("/cadastrarEvento", function (req, res) {
 app.get("/verEventos", function (req, res) {
 	res.sendFile(path.resolve("../../view/eventView.html"));
 });
+
+//Get para mandar html estático para o usuário
+app.get('/', function(req, res){
+  res.sendFile("../../view/eventView.html");
+}); 
+/* End */
+
+/* POST para efetuar uma busca no bd */
+
+app.post('/searchEvent', function (request, response) {
+	var nome = request.body.nome;
+
+	connection.query('SELECT * FROM eventos WHERE nome = ?', [nome], function (error, results, fields)
+	{
+		if (results.length > 0)
+		{
+			var setEvent = require("../../model/eventModel");
+			setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
+								results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
+			console.log("To no app.js");
+			console.log(setEvent);
+			
+			response.redirect('/verEventos');
+			
+		}else
+		{
+			response.send('Event not found.');
+		}
+	});
+});
+
+/* END */
 
 
 function setNome1(nome) {
@@ -268,3 +300,5 @@ app.get('/rows', function (request, response) {
 
 // PORTA
 app.listen(8081, function () { console.log("Servidor ligado") });
+
+//Functions
