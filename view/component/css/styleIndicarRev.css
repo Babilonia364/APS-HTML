@@ -1,0 +1,142 @@
+.button {
+
+  background-image: linear-gradient(to right, #a8ff78, #78ffd6);
+  border: none;
+  color: black;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.sombra:hover {box-shadow: 0 7px 7px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);}
+
+label{font-family: walknegrito;font-size: 20px;}
+
+
+p.round1 {
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
+/*form {
+  width: 0%;
+  margin: auto;
+}*/
+
+
+input[type=text], select {
+  width: 500px;
+  height:30px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=password], select {
+  width: 500px;
+  height:30px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+ 
+  background-image: linear-gradient(to left, #a8ff78, #78ffd6);
+  border: none;
+  color: black;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  font-family: walknegrito;
+  font-size: 20px;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+
+.sidenav {
+  height: 18%;
+  max-width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-image: linear-gradient(to left, #a8ff78, #78ffd6);
+  overflow-x: hidden;
+}
+
+@font-face {
+  font-family: myFirstFont;
+  src: url(Walkway_Oblique.ttf);
+}
+
+@font-face {
+  font-family: walknegrito;
+  src: url(Walkway_Bold.ttf);
+}
+
+.content {
+  margin-left: 35%;
+  margin-top: 15%;
+  background-color: white;
+  font-family: myFirstFont;
+}
+.sidenav img {
+  max-width: 8%;
+  height: auto;
+  position:relative;
+  left:10%;
+  top:20%;
+
+}
+
+.content2 {
+  margin-left: 35%;
+  margin-top: 0%;
+  background-color: white;
+  font-family: myFirstFont;
+}
+.content3 {
+  margin-left: 45%;
+  margin-top: 0%;
+  background-color: white;
+  font-family: myFirstFont;
+}
+.content4 {
+  margin-left: 45%;
+  margin-top: -8.7%;
+  background-color: white;
+  font-family: myFirstFont;
+}
+.content5 {
+  margin-left: 25%;
+  margin-top: -8.5%;
+  background-color: white;
+  font-family: myFirstFont;
+}
+
+
+.simple {
+  width: 40%; /* largura do box */
+  padding: 0 5%; /* padding à esquerda e à direita */
+  border: solid red;
+  border-width: 0 1%;
+}

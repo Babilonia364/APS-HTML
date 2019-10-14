@@ -90,6 +90,10 @@ app.get("/verArtigo", function (req, res) {
 	res.sendFile(path.resolve("../../view/verArtigo.html"));
 });
 
+app.get("/indicarRevisor", function (req, res) {
+	res.sendFile(path.resolve("../../view/indicarRevisor.html"));
+});
+
 /* End */
 
 /* POST para efetuar uma busca no bd */
@@ -343,7 +347,7 @@ app.post('/verArtigo', function (request, response) {
        
 		if (results.length > 0)
 		{
-            for(var i = 0;i < results.length;i++){
+            for(var i = 0; i < results.length; i++){
             
             
 			var setEvent = require("../../model/verArtigoModel");
