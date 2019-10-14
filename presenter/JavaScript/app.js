@@ -347,7 +347,7 @@ app.post('/verArtigo', function (request, response) {
        
 		if (results.length > 0)
 		{
-            for(var i = 0;i < results.length;i++){
+            for(var i = 0; i < results.length; i++){
             
             
 			var setEvent = require("../../model/verArtigoModel");
