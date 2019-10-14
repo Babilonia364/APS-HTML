@@ -90,6 +90,10 @@ app.get("/verArtigo", function (req, res) {
 	res.sendFile(path.resolve("../../view/verArtigo.html"));
 });
 
+app.get("/indicarRevisor", function (req, res) {
+	res.sendFile(path.resolve("../../view/indicarRevisor.html"));
+});
+
 /* End */
 
 /* POST para efetuar uma busca no bd */
