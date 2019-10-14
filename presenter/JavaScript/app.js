@@ -214,7 +214,6 @@ app.post('/editarP', function (req, res) {
     res.redirect('/homeProf');
 });
 
-
 app.post('/subArtigo', function (req, res) {
 
 	var titulo = req.body.titulo;
@@ -249,6 +248,23 @@ app.post('/cadasE', function (req, res) {
 
 	res.redirect('/homeAdmin');
 });
+
+//MANDA SÓ UMA INFO
+app.get('/rows', function (request, response) {
+    connection.query('SELECT * FROM artigo', function (error, results, fields) {
+        if (results.length > 0) {
+            for (var i = 0; i < 2; i++) {
+                console.log(results[0].titulo);
+                response.send(results[0].titulo);
+            }
+        }
+        else {
+            response.send('Please enter Username and Password!');
+            response.end();
+        }
+    });
+});
+
 
 // PORTA
 app.listen(8081, function () { console.log("Servidor ligado") });
