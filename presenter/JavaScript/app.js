@@ -112,18 +112,32 @@ app.post('/searchEvent', function (request, response) {
 			setEvent = JSON.parse(setEvent);
 			console.log(setEvent);
 			
-			textHTML += "<table border='1'>"
+			textHTML += "<table border='1'>\n"
 			/* Creating table */
-				textHTML += "<tr><td>" + setEvent.nome + "</td></tr>";
-				textHTML += "<tr><td>" + setEvent.sigla + "</td></tr>";
-				textHTML += "<tr><td>" + setEvent.data_in + "</td></tr>";
-				textHTML += "<tr><td>" + setEvent.data_fn + "</td></tr>";
-				textHTML += "<tr><td>" + setEvent.data_sub_in + "</td></tr>";
-				textHTML += "<tr><td>" + setEvent.data_sub_fn + "</td></tr>";
-				textHTML += "<tr><td>" + setEvent.area_conc + "</td></tr>";
+			/* Creating index */
+				textHTML += "\t<tr>\n"
+					textHTML +=	"\t\t<th>" + "Nome" + "</th>\n";
+					textHTML +=	"\t\t<th>" + "Sigla" + "</th>\n";
+					textHTML +=	"\t\t<th>" + "Data de inicio" + "</th>\n";
+					textHTML +=	"\t\t<th>" + "Data de final" + "</th>\n";
+					textHTML +=	"\t\t<th>" + "Data de inicio das submissões" + "</th>\n";
+					textHTML +=	"\t\t<th>" + "Data de fim das submissões" + "</th>\n";
+					textHTML +=	"\t\t<th>" + "Área de concentração" + "</th>\n";
+				textHTML += "\t</tr>\n"
+			
+			/* Creating body */
+				textHTML += "\t<tr>\n"
+					textHTML += "\t\t<td>" + setEvent.nome + "</td>\n";
+					textHTML += "\t\t<td>" + setEvent.sigla + "</td>\n";
+					textHTML += "\t\t<td>" + setEvent.data_in + "</td>\n";
+					textHTML += "\t\t<td>" + setEvent.data_fn + "</td>\n";
+					textHTML += "\t\t<td>" + setEvent.data_sub_in + "</td>\n";
+					textHTML += "\t\t<td>" + setEvent.data_sub_fn + "</td>\n";
+					textHTML += "\t\t<td>" + setEvent.area_conc + "</td>\n";
+				textHTML += "\t</tr>\n"
 				
 			/* End */
-			textHTML += "</table>"
+			textHTML += "</table>\n"
 			
 			console.log(textHTML);
 			
