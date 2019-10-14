@@ -279,7 +279,7 @@ app.post('/subArtigo', function (req, res) {
     if(tipo_user_atual == "aluno"){
         res.redirect('/homeAluno');
     } else if(tipo_user_atual == "professor"){
-        response.redirect('/homeProf');
+        res.redirect('/homeProf');
     }
 });
 
@@ -323,53 +323,63 @@ app.listen(8081, function () { console.log("Servidor ligado") });
 //Functions
 
 app.post('/verArtigo', function (request, response) {
-	var nome = request.body.nome;
-
-	console.log(nome);
-
+    var textHTML = [];
 	connection.query('SELECT * FROM artigo ', function (error, results, fields)
 	{
+       
 		if (results.length > 0)
 		{
-			var textHTML = "";
+            for(var i = 0;i < results.length;i++){
+            
+            
 			var setEvent = require("../../model/verArtigoModel");
-			setEvent = setEvent(results[0].idArtigo, results[0].titulo, results[0].nome, results[0].email,
-								results[0].resumo, results[0].arquivo, results[0].status);
-			console.log("To no app.js");
+			setEvent = setEvent(results[i].idArtigo, results[i].titulo, results[i].nome, results[i].email,
+								results[i].resumo, results[i].arquivo, results[i].status);
 			setEvent = JSON.stringify(setEvent);
 			setEvent = JSON.parse(setEvent);
-			console.log(setEvent);
 			
-			textHTML += "<table>"
+			textHTML[0] += "<table>"
             /* Creating table */
          
-                textHTML += "<tr><th>" + "idArtigo" + "</th>";
-                textHTML += "<th>" + "Titulo" + "</th>";
-                textHTML += "<th>" + "Nome" + "</th>";
-                textHTML += "<th>" + "Email" + "</th>";
-                textHTML += "<th>" + "Resumo" + "</th>";
-                textHTML += "<th>" + "Arquivo" + "</th>";
-                textHTML += "<th>" + "Status" + "</th></tr>";
+                textHTML[0] += "<tr><th>" + "idArtigo" + "</th>";
+                textHTML[0] += "<th>" + "Titulo" + "</th>";
+                textHTML[0] += "<th>" + "Nome" + "</th>";
+                textHTML[0] += "<th>" + "Email" + "</th>";
+                textHTML[0] += "<th>" + "Resumo" + "</th>";
+                textHTML[0] += "<th>" + "Arquivo" + "</th>";
+                textHTML[0] += "<th>" + "Status" + "</th></tr>";
 
-				textHTML += "<tr><td>" + setEvent.idArtigo + "</td>";
-				textHTML += "<td>" + setEvent.titulo + "</td>";
-				textHTML += "<td>" + setEvent.nome + "</td>";
-				textHTML += "<td>" + setEvent.email + "</td>";
-				textHTML += "<td>" + setEvent.resumo + "</td>";
-				textHTML += "<td>" + setEvent.arquivo + "</td>";
-				textHTML += "<td>" + setEvent.status + "</td></tr>";
+				textHTML[0] += "<tr><td>" + setEvent.idArtigo + "</td>";
+				textHTML[0] += "<td>" + setEvent.titulo + "</td>";
+				textHTML[0] += "<td>" + setEvent.nome + "</td>";
+				textHTML[0] += "<td>" + setEvent.email + "</td>";
+				textHTML[0] += "<td>" + setEvent.resumo + "</td>";
+				textHTML[0] += "<td>" + setEvent.arquivo + "</td>";
+                textHTML[0] += "<td>" + setEvent.status + "</td></tr>";
+            textHTML[0] += "</table>"
+            textHTML[i+1] += "<table>" 
+                textHTML[i+1] += "<tr><td>" + setEvent.idArtigo + "</td>";
+                textHTML[i+1] += "<td>" + setEvent.titulo + "</td>";
+                textHTML[i+1] += "<td>" + setEvent.nome + "</td>";
+                textHTML[i+1] += "<td>" + setEvent.email + "</td>";
+                textHTML[i+1] += "<td>" + setEvent.resumo + "</td>";
+                textHTML[i+1] += "<td>" + setEvent.arquivo + "</td>";
+                textHTML[i+1] += "<td>" + setEvent.status + "</td></tr>";
+            textHTML[i+1] += "</table>"
 				
 			/* End */
-			textHTML += "</table>"
-			
-			console.log(textHTML);
-			
-			response.send(textHTML);
+
+            
+			//console.log(textHTML[0]);
+            }
+        
+			response.send(textHTML[0]);
 			
 		}else
 		{
 			response.send('Event not found.');
-		}
+        }
+    
 	});
 });
 
