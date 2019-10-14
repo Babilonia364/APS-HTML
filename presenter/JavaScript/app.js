@@ -86,6 +86,10 @@ app.get("/verEventos", function (req, res) {
 	res.sendFile(path.resolve("../../view/eventView.html"));
 });
 
+app.get("/verArtigo", function (req, res) {
+	res.sendFile(path.resolve("../../view/verArtigo.html"));
+});
+
 /* End */
 
 /* POST para efetuar uma busca no bd */
@@ -317,3 +321,56 @@ app.get('/rows', function (request, response) {
 app.listen(8081, function () { console.log("Servidor ligado") });
 
 //Functions
+
+app.post('/verArtigo', function (request, response) {
+	var nome = request.body.nome;
+
+	console.log(nome);
+
+	connection.query('SELECT * FROM artigo ', function (error, results, fields)
+	{
+		if (results.length > 0)
+		{
+			var textHTML = "";
+			var setEvent = require("../../model/verArtigoModel");
+			setEvent = setEvent(results[0].idArtigo, results[0].titulo, results[0].nome, results[0].email,
+								results[0].resumo, results[0].arquivo, results[0].status);
+			console.log("To no app.js");
+			setEvent = JSON.stringify(setEvent);
+			setEvent = JSON.parse(setEvent);
+			console.log(setEvent);
+			
+			textHTML += "<table>"
+            /* Creating table */
+         
+                textHTML += "<tr><th>" + "idArtigo" + "</th>";
+                textHTML += "<th>" + "Titulo" + "</th>";
+                textHTML += "<th>" + "Nome" + "</th>";
+                textHTML += "<th>" + "Email" + "</th>";
+                textHTML += "<th>" + "Resumo" + "</th>";
+                textHTML += "<th>" + "Arquivo" + "</th>";
+                textHTML += "<th>" + "Status" + "</th></tr>";
+
+				textHTML += "<tr><td>" + setEvent.idArtigo + "</td>";
+				textHTML += "<td>" + setEvent.titulo + "</td>";
+				textHTML += "<td>" + setEvent.nome + "</td>";
+				textHTML += "<td>" + setEvent.email + "</td>";
+				textHTML += "<td>" + setEvent.resumo + "</td>";
+				textHTML += "<td>" + setEvent.arquivo + "</td>";
+				textHTML += "<td>" + setEvent.status + "</td></tr>";
+				
+			/* End */
+			textHTML += "</table>"
+			
+			console.log(textHTML);
+			
+			response.send(textHTML);
+			
+		}else
+		{
+			response.send('Event not found.');
+		}
+	});
+});
+
+/* END */
