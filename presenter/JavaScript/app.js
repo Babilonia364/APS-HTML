@@ -104,7 +104,7 @@ app.post('/searchEvent', function (request, response) {
 			setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
 								results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
 			console.log("To no app.js");
-			//setEvent = JSON.stringify(setEvent);
+			setEvent = JSON.stringify(setEvent);
 			setEvent = JSON.parse(setEvent);
 			console.log(setEvent);
 			
@@ -123,8 +123,7 @@ app.post('/searchEvent', function (request, response) {
 			
 			console.log(textHTML);
 			
-			//var something = document.getElementById("output").innerHTML;
-			response.send(setEvent);
+			response.send(textHTML);
 			
 		}else
 		{
