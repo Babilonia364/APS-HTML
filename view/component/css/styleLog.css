@@ -122,10 +122,17 @@ input[type=submit]:hover {
 }
 .content4 {
   margin-left: 45%;
-  margin-top: -7%;
+  margin-top: -8.7%;
   background-color: white;
   font-family: myFirstFont;
 }
+.content5 {
+  margin-left: 25%;
+  margin-top: -8.5%;
+  background-color: white;
+  font-family: myFirstFont;
+}
+
 
 .simple {
   width: 40%; /* largura do box */

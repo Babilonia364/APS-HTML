@@ -5,8 +5,8 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+//Global var
 var tipo_user_atual;
-
 
 //mudar o usuario e a senha de acordo com o seu mysql
 const connection = mysql.createConnection({
@@ -49,6 +49,10 @@ app.get("/cadastroprof", function (req, res) {
     res.sendFile(path.resolve("../../view/cadastroProf.html"));
 });
 
+app.get("/cadastroadmin", function (req, res) {
+    res.sendFile(path.resolve("../../view/cadastroAdmin.html"));
+});
+
 app.get("/homeAluno", function (req, res) {
     res.sendFile(path.resolve("../../view/homeAluno.html"));
 });
@@ -78,6 +82,57 @@ app.get("/cadastrarEvento", function (req, res) {
 	res.sendFile(path.resolve("../../view/cadastroEventoView.html"));
 });
 
+app.get("/verEventos", function (req, res) {
+	res.sendFile(path.resolve("../../view/eventView.html"));
+});
+
+/* End */
+
+/* POST para efetuar uma busca no bd */
+
+app.post('/searchEvent', function (request, response) {
+	var nome = request.body.nome;
+
+	console.log(nome);
+
+	connection.query('SELECT * FROM eventos WHERE nome = ?', [nome], function (error, results, fields)
+	{
+		if (results.length > 0)
+		{
+			var textHTML = "";
+			var setEvent = require("../../model/eventModel");
+			setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
+								results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
+			console.log("To no app.js");
+			setEvent = JSON.stringify(setEvent);
+			setEvent = JSON.parse(setEvent);
+			console.log(setEvent);
+			
+			textHTML += "<table border='1'>"
+			/* Creating table */
+				textHTML += "<tr><td>" + setEvent.nome + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.sigla + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.data_in + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.data_fn + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.data_sub_in + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.data_sub_fn + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.area_conc + "</td></tr>";
+				
+			/* End */
+			textHTML += "</table>"
+			
+			console.log(textHTML);
+			
+			response.send(textHTML);
+			
+		}else
+		{
+			response.send('Event not found.');
+		}
+	});
+});
+
+/* END */
 
 
 function setNome1(nome) {
@@ -125,7 +180,7 @@ app.post('/cadasA', function (req, res) {
 	var instituicao = req.body.instituicao;
 	var matricula = req.body.matricula;
 
-	connection.query("INSERT INTO `aluno` (nome, email, senha, instituicao,matricula) VALUES (?,?,?,?,?)", [nome.toString(), email.toString(), senha.toString(), instituicao.toString(), matricula.toString()], function (err, result) {
+	connection.query("INSERT INTO `aluno` (nome, email, instituicao,matricula) VALUES (?,?,?,?,?)", [nome.toString(), email.toString(), instituicao.toString(), matricula.toString()], function (err, result) {
 		if (err) throw err;
 	});
 
@@ -155,7 +210,22 @@ app.post('/cadasP', function (req, res) {
     res.redirect('/login');
 });
 
-// PUT
+app.post('/cadasADM', function (req, res) {
+    var nome = req.body.nome;
+	var email = req.body.email;
+
+    connection.query("INSERT INTO `admin` (nome, email) VALUES (?,?)", [nome, email], function (err, result) {
+        if (err) throw err;
+    });
+
+    connection.query("INSERT INTO `login` (usuario, senha, tipo_user) VALUES (?,?, ?)", [email.toString(), senha.toString(), "admin"], function (err, result) {
+        if (err) throw err;
+    });
+
+    res.redirect('/login');
+});
+
+// EDIT
 
 app.post('/editarA', function (req, res) {
     var nome = req.body.nome;
@@ -192,7 +262,6 @@ app.post('/editarP', function (req, res) {
     res.redirect('/homeProf');
 });
 
-
 app.post('/subArtigo', function (req, res) {
 
 	var titulo = req.body.titulo;
@@ -228,5 +297,23 @@ app.post('/cadasE', function (req, res) {
 	res.redirect('/homeAdmin');
 });
 
+//MANDA SÓ UMA INFO
+app.get('/rows', function (request, response) {
+    connection.query('SELECT * FROM artigo', function (error, results, fields) {
+        if (results.length > 0) {
+                console.log(results[0].titulo);
+                //response.send(results[0].titulo);
+				response.send(results[0].nome);
+        }
+        else {
+            response.send('Please enter Username and Password!');
+            response.end();
+        }
+    });
+});
+
+
 // PORTA
 app.listen(8081, function () { console.log("Servidor ligado") });
+
+//Functions
