@@ -195,37 +195,59 @@ app.post('/auth', function (request, response) {
     }
 });
 
-app.post('/cadasA', function (req, res) {
+app.post('/cadasA', async function (req, res) {
 	var nome = req.body.nome;
 	var email = req.body.email;
 	var senha = req.body.senha;
 	var instituicao = req.body.instituicao;
 	var matricula = req.body.matricula;
+	var idUser;
 
-	connection.query("INSERT INTO `aluno` (nome, email, instituicao,matricula) VALUES (?,?,?,?,?)", [nome.toString(), email.toString(), instituicao.toString(), matricula.toString()], function (err, result) {
-		if (err) throw err;
-	});
-
-    connection.query("INSERT INTO `login` (usuario, senha, tipo_user) VALUES (?,?,?)", [email.toString(), senha.toString(), "aluno"], function (err, result) {
+	connection.query("INSERT INTO `login` (usuario, senha, tipo_user) VALUES (?,?,?)", [email.toString(), senha.toString(), "aluno"], function (err, result) {
         if (err) throw err;
     });
+	
+	connection.query('SELECT idUser FROM login WHERE usuario = ?', [email], function (error, results, fields){
+		if(results.length > 0)
+		{
+			idUser = results[0].idUser;
+		}
+		if (error) throw error;
+	});
+	
+	await sleep(30);
+
+	connection.query("INSERT INTO `aluno` (nome, email, instituicao,matricula,aLogin) VALUES (?,?,?,?,?)", [nome.toString(), email.toString(), instituicao.toString(), matricula.toString(), idUser.toString()], function (err, result) {
+		if (err) throw err;
+	});
 
     res.redirect('/login');
 });
 
-app.post('/cadasP', function (req, res) {
+app.post('/cadasP', async function (req, res) {
     var nome = req.body.nome;
     var email = req.body.email;
     var senha = req.body.senha;
     var titulacao = req.body.titulacao;
     var instituicao = req.body.instituicao;
     var areadepesquisa = req.body.areadepesquisa;
-
-    connection.query("INSERT INTO `professor` (nome, email,instituicao,titulacao,area_pesq) VALUES (?,?,?,?,?)", [nome, email, instituicao, titulacao, areadepesquisa], function (err, result) {
+	var idUser;
+	
+	connection.query("INSERT INTO `login` (usuario, senha, tipo_user) VALUES (?,?, ?)", [email.toString(), senha.toString(), "professor"], function (err, result) {
         if (err) throw err;
     });
-
-    connection.query("INSERT INTO `login` (usuario, senha, tipo_user) VALUES (?,?, ?)", [email.toString(), senha.toString(), "professor"], function (err, result) {
+	
+	connection.query('SELECT idUser FROM login WHERE usuario = ?', [email], function (error, results, fields){
+		if(results.length > 0)
+		{
+			idUser = results[0].idUser;
+		}
+		if (error) throw error;
+	});
+	
+	await sleep(30);
+	
+    connection.query("INSERT INTO `professor` (nome, email,instituicao,titulacao,area_pesq,pLogin) VALUES (?,?,?,?,?,?)", [nome, email, instituicao, titulacao, areadepesquisa, idUser], function (err, result) {
         if (err) throw err;
     });
 
@@ -400,5 +422,12 @@ app.post('/verArtigo', function (request, response) {
     
 	});
 });
+
+//Sleep Function
+function sleep(ms){
+    return new Promise(resolve=>{
+        setTimeout(resolve,ms)
+    })
+}
 
 /* END */

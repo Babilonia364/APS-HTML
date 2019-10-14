@@ -28,14 +28,13 @@ CREATE TABLE `aluno` (
   `idAluno` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
-  `senha` varchar(45) DEFAULT NULL,
   `instituicao` varchar(45) DEFAULT NULL,
   `matricula` varchar(45) DEFAULT NULL,
   `aLogin` int(11) DEFAULT NULL,
   PRIMARY KEY (`idAluno`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_Login_idx` (`aLogin`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +43,7 @@ CREATE TABLE `aluno` (
 
 LOCK TABLES `aluno` WRITE;
 /*!40000 ALTER TABLE `aluno` DISABLE KEYS */;
-INSERT INTO `aluno` VALUES (1,'asas','asas',NULL,'asas','asas',NULL),(2,'jv','jv@lixo.br',NULL,'UECE','12331321',NULL),(3,'jv2','jv@uece.br','pirocadegato','UECE','1245543',NULL);
+INSERT INTO `aluno` VALUES (1,'asas','asas','asas','asas',NULL),(2,'jv','jv@lixo.br','UECE','12331321',NULL),(3,'jv2','jv@uece.br','UECE','1245543',NULL),(4,'Limão','mateusx5@gmail.com','UECE','6666mole6dura',34);
 /*!40000 ALTER TABLE `aluno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +96,7 @@ CREATE TABLE `eventos` (
   `eTag` int(11) DEFAULT NULL,
   PRIMARY KEY (`idEvento`),
   KEY `fk_tag_idx` (`eTag`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +105,7 @@ CREATE TABLE `eventos` (
 
 LOCK TABLES `eventos` WRITE;
 /*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
-INSERT INTO `eventos` VALUES (1,'Balbúrdia','BBD','2019-10-15','2019-10-31','2019-10-17','2019-10-29',NULL,NULL,NULL);
+INSERT INTO `eventos` VALUES (1,'Balbúrdia','BBD','2019-10-15','2019-10-31','2019-10-17','2019-10-29',NULL,NULL,NULL),(2,'Comer pizza na casa do Mateus','CPncdM','2019-10-30','2019-10-31','2019-10-25','2019-10-27','Casa do lima',NULL,NULL),(3,'Sacudir o JV na porrada','SJVP','2019-10-31','2019-11-02','2019-10-27','2019-10-29','Casa do JV',NULL,NULL);
 /*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +123,7 @@ CREATE TABLE `login` (
   `tipo_user` varchar(45) DEFAULT 'aluno',
   PRIMARY KEY (`idUser`),
   UNIQUE KEY `usuario_UNIQUE` (`usuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +132,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (6,'casa','casa','aluno'),(7,'asas','asas','aluno'),(8,'case','caes','aluno'),(9,'Negreiso@MelhorProfessor.com','12345','aluno'),(10,'jv@lixo.br','pirocadegato','aluno'),(11,'jv@uece.br','pirocadegato','aluno');
+INSERT INTO `login` VALUES (6,'casa','casa','aluno'),(7,'asas','asas','aluno'),(8,'case','caes','aluno'),(9,'Negreiso@MelhorProfessor.com','12345','aluno'),(10,'jv@lixo.br','pirocadegato','aluno'),(11,'jv@uece.br','pirocadegato','aluno'),(12,'admin','admin','admin'),(31,'sujiro@hotmail.com','yakuza','professor'),(30,'verbena2@uece.br','gatos','professor'),(34,'mateusx5@gmail.com','jvteamo','aluno');
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,7 +154,7 @@ CREATE TABLE `professor` (
   `pLogin` int(11) DEFAULT NULL,
   PRIMARY KEY (`idprofessor`),
   KEY `fk_login_idx` (`pLogin`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,8 +163,34 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (1,'casa','casa',NULL,'casa',NULL,'casa',NULL),(2,'caes','case',NULL,'case',NULL,'acse',NULL),(3,'Marcos','Negreiso@MelhorProfessor.com',NULL,'Paraíso',NULL,'Pesquisa Operacional',NULL);
+INSERT INTO `professor` VALUES (1,'casa','casa',NULL,'casa',NULL,'casa',NULL),(2,'caes','case',NULL,'case',NULL,'acse',NULL),(3,'Marcos','Negreiso@MelhorProfessor.com',NULL,'Paraíso',NULL,'Pesquisa Operacional',NULL),(19,'Verbena Lucia','verbena2@uece.br',NULL,'UECE','Doutora em gatos','Gatologia',30),(20,'Sujiro Kifuja','sujiro@hotmail.com',NULL,'Universidade de Tókyo','Armas','Anatomia',31);
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `revisor`
+--
+
+DROP TABLE IF EXISTS `revisor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `revisor` (
+  `idRevisor` int(11) NOT NULL,
+  `rProfessor` int(11) DEFAULT NULL,
+  `rEventos` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idRevisor`),
+  KEY `fk_professor_idx` (`rProfessor`),
+  KEY `fk_eventos_idx` (`rEventos`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `revisor`
+--
+
+LOCK TABLES `revisor` WRITE;
+/*!40000 ALTER TABLE `revisor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `revisor` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -190,10 +215,6 @@ LOCK TABLES `tag` WRITE;
 /*!40000 ALTER TABLE `tag` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tag` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'apsjob'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -203,3 +224,5 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-10-14 20:18:34
