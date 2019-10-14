@@ -99,12 +99,31 @@ app.post('/searchEvent', function (request, response) {
 	{
 		if (results.length > 0)
 		{
+			var textHTML = "";
 			var setEvent = require("../../model/eventModel");
 			setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
 								results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
 			console.log("To no app.js");
+			//setEvent = JSON.stringify(setEvent);
+			setEvent = JSON.parse(setEvent);
 			console.log(setEvent);
 			
+			textHTML += "<table border='1'>"
+			/* Creating table */
+				textHTML += "<tr><td>" + setEvent.nome + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.sigla + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.data_in + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.data_fn + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.data_sub_in + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.data_sub_fn + "</td></tr>";
+				textHTML += "<tr><td>" + setEvent.area_conc + "</td></tr>";
+				
+			/* End */
+			textHTML += "</table>"
+			
+			console.log(textHTML);
+			
+			//var something = document.getElementById("output").innerHTML;
 			response.send(setEvent);
 			
 		}else
