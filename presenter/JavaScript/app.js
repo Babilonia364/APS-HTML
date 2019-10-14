@@ -86,16 +86,14 @@ app.get("/verEventos", function (req, res) {
 	res.sendFile(path.resolve("../../view/eventView.html"));
 });
 
-//Get para mandar html estático para o usuário
-app.get('/', function(req, res){
-  res.sendFile("../../view/eventView.html");
-}); 
 /* End */
 
 /* POST para efetuar uma busca no bd */
 
 app.post('/searchEvent', function (request, response) {
 	var nome = request.body.nome;
+
+	console.log(nome);
 
 	connection.query('SELECT * FROM eventos WHERE nome = ?', [nome], function (error, results, fields)
 	{
@@ -107,7 +105,7 @@ app.post('/searchEvent', function (request, response) {
 			console.log("To no app.js");
 			console.log(setEvent);
 			
-			response.redirect('/verEventos');
+			response.send(setEvent);
 			
 		}else
 		{
@@ -285,10 +283,9 @@ app.post('/cadasE', function (req, res) {
 app.get('/rows', function (request, response) {
     connection.query('SELECT * FROM artigo', function (error, results, fields) {
         if (results.length > 0) {
-            for (var i = 0; i < 2; i++) {
                 console.log(results[0].titulo);
-                response.send(results[0].titulo);
-            }
+                //response.send(results[0].titulo);
+				response.send(results[0].nome);
         }
         else {
             response.send('Please enter Username and Password!');
