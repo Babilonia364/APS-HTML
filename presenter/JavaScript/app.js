@@ -427,7 +427,7 @@ app.post('/indicarRC', async function (req, res) {
 	var idEvento = req.body.idEvento;
 	var emailProfessor = req.body.emailProfessor;
 	
-	console.log(emailProfessor);
+	console.log("email do professor: " + emailProfessor);
 	
 	connection.query('SELECT idprofessor FROM professor WHERE email = ?', [emailProfessor], function (error, results, fields){
 		idProfessor = results[0].idprofessor;
@@ -435,18 +435,21 @@ app.post('/indicarRC', async function (req, res) {
 	});
 
 	await sleep(5);
+	
+	console.log("id do professor: " + idProfessor);
 
-	connection.query('SELECT nome FROM eventos JOIN revisor_evento ON revisor_evento.rEventos =  eventos.idEvento JOIN professor ON professor.idprofessor = revisor_evento.rProfessor AND professor.idprofessor = ?', [idProfessor], function (error, results, fields){
-		if(results.length > 0)
+	connection.query('SELECT eventos.nome FROM eventos JOIN revisor_evento ON revisor_evento.rEventos =  eventos.idEvento JOIN professor ON professor.idprofessor = revisor_evento.rProfessor AND professor.idprofessor = ?', [idProfessor], function (error, results, fields){
+		if(results.length > 0)				//Regra de negócios é aqui
 		{
 			if(results.length > 2)
 			{
-				response.redirect('/homeAdmin');
+				res.redirect('/homeAdmin');
 			}
 		}
 		
 		connection.query("INSERT INTO `revisor_evento` (rProfessor, rEventos) VALUES (?,?)", [idProfessor, idEvento], function (error, results, fields){
 			if (error) throw error;
+			res.redirect('/indicarRevisorConferencia');
 		})
 		
 		if (error) throw error;
