@@ -1,5 +1,13 @@
 $(document).ready(function () {
-	$.get('/rows', function (res) {
-		$('span').html(res);
+	$.post('/verEventos', function (res) {
+		document.getElementById("output").innerHTML = res;
+		// $('span').html(res);
 	})
 });
+
+/* $(document).ready(function () {
+	$.post('/verArtigo', function (res) {
+		document.getElementById("output").innerHTML = res;
+		$('span').html(res);
+	})
+}); */
