@@ -426,6 +426,7 @@ app.post('/indicarRC', async function (req, res) {
 	var idProfessor;
 	var idEvento = req.body.idEvento;
 	var emailProfessor = req.body.emailProfessor;
+	var erro = 0;
 	
 	console.log("email do professor: " + emailProfessor);
 	
@@ -443,13 +444,13 @@ app.post('/indicarRC', async function (req, res) {
 		{
 			if(results.length > 2)
 			{
-				res.redirect('/homeAdmin');
+				erro=1;
 			}
 		}
 		
 		connection.query("INSERT INTO `revisor_evento` (rProfessor, rEventos) VALUES (?,?)", [idProfessor, idEvento], function (error, results, fields){
 			if (error) throw error;
-			res.redirect('/indicarRevisorConferencia');
+			
 		})
 		
 		if (error) throw error;
@@ -457,7 +458,13 @@ app.post('/indicarRC', async function (req, res) {
 	
 	await sleep(5);
 
-	res.redirect('/homeAdmin');
+	if(erro==1)
+	{
+		res.redirect('/homeAdmin');
+	}else
+	{
+		res.redirect('/indicarRevisorConferencia');
+	}
 });
 
 // PORTA
