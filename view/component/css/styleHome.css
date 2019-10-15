@@ -14,11 +14,9 @@
         position: fixed;
         top: 0;
         left: 0;
-        border: 1px solid red;
     }
 
     .hamburguer {
-        border: 1px solid red;
         position: relative;
         display: block;
         background: #000;
@@ -114,7 +112,6 @@
       }
 
 .sidenav {
-    border: 1px solid red;
     height: 10%;
     max-width: 100%;
     z-index: 1;
@@ -156,14 +153,13 @@ input[type=submit] {
 
 .pesquisa{
     /* float: right; */
-    border: 1px solid red;
     position: relative;
     /* margin: 50%; */
-    padding: 2em 40em;
+    padding: 2em 20em;
     /* text-align: center; */
 }
 
-table{
+/* table{
 	width: 100%;
 	margin-bottom : .5em;
     table-layout: fixed;
@@ -183,16 +179,47 @@ th{
 }
 
 .tabela-artigo{
-    border: 1px solid red;
     width: 50%;
     height: 25%;
     display: inline-block;
   }
   
   .tabela-evento{
-    border: 1px solid red;
     width: 50%;
     height: 25%;
     float: right;
   }
-  
+ */
+
+.content2 {
+margin-left: 0%;
+margin-top: 0%;
+background-color: white;
+font-family: myFirstFont;
+}
+
+table {
+/* padding-top: 200px; */
+border: 1px solid red;
+border-collapse: collapse;
+
+}
+
+th{
+word-wrap:break-word;
+text-align: left;
+padding: 8px;
+}
+
+td {
+    word-wrap:break-word;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+background-color: #4CAF50;
+color: white;
+}
