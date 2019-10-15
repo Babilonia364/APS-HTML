@@ -337,14 +337,14 @@ app.post('/cadasE', function (req, res) {
 });
 
 app.post('/verEventos', function (request, response) {
-    var textHTML = [];
+    var textHTML = [""];
     connection.query('SELECT * FROM eventos ', function (error, results, fields) {
 
         if (results.length > 0) {
             for (let i = 0; i < results.length; i++) {
 
                 var setEvent = require("../../model/eventModel");
-                setEvent = setEvent(results[i].idEvento, results[i].nome, results[i].sigla, results[i].data_in,
+                setEvent = setEvent(results[i].nome, results[i].sigla, results[i].data_in,
                     results[i].data_fn, results[i].data_sub_in, results[i].data_sub_fn, results[i].area_conc);
                 setEvent = JSON.stringify(setEvent);
                 setEvent = JSON.parse(setEvent);
@@ -352,7 +352,6 @@ app.post('/verEventos', function (request, response) {
                 textHTML[0] += "<table>"
                 /* Creating table */
 
-                textHTML[0] += "<tr><th>" + "idEvento" + "</th>";
                 textHTML[0] += "<th>" + "Nome" + "</th>";
                 textHTML[0] += "<th>" + "sigla" + "</th>";
                 textHTML[0] += "<th>" + "data_in" + "</th>";
@@ -361,18 +360,16 @@ app.post('/verEventos', function (request, response) {
                 textHTML[0] += "<th>" + "data_sub_fn" + "</th>";
                 textHTML[0] += "<th>" + "area_conc" + "</th></tr>";
 
-                textHTML[0] += "<tr><td>" + setEvent.idEvento + "</td>";
                 textHTML[0] += "<td>" + setEvent.nome + "</td>";
                 textHTML[0] += "<td>" + setEvent.sigla + "</td>";
                 textHTML[0] += "<td>" + setEvent.data_in + "</td>";
                 textHTML[0] += "<td>" + setEvent.data_fn + "</td>";
-                textHTML[0] += "<td>" + setEvent.resumo + "</td>";
+                textHTML[0] += "<td>" + setEvent.data_sub_in + "</td>";
                 textHTML[0] += "<td>" + setEvent.data_sub_fn + "</td>";
                 textHTML[0] += "<td>" + setEvent.area_conc + "</td></tr>";
                 textHTML[0] += "</table>"
 
                 textHTML[i + 1] += "<table>"
-                textHTML[i + 1] += "<tr><td>" + setEvent.idEvento + "</td>";
                 textHTML[i + 1] += "<td>" + setEvent.nome + "</td>";
                 textHTML[i + 1] += "<td>" + setEvent.sigla + "</td>";
                 textHTML[i + 1] += "<td>" + setEvent.data_in + "</td>";
@@ -402,7 +399,7 @@ app.post('/verEventos', function (request, response) {
 //Functions
 
 app.post('/verArtigo', function (request, response) {
-    var textHTML = [];
+    var textHTML = [""];
     connection.query('SELECT * FROM artigo ', function (error, results, fields) {
 
         if (results.length > 0) {
