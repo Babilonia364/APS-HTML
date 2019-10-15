@@ -90,8 +90,12 @@ app.get("/verArtigo", function (req, res) {
 	res.sendFile(path.resolve("../../view/verArtigo.html"));
 });
 
-app.get("/indicarRevisor", function (req, res) {
-	res.sendFile(path.resolve("../../view/indicarRevisor.html"));
+app.get("/indicarRevisorArtigo", function (req, res) {
+	res.sendFile(path.resolve("../../view/indicarRevisorArtigo.html"));
+});
+
+app.get("/indicarRevisorConferencia", function (req, res) {
+	res.sendFile(path.resolve("../../view/indicarRevisorConferencia.html"));
 });
 
 /* End */
@@ -356,12 +360,6 @@ app.get('/rows', function (request, response) {
     });
 });
 
-
-// PORTA
-app.listen(8081, function () { console.log("Servidor ligado") });
-
-//Functions
-
 app.post('/verArtigo', function (request, response) {
     var textHTML = [];
 	connection.query('SELECT * FROM artigo ', function (error, results, fields)
@@ -423,6 +421,46 @@ app.post('/verArtigo', function (request, response) {
 	});
 });
 
+app.post('/indicarRC', async function (req, res) {
+
+	var idProfessor;
+	var idEvento = req.body.idEvento;
+	var emailProfessor = req.body.emailProfessor;
+	
+	console.log(emailProfessor);
+	
+	connection.query('SELECT idprofessor FROM professor WHERE email = ?', [emailProfessor], function (error, results, fields){
+		idProfessor = results[0].idprofessor;
+		if(error) throw error;
+	});
+
+	await sleep(5);
+
+	connection.query('SELECT nome FROM eventos JOIN revisor_evento ON revisor_evento.rEventos =  eventos.idEvento JOIN professor ON professor.idprofessor = revisor_evento.rProfessor AND professor.idprofessor = ?', [idProfessor], function (error, results, fields){
+		if(results.length > 0)
+		{
+			if(results.length > 2)
+			{
+				response.redirect('/homeAdmin');
+			}
+		}
+		
+		connection.query("INSERT INTO `revisor_evento` (rProfessor, rEventos) VALUES (?,?)", [idProfessor, idEvento], function (error, results, fields){
+			if (error) throw error;
+		})
+		
+		if (error) throw error;
+	});
+	
+	await sleep(5);
+
+	res.redirect('/homeAdmin');
+});
+
+// PORTA
+app.listen(8081, function () { console.log("Servidor ligado") });
+
+//Functions
 //Sleep Function
 function sleep(ms){
     return new Promise(resolve=>{
