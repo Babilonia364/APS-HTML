@@ -338,7 +338,7 @@ app.post('/cadasE', function (req, res) {
 
 app.post('/verEventos', function (request, response) {
     var textHTML = [""];
-    connection.query('SELECT * FROM eventos ', function (error, results, fields) {
+    connection.query('SELECT * FROM eventos ORDER BY idEvento DESC LIMIT 5', function (error, results, fields) {
 
         if (results.length > 0) {
             for (let i = 0; i < results.length; i++) {
