@@ -10,7 +10,7 @@
     .menu {
         background:  #78ffd6;
         width: 10%;
-        height: 9.5%;
+        height: 8.2%;
         position: fixed;
         top: 0;
         left: 0;
@@ -175,11 +175,13 @@ table {
 /* border: 1px solid red; */
 border-collapse: collapse;
 width: 100%;
+font-size: 25px;
 }
 
 td{
     width: 20em;
     text-align: center;
+    
 }
 
 th {

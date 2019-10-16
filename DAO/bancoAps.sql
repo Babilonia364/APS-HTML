@@ -1,15 +1,15 @@
-CREATE DATABASE  IF NOT EXISTS `apsjob` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE  IF NOT EXISTS `apsjob` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `apsjob`;
--- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.27, for Linux (x86_64)
 --
 -- Host: localhost    Database: apsjob
 -- ------------------------------------------------------
--- Server version	5.7.26
+-- Server version	5.7.27-0ubuntu0.19.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,7 +23,7 @@ USE `apsjob`;
 
 DROP TABLE IF EXISTS `aluno`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aluno` (
   `idAluno` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
@@ -53,7 +53,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `artigo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `artigo` (
   `idArtigo` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(45) DEFAULT NULL,
@@ -83,20 +83,20 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `eventos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `eventos` (
   `idEvento` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   `sigla` varchar(45) DEFAULT NULL,
-  `data_in` date DEFAULT NULL,
-  `data_fn` date DEFAULT NULL,
-  `data_sub_in` date DEFAULT NULL,
-  `data_sub_fn` date DEFAULT NULL,
   `area_conc` varchar(45) DEFAULT NULL,
   `situacao` varchar(45) DEFAULT NULL,
   `login` varchar(45) DEFAULT NULL,
+  `data_sub_in` varchar(45) DEFAULT NULL,
+  `data_in` varchar(45) DEFAULT NULL,
+  `data_fn` varchar(45) DEFAULT NULL,
+  `data_sub_fn` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idEvento`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `eventos` (
 
 LOCK TABLES `eventos` WRITE;
 /*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
-INSERT INTO `eventos` VALUES (1,'Balbúrdia','BBD','2019-10-15','2019-10-31','2019-10-17','2019-10-29',NULL,NULL,NULL),(2,'Comer pizza na casa do Mateus','CPncdM','2019-10-30','2019-10-31','2019-10-25','2019-10-27','Casa do lima',NULL,NULL),(3,'Sacudir o JV na porrada','SJVP','2019-10-31','2019-11-02','2019-10-27','2019-10-29','Casa do JV',NULL,NULL),(4,'Rodar caixinha no cdz','RcnCDZ','2019-11-03','2019-11-09','2019-10-30','2019-11-01','UECE',NULL,NULL),(5,'Rodar 37 caixinhas e tirar só o sorento','R37CetsS','2019-10-30','2019-10-31','2019-10-23','2019-10-24','Lixo',NULL,NULL),(6,'Rodar 45 caixinhas e tirar só cavaleiro negro','R45ctsCN','2019-11-06','2019-11-07','2019-10-25','2019-10-26','Casa do lima',NULL,NULL);
+INSERT INTO `eventos` VALUES (1,'Balbúrdia','BBD',NULL,NULL,NULL,NULL,'2019-10-15','2019-10-31','2019-10-29'),(2,'Comer pizza na casa do Mateus','CPncdM','Casa do lima',NULL,NULL,NULL,'2019-10-30','2019-10-31','2019-10-27'),(3,'Sacudir o JV na porrada','SJVP','Casa do JV',NULL,NULL,NULL,'2019-10-31','2019-11-02','2019-10-29'),(4,'Rodar caixinha no cdz','RcnCDZ','UECE',NULL,NULL,NULL,'2019-11-03','2019-11-09','2019-11-01'),(5,'Rodar 37 caixinhas e tirar só o sorento','R37CetsS','Lixo',NULL,NULL,NULL,'2019-10-30','2019-10-31','2019-10-24'),(6,'Rodar 45 caixinhas e tirar só cavaleiro negro','R45ctsCN','Casa do lima',NULL,NULL,NULL,'2019-11-06','2019-11-07','2019-10-26'),(7,'sdds cdz','scdz','51',NULL,NULL,'2018-11-01','2019-01-01','2019-12-31','2020-11-03');
 /*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +115,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `login`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `login` (
   `idUser` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(45) NOT NULL,
@@ -142,7 +142,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `professor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `professor` (
   `idprofessor` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
@@ -173,7 +173,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `revisor_artigo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `revisor_artigo` (
   `idRevisorArtigo` int(11) NOT NULL AUTO_INCREMENT,
   `rArtigo` int(11) DEFAULT NULL,
@@ -200,7 +200,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `revisor_evento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `revisor_evento` (
   `idRevisor` int(11) NOT NULL AUTO_INCREMENT,
   `rProfessor` int(11) DEFAULT NULL,
@@ -227,7 +227,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tag` (
   `idTag` int(11) NOT NULL AUTO_INCREMENT,
   `tag` varchar(45) DEFAULT NULL,
@@ -256,4 +256,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-16  0:35:52
+-- Dump completed on 2019-10-16 12:40:49
