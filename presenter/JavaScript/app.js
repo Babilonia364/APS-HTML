@@ -7,6 +7,7 @@ const path = require('path');
 
 //Global var
 var tipo_user_atual;
+var login;
 
 //mudar o usuario e a senha de acordo com o seu mysql
 const connection = mysql.createConnection({
@@ -173,6 +174,7 @@ app.post('/auth', function (request, response) {
                 setNome1(username);
                 //seta  o user global
                 tipo_user_atual = results[0].tipo_user;
+                login=results[0].usuario;
 
                 if (results[0].tipo_user == 'aluno') {
                     response.redirect('/homeAluno');
@@ -308,7 +310,7 @@ app.post('/subArtigo', function (req, res) {
     var email = req.body.email;
     var resumo = req.body.resumo;
 
-    connection.query("INSERT INTO `artigo` (titulo, resumo,nome,email) VALUES (?,?,?,?)", [titulo, nome, email, resumo], function (err, result) {
+    connection.query("INSERT INTO `artigo` (titulo,nome,email,resumo,login) VALUES (?,?,?,?,?)", [titulo, nome, email, resumo,login], function (err, result) {
         if (err) throw err;
     });
     if (tipo_user_atual == "aluno") {
@@ -400,7 +402,7 @@ app.post('/verEventos', function (request, response) {
 
 app.post('/verArtigo', function (request, response) {
     var textHTML = [""];
-    connection.query('SELECT * FROM artigo ', function (error, results, fields) {
+    connection.query('SELECT * FROM artigo WHERE login = ?',[login], function (error, results, fields) {
 
         if (results.length > 0) {
             for (var i = 0; i < results.length; i++) {
