@@ -413,8 +413,8 @@ app.post('/verEventos', function (request, response) {
                 /* Creating table */
 
                 textHTML[0] += "<tr><th>" + "Nome" + "</th>";
-                textHTML[0] += "<th>" + "data_sub_in" + "</th>";
-                textHTML[0] += "<th>" + "data_sub_fn" + "</th></tr>";
+                textHTML[0] += "<th>" + "Data de inicio das submissões" + "</th>";
+                textHTML[0] += "<th>" + "Data de fim das submissões" + "</th></tr>";
 
                 textHTML[0] += "<tr><td>" + setEvent.nome + "</td>";
                 textHTML[0] += "<td>" + setEvent.data_sub_in + "</td>";
