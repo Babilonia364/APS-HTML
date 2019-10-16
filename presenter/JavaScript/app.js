@@ -92,14 +92,21 @@ app.get("/verArtigo", function (req, res) {
 });
 
 app.get("/indicarRevisorArtigo", function (req, res) {
-	res.sendFile(path.resolve("../../view/indicarRevisorArtigo.html"));
+    res.sendFile(path.resolve("../../view/indicarRevisorArtigo.html"));
 });
 
 app.get("/indicarRevisorConferencia", function (req, res) {
-	res.sendFile(path.resolve("../../view/indicarRevisorConferencia.html"));
+    res.sendFile(path.resolve("../../view/indicarRevisorConferencia.html"));
 });
 
 /* End */
+
+
+// nome_usuario foi criada no escopo global
+function setNome1(nome) {
+    nome_usuario = nome;
+}
+
 
 /* POST para efetuar uma busca no bd */
 
@@ -159,12 +166,6 @@ app.post('/searchEvent', function (request, response) {
 /* END */
 
 
-function setNome1(nome) {
-    nome_usuario = nome; // nome_usuario foi criada no escopo global
-}
-
-
-
 // POST
 app.post('/auth', function (request, response) {
     var username = request.body.username;
@@ -178,7 +179,7 @@ app.post('/auth', function (request, response) {
                 setNome1(username);
                 //seta  o user global
                 tipo_user_atual = results[0].tipo_user;
-                login=results[0].usuario;
+                login = results[0].usuario;
 
                 if (results[0].tipo_user == 'aluno') {
                     response.redirect('/homeAluno');
@@ -321,7 +322,7 @@ app.post('/subArtigo', function (req, res) {
     var email = req.body.email;
     var resumo = req.body.resumo;
 
-    connection.query("INSERT INTO `artigo` (titulo,nome,email,resumo,login) VALUES (?,?,?,?,?)", [titulo, nome, email, resumo,login], function (err, result) {
+    connection.query("INSERT INTO `artigo` (titulo,nome,email,resumo,login) VALUES (?,?,?,?,?)", [titulo, nome, email, resumo, login], function (err, result) {
         if (err) throw err;
     });
     if (tipo_user_atual == "aluno") {
@@ -381,7 +382,6 @@ app.post('/verEventos', function (request, response) {
 
                 /* End */
 
-
                 //console.log(textHTML[0]);
             }
 
@@ -397,11 +397,10 @@ app.post('/verEventos', function (request, response) {
 
 app.post('/verArtigo', function (request, response) {
     var textHTML = [""];
-    connection.query('SELECT * FROM artigo WHERE login = ?',[login], function (error, results, fields) {
+    connection.query('SELECT * FROM artigo WHERE login = ?', [login], function (error, results, fields) {
 
         if (results.length > 0) {
             for (var i = 0; i < results.length; i++) {
-
 
                 var setEvent = require("../../model/verArtigoModel");
                 setEvent = setEvent(results[i].idArtigo, results[i].titulo, results[i].nome, results[i].email,
@@ -440,7 +439,6 @@ app.post('/verArtigo', function (request, response) {
 
                 /* End */
 
-
                 //console.log(textHTML[0]);
             }
 
@@ -455,48 +453,45 @@ app.post('/verArtigo', function (request, response) {
 
 app.post('/indicarRC', async function (req, res) {
 
-	var idProfessor;
-	var idEvento = req.body.idEvento;
-	var emailProfessor = req.body.emailProfessor;
-	var erro = 0;
-	
-	console.log("email do professor: " + emailProfessor);
-	
-	connection.query('SELECT idprofessor FROM professor WHERE email = ?', [emailProfessor], function (error, results, fields){
-		idProfessor = results[0].idprofessor;
-		if(error) throw error;
-	});
+    var idProfessor;
+    var idEvento = req.body.idEvento;
+    var emailProfessor = req.body.emailProfessor;
+    var erro = 0;
 
-	await sleep(5);
-	
-	console.log("id do professor: " + idProfessor);
+    console.log("email do professor: " + emailProfessor);
 
-	connection.query('SELECT eventos.nome FROM eventos JOIN revisor_evento ON revisor_evento.rEventos =  eventos.idEvento JOIN professor ON professor.idprofessor = revisor_evento.rProfessor AND professor.idprofessor = ?', [idProfessor], function (error, results, fields){
-		if(results.length > 0)				//Regra de negócios é aqui
-		{
-			if(results.length > 2)
-			{
-				erro=1;
-			}
-		}
-		
-		connection.query("INSERT INTO `revisor_evento` (rProfessor, rEventos) VALUES (?,?)", [idProfessor, idEvento], function (error, results, fields){
-			if (error) throw error;
-			
-		})
-		
-		if (error) throw error;
-	});
-	
-	await sleep(5);
+    connection.query('SELECT idprofessor FROM professor WHERE email = ?', [emailProfessor], function (error, results, fields) {
+        idProfessor = results[0].idprofessor;
+        if (error) throw error;
+    });
 
-	if(erro==1)
-	{
-		res.redirect('/homeAdmin');
-	}else
-	{
-		res.redirect('/indicarRevisorConferencia');
-	}
+    await sleep(5);
+
+    console.log("id do professor: " + idProfessor);
+
+    connection.query('SELECT eventos.nome FROM eventos JOIN revisor_evento ON revisor_evento.rEventos =  eventos.idEvento JOIN professor ON professor.idprofessor = revisor_evento.rProfessor AND professor.idprofessor = ?', [idProfessor], function (error, results, fields) {
+        if (results.length > 0)				//Regra de negócios é aqui
+        {
+            if (results.length > 2) {
+                erro = 1;
+            }
+        }
+
+        connection.query("INSERT INTO `revisor_evento` (rProfessor, rEventos) VALUES (?,?)", [idProfessor, idEvento], function (error, results, fields) {
+            if (error) throw error;
+
+        })
+
+        if (error) throw error;
+    });
+
+    await sleep(5);
+
+    if (erro == 1) {
+        res.redirect('/homeAdmin');
+    } else {
+        res.redirect('/indicarRevisorConferencia');
+    }
 });
 
 //Functions
