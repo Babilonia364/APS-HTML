@@ -126,7 +126,7 @@ app.post('/searchEvent', function (request, response) {
     var nome = request.body.nome;
     nome_event = nome;
 
-    connection.query('SELECT * FROM eventos WHERE nome = ?', [nome], function (error, results, fields) {
+    connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ? ', [nome,nome,nome], function (error, results, fields) {
         if (results.length > 0) {
             var textHTML = "";
             var setEvent = require("../../model/eventModel");
