@@ -132,10 +132,8 @@ app.post('/searchEvent', function (request, response) {
             var setEvent = require("../../model/eventModel");
             setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
                 results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
-            console.log("To no app.js");
             setEvent = JSON.stringify(setEvent);
             setEvent = JSON.parse(setEvent);
-            console.log(setEvent);
 
             textHTML += "<!DOCTYPE html>";
             textHTML +=    "<html>";
@@ -487,7 +485,6 @@ app.post('/verEventos', function (request, response) {
 
                 /* End */
 
-                console.log(textHTML[0]);
             }
 
             response.send(textHTML[0]);
@@ -564,14 +561,10 @@ app.post('/indicarRC', async function (req, res) {
 	var emailProfessor = req.body.emailProfessor;
 	var erro = 0;
 	
-	console.log("email do professor: " + emailProfessor);
-	
 	connection.query('SELECT idprofessor FROM professor WHERE email = ?', [emailProfessor], function (error, results, fields){
 		idProfessor = results[0].idprofessor;
 		if(error) throw error;
 	});
-
-    console.log("email do professor: " + emailProfessor);
 
     connection.query('SELECT idprofessor FROM professor WHERE email = ?', [emailProfessor], function (error, results, fields) {
         idProfessor = results[0].idprofessor;
@@ -579,8 +572,6 @@ app.post('/indicarRC', async function (req, res) {
     });
 
     await sleep(5);
-
-    console.log("id do professor: " + idProfessor);
 
     connection.query('SELECT eventos.nome FROM eventos JOIN revisor_evento ON revisor_evento.rEventos =  eventos.idEvento JOIN professor ON professor.idprofessor = revisor_evento.rProfessor AND professor.idprofessor = ?', [idProfessor], function (error, results, fields) {
         if (results.length > 0)				//Regra de negócios é aqui
