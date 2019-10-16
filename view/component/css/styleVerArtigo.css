@@ -1,16 +1,4 @@
-.button {
 
-  background-image: linear-gradient(to right, #a8ff78, #78ffd6);
-  border: none;
-  color: black;
-  padding: 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
 
 .sombra:hover {box-shadow: 0 7px 7px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);}
 
@@ -21,11 +9,6 @@ p.round1 {
   border: 2px solid red;
   border-radius: 5px;
 }
-
-/*form {
-  width: 0%;
-  margin: auto;
-}*/
 
 
 input[type=text], select {
@@ -142,20 +125,20 @@ input[type=submit]:hover {
 }
 
 table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  th, td {
-    text-align: left;
-    padding: 8px;
-  }
-  
-  tr:nth-child(even){background-color: #f2f2f2}
-  
-  th {
-    background-color: #4CAF50;
-    color: white;
-  }
+border-collapse: collapse;
+width: 100%;
+}
+
+th, td {
+text-align: left;
+padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+background-color: #4CAF50;
+color: white;
+}
 
 

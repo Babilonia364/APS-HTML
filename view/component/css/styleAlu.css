@@ -22,11 +22,6 @@ p.round1 {
   border-radius: 5px;
 }
 
-/*form {
-  width: 0%;
-  margin: auto;
-}*/
-
 input[type=text], select {
   width: 500px;
   height:30px;

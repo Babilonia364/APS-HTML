@@ -14,11 +14,9 @@
         position: fixed;
         top: 0;
         left: 0;
-        border: 1px solid red;
     }
 
     .hamburguer {
-        border: 1px solid red;
         position: relative;
         display: block;
         background: #000;
@@ -114,7 +112,6 @@
       }
 
 .sidenav {
-    border: 1px solid red;
     height: 10%;
     max-width: 100%;
     z-index: 1;
@@ -156,43 +153,53 @@ input[type=submit] {
 
 .pesquisa{
     /* float: right; */
-    border: 1px solid red;
     position: relative;
     /* margin: 50%; */
-    padding: 2em 40em;
+    padding: 2em 20em;
     /* text-align: center; */
 }
 
-table{
-	width: 100%;
-	margin-bottom : .5em;
-    table-layout: fixed;
-
+.content2 {
+margin-left: 0%;
+margin-top: 0%;
+background-color: white;
+font-family: myFirstFont;
 }
 
-td, th {
-	padding: .7em;
-	margin: 0;
-	border: 1px solid #ccc;
-	text-align: center;
+table {
+/* padding-top: 200px; */
+/* border: 1px solid red; */
+border-collapse: collapse;
+width: 100%;
 }
 
-th{
-	font-weight: bold;
-	background-color: #EEE;
+td{
+    width: 20em;
+    text-align: center;
 }
 
-.tabela-artigo{
-    border: 1px solid red;
-    width: 50%;
-    height: 25%;
-    display: inline-block;
-  }
-  
-  .tabela-evento{
-    border: 1px solid red;
-    width: 50%;
-    height: 25%;
-    float: right;
-  }
-  
+th {
+    text-align: center;
+    padding: 8px;
+}
+    
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+background-color: #4CAF50;
+color: white;
+}
+.content {
+  margin-left: 35%;
+  margin-top: 15%;
+  background-color: white;
+  font-family: myFirstFont;
+}
+.sidenav img {
+  max-width: 8%;
+  height: auto;
+  position:relative;
+  left:10%;
+  top:20%;
+
+}

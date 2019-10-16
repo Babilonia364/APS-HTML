@@ -7,6 +7,7 @@ const path = require('path');
 
 //Global var
 var tipo_user_atual;
+var login;
 
 //mudar o usuario e a senha de acordo com o seu mysql
 const connection = mysql.createConnection({
@@ -177,6 +178,7 @@ app.post('/auth', function (request, response) {
                 setNome1(username);
                 //seta  o user global
                 tipo_user_atual = results[0].tipo_user;
+                login=results[0].usuario;
 
                 if (results[0].tipo_user == 'aluno') {
                     response.redirect('/homeAluno');
@@ -312,7 +314,7 @@ app.post('/subArtigo', function (req, res) {
     var email = req.body.email;
     var resumo = req.body.resumo;
 
-    connection.query("INSERT INTO `artigo` (titulo, resumo,nome,email) VALUES (?,?,?,?)", [titulo, nome, email, resumo], function (err, result) {
+    connection.query("INSERT INTO `artigo` (titulo,nome,email,resumo,login) VALUES (?,?,?,?,?)", [titulo, nome, email, resumo,login], function (err, result) {
         if (err) throw err;
     });
     if (tipo_user_atual == "aluno") {
@@ -341,14 +343,14 @@ app.post('/cadasE', function (req, res) {
 });
 
 app.post('/verEventos', function (request, response) {
-    var textHTML = [];
-    connection.query('SELECT * FROM eventos ', function (error, results, fields) {
+    var textHTML = [""];
+    connection.query('SELECT * FROM eventos ORDER BY idEvento DESC LIMIT 5', function (error, results, fields) {
 
         if (results.length > 0) {
             for (let i = 0; i < results.length; i++) {
 
                 var setEvent = require("../../model/eventModel");
-                setEvent = setEvent(results[i].idEvento, results[i].nome, results[i].sigla, results[i].data_in,
+                setEvent = setEvent(results[i].nome, results[i].sigla, results[i].data_in,
                     results[i].data_fn, results[i].data_sub_in, results[i].data_sub_fn, results[i].area_conc);
                 setEvent = JSON.stringify(setEvent);
                 setEvent = JSON.parse(setEvent);
@@ -356,7 +358,6 @@ app.post('/verEventos', function (request, response) {
                 textHTML[0] += "<table>"
                 /* Creating table */
 
-                textHTML[0] += "<tr><th>" + "idEvento" + "</th>";
                 textHTML[0] += "<th>" + "Nome" + "</th>";
                 textHTML[0] += "<th>" + "sigla" + "</th>";
                 textHTML[0] += "<th>" + "data_in" + "</th>";
@@ -365,18 +366,16 @@ app.post('/verEventos', function (request, response) {
                 textHTML[0] += "<th>" + "data_sub_fn" + "</th>";
                 textHTML[0] += "<th>" + "area_conc" + "</th></tr>";
 
-                textHTML[0] += "<tr><td>" + setEvent.idEvento + "</td>";
                 textHTML[0] += "<td>" + setEvent.nome + "</td>";
                 textHTML[0] += "<td>" + setEvent.sigla + "</td>";
                 textHTML[0] += "<td>" + setEvent.data_in + "</td>";
                 textHTML[0] += "<td>" + setEvent.data_fn + "</td>";
-                textHTML[0] += "<td>" + setEvent.resumo + "</td>";
+                textHTML[0] += "<td>" + setEvent.data_sub_in + "</td>";
                 textHTML[0] += "<td>" + setEvent.data_sub_fn + "</td>";
                 textHTML[0] += "<td>" + setEvent.area_conc + "</td></tr>";
                 textHTML[0] += "</table>"
 
                 textHTML[i + 1] += "<table>"
-                textHTML[i + 1] += "<tr><td>" + setEvent.idEvento + "</td>";
                 textHTML[i + 1] += "<td>" + setEvent.nome + "</td>";
                 textHTML[i + 1] += "<td>" + setEvent.sigla + "</td>";
                 textHTML[i + 1] += "<td>" + setEvent.data_in + "</td>";
@@ -403,8 +402,8 @@ app.post('/verEventos', function (request, response) {
 
 
 app.post('/verArtigo', function (request, response) {
-    var textHTML = [];
-    connection.query('SELECT * FROM artigo ', function (error, results, fields) {
+    var textHTML = [""];
+    connection.query('SELECT * FROM artigo WHERE login = ?',[login], function (error, results, fields) {
 
         if (results.length > 0) {
             for (var i = 0; i < results.length; i++) {
