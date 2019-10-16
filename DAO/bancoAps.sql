@@ -1,15 +1,15 @@
 CREATE DATABASE  IF NOT EXISTS `apsjob` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `apsjob`;
--- MySQL dump 10.13  Distrib 5.7.24, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: apsjob
 -- ------------------------------------------------------
--- Server version	5.7.24
+-- Server version	5.7.26
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,7 +23,7 @@ USE `apsjob`;
 
 DROP TABLE IF EXISTS `aluno`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `aluno` (
   `idAluno` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
@@ -53,7 +53,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `artigo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `artigo` (
   `idArtigo` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(45) DEFAULT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE `artigo` (
   `status` varchar(45) DEFAULT NULL,
   `login` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idArtigo`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `artigo` (
 
 LOCK TABLES `artigo` WRITE;
 /*!40000 ALTER TABLE `artigo` DISABLE KEYS */;
-INSERT INTO `artigo` VALUES (1,'jv piroca de gato','Lima@gmail.com','Prova de que o jv tem piroca de gato','Mateus',NULL,NULL,NULL);
+INSERT INTO `artigo` VALUES (1,'jv piroca de gato','Lima@gmail.com','Prova de que o jv tem piroca de gato','Mateus',NULL,NULL,NULL),(2,'Por que a camila tem o rabão?','Incognito','Incog@hotmail.com','Neste artigo nos questionamos por que a camila tem o rabão.',NULL,NULL,'phnegao@hotmail.com');
 /*!40000 ALTER TABLE `artigo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +83,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `eventos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `eventos` (
   `idEvento` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
@@ -94,10 +94,9 @@ CREATE TABLE `eventos` (
   `data_sub_fn` date DEFAULT NULL,
   `area_conc` varchar(45) DEFAULT NULL,
   `situacao` varchar(45) DEFAULT NULL,
-  `eTag` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idEvento`),
-  KEY `fk_tag_idx` (`eTag`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `login` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idEvento`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +105,7 @@ CREATE TABLE `eventos` (
 
 LOCK TABLES `eventos` WRITE;
 /*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
-INSERT INTO `eventos` VALUES (1,'Balbúrdia','BBD','2019-10-15','2019-10-31','2019-10-17','2019-10-29',NULL,NULL,NULL),(2,'Comer pizza na casa do Mateus','CPncdM','2019-10-30','2019-10-31','2019-10-25','2019-10-27','Casa do lima',NULL,NULL),(3,'Sacudir o JV na porrada','SJVP','2019-10-31','2019-11-02','2019-10-27','2019-10-29','Casa do JV',NULL,NULL);
+INSERT INTO `eventos` VALUES (1,'Balbúrdia','BBD','2019-10-15','2019-10-31','2019-10-17','2019-10-29',NULL,NULL,NULL),(2,'Comer pizza na casa do Mateus','CPncdM','2019-10-30','2019-10-31','2019-10-25','2019-10-27','Casa do lima',NULL,NULL),(3,'Sacudir o JV na porrada','SJVP','2019-10-31','2019-11-02','2019-10-27','2019-10-29','Casa do JV',NULL,NULL),(4,'Rodar caixinha no cdz','RcnCDZ','2019-11-03','2019-11-09','2019-10-30','2019-11-01','UECE',NULL,NULL),(5,'Rodar 37 caixinhas e tirar só o sorento','R37CetsS','2019-10-30','2019-10-31','2019-10-23','2019-10-24','Lixo',NULL,NULL),(6,'Rodar 45 caixinhas e tirar só cavaleiro negro','R45ctsCN','2019-11-06','2019-11-07','2019-10-25','2019-10-26','Casa do lima',NULL,NULL);
 /*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +115,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `login`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `login` (
   `idUser` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(45) NOT NULL,
@@ -143,7 +142,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `professor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `professor` (
   `idprofessor` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
@@ -174,15 +173,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `revisor_artigo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `revisor_artigo` (
-  `idRevisorArtigo` int(11) NOT NULL,
+  `idRevisorArtigo` int(11) NOT NULL AUTO_INCREMENT,
   `rArtigo` int(11) DEFAULT NULL,
   `rProfessor` int(11) DEFAULT NULL,
   PRIMARY KEY (`idRevisorArtigo`),
   KEY `fk_artigo_idx` (`rArtigo`),
   KEY `fk_professor_idx` (`rProfessor`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,6 +190,7 @@ CREATE TABLE `revisor_artigo` (
 
 LOCK TABLES `revisor_artigo` WRITE;
 /*!40000 ALTER TABLE `revisor_artigo` DISABLE KEYS */;
+INSERT INTO `revisor_artigo` VALUES (1,2,20),(2,2,20),(3,2,19),(4,2,19),(5,2,20),(6,2,20),(7,2,20),(8,2,20),(9,2,20),(10,2,20);
 /*!40000 ALTER TABLE `revisor_artigo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +200,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `revisor_evento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `revisor_evento` (
   `idRevisor` int(11) NOT NULL AUTO_INCREMENT,
   `rProfessor` int(11) DEFAULT NULL,
@@ -227,12 +227,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tag` (
   `idTag` int(11) NOT NULL AUTO_INCREMENT,
   `tag` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idTag`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `tEventos` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idTag`),
+  KEY `fk_eventos_idx` (`tEventos`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,6 +243,7 @@ CREATE TABLE `tag` (
 
 LOCK TABLES `tag` WRITE;
 /*!40000 ALTER TABLE `tag` DISABLE KEYS */;
+INSERT INTO `tag` VALUES (1,'playboy',NULL),(2,'playboy',NULL),(3,'playboy',NULL),(4,'playboy',NULL),(5,'playboy',NULL),(6,'playboy',NULL),(7,'playboy',1),(8,'playgirl',1);
 /*!40000 ALTER TABLE `tag` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -253,4 +256,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-15 21:46:57
+-- Dump completed on 2019-10-16  0:35:52
