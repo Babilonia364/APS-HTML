@@ -34,7 +34,7 @@ CREATE TABLE `aluno` (
   PRIMARY KEY (`idAluno`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_Login_idx` (`aLogin`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `aluno` (
 
 LOCK TABLES `aluno` WRITE;
 /*!40000 ALTER TABLE `aluno` DISABLE KEYS */;
-INSERT INTO `aluno` VALUES (1,'asas','asas','asas','asas',NULL),(2,'jv','jv@lixo.br','UECE','12331321',NULL),(3,'jv2','jv@uece.br','UECE','1245543',NULL),(4,'Limão','mateusx5@gmail.com','UECE','6666mole6dura',34);
+INSERT INTO `aluno` VALUES (1,'asas','asas','asas','asas',NULL),(2,'jv','jv@lixo.br','UECE','12331321',NULL),(3,'jv2','jv@uece.br','UECE','1245543',NULL),(4,'Limão','mateusx5@gmail.com','UECE','6666mole6dura',34),(5,'Comitador','Comitador@yahoo.com','Casa das primas','5656656465',36);
 /*!40000 ALTER TABLE `aluno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,7 +64,7 @@ CREATE TABLE `artigo` (
   `status` varchar(45) DEFAULT NULL,
   `login` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idArtigo`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,8 +73,35 @@ CREATE TABLE `artigo` (
 
 LOCK TABLES `artigo` WRITE;
 /*!40000 ALTER TABLE `artigo` DISABLE KEYS */;
-INSERT INTO `artigo` VALUES (1,'jv piroca de gato','Lima@gmail.com','Prova de que o jv tem piroca de gato','Mateus',NULL,NULL,NULL),(2,'Por que a camila tem o rabão?','Incognito','Incog@hotmail.com','Neste artigo nos questionamos por que a camila tem o rabão.',NULL,NULL,'phnegao@hotmail.com');
+INSERT INTO `artigo` VALUES (1,'jv piroca de gato','Lima@gmail.com','Prova de que o jv tem piroca de gato','Mateus',NULL,NULL,NULL),(2,'Por que a camila tem o rabão?','Incognito','Incog@hotmail.com','Neste artigo nos questionamos por que a camila tem o rabão.',NULL,NULL,'phnegao@hotmail.com'),(3,'Titulo','Biroliro','biroliro@hotmail.com','Resumo',NULL,'aguardando revisão','Comitador@yahoo.com');
 /*!40000 ALTER TABLE `artigo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `artigo_evento`
+--
+
+DROP TABLE IF EXISTS `artigo_evento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `artigo_evento` (
+  `idArtigoEvento` int(11) NOT NULL AUTO_INCREMENT,
+  `fkArtigo` int(11) DEFAULT NULL,
+  `fkEvento` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idArtigoEvento`),
+  KEY `fk_artigo_idx` (`fkArtigo`),
+  KEY `fk_evento_idx` (`fkEvento`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `artigo_evento`
+--
+
+LOCK TABLES `artigo_evento` WRITE;
+/*!40000 ALTER TABLE `artigo_evento` DISABLE KEYS */;
+INSERT INTO `artigo_evento` VALUES (1,3,NULL),(2,4,NULL),(3,NULL,NULL),(4,6,NULL),(5,NULL,NULL);
+/*!40000 ALTER TABLE `artigo_evento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -123,7 +150,7 @@ CREATE TABLE `login` (
   `tipo_user` varchar(45) DEFAULT 'aluno',
   PRIMARY KEY (`idUser`),
   UNIQUE KEY `usuario_UNIQUE` (`usuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,7 +159,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (6,'casa','casa','aluno'),(7,'asas','asas','aluno'),(8,'case','caes','aluno'),(9,'Negreiso@MelhorProfessor.com','12345','aluno'),(10,'jv@lixo.br','pirocadegato','aluno'),(11,'jv@uece.br','pirocadegato','aluno'),(12,'admin','admin','admin'),(31,'sujiro@hotmail.com','yakuza','professor'),(30,'verbena2@uece.br','gatos','professor'),(34,'mateusx5@gmail.com','jvteamo','aluno'),(35,'phnegao@hotmail.com','brenda25','professor');
+INSERT INTO `login` VALUES (6,'casa','casa','aluno'),(7,'asas','asas','aluno'),(8,'case','caes','aluno'),(9,'Negreiso@MelhorProfessor.com','12345','aluno'),(10,'jv@lixo.br','pirocadegato','aluno'),(11,'jv@uece.br','pirocadegato','aluno'),(12,'admin','admin','admin'),(31,'sujiro@hotmail.com','yakuza','professor'),(30,'verbena2@uece.br','gatos','professor'),(34,'mateusx5@gmail.com','jvteamo','aluno'),(35,'phnegao@hotmail.com','brenda25','professor'),(36,'Comitador@yahoo.com','casa','aluno');
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,4 +283,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-16  0:35:52
+-- Dump completed on 2019-10-16 20:18:36
