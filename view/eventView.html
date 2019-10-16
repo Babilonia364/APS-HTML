@@ -6,14 +6,32 @@
     <meta charset="utf-8">
     <link rel="icon" href="resources/imagens/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type='text/css' href="view/component/css/styleVerEvento.css">
-    
-	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="../../presenter/JavaScript/linkBDEvent.js"></script>
 </head>
 
 <body>
-        <div class="content2 ">
-                <p id="output"><span></span></p>
-           
-        </div>
+    <div class="menu-header">
+        <input id="menu-hamburguer" type="checkbox">
+        <label for="menu-hamburguer">
+            <div class="menu">
+                <span class="hamburguer"></span>
+            </div>
+        </label>
+        <ul>
+            <li><a href=''>Home</a></li>
+            <li><a href=#></a></li>
+            <li><a href='cadastrarEvento'>Cadastrar Evento</a></li>
+            <li><a href='indicarRevisorArtigo'>Indicar revisor de artigo</a></li>
+            <li><a href='indicarRevisorConferencia'>Indicar revisor de conferencia</a></li>
+        </ul>
+    </div>
+    <div class="sidenav">
+        <img src="../resources/imagens/icone_artigo.png" alt="Articles Center">
+    </div>
+    <div class="content2 ">
+        <p id="output"><span></span></p>
+
+    </div>
 </body>
