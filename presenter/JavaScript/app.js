@@ -99,6 +99,10 @@ app.get("/indicarRevisorConferencia", function (req, res) {
     res.sendFile(path.resolve("../../view/indicarRevisorConferencia.html"));
 });
 
+app.get("/addTag", function (req, res) {
+    res.sendFile(path.resolve("../../view/adicionarTag.html"));
+});
+
 /* End */
 
 
@@ -560,6 +564,8 @@ app.post('/indicarRA', async function (req, res) {
 		});
 	}
 	
+	await sleep(5);
+	
 	if(erro == 0)
 	{
 		res.redirect('/indicarRevisorArtigo')
@@ -572,6 +578,39 @@ app.post('/indicarRA', async function (req, res) {
 	}else if(erro == 3)
 	{
 		res.send('Article already have a Professor');
+	}
+});
+
+app.post('/addOneTag', async function (req, res) {
+	var nomeEvento = req.body.nomeEvento;
+	var tag = req.body.tag;
+	var erro = 0;
+	var idEvento
+	
+	connection.query("SELECT idEvento FROM eventos WHERE nome = ?", [nomeEvento], function (error, results, fields){
+		if(results.length > 0)
+		{
+			idEvento = results[0].idEvento;
+		}else if (error)
+		{
+			erro = 1;
+		}
+	});
+	
+	await sleep(5);
+	
+	connection.query("INSERT INTO tag (tag, tEventos) VALUES (?,?)", [tag, idEvento], function (error, results, fields) {
+		if (error) throw error;
+	});
+	
+	await sleep(5);
+	
+	if(erro == 0)
+	{
+		res.redirect('/addTag')
+	}else if(erro == 1)
+	{
+		res.send('Event not found.');
 	}
 });
 
