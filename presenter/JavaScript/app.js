@@ -99,6 +99,10 @@ app.get("/indicarRevisorConferencia", function (req, res) {
     res.sendFile(path.resolve("../../view/indicarRevisorConferencia.html"));
 });
 
+app.get("/editarEvento", function (req, res) {
+    res.sendFile(path.resolve("../../view/editarEvento.html"));
+});
+
 /* End */
 
 
@@ -112,10 +116,7 @@ function setNome1(nome) {
 
 app.post('/searchEvent', function (request, response) {
     var nome = request.body.nome;
-
-    // response.redirect
-    console.log(nome);
-
+    
     connection.query('SELECT * FROM eventos WHERE nome = ?', [nome], function (error, results, fields) {
         if (results.length > 0) {
             var textHTML = "";
@@ -133,13 +134,20 @@ app.post('/searchEvent', function (request, response) {
             textHTML +="<title>Lista Artigos</title>"
             textHTML +="<meta charset=\"utf-8\">"
             textHTML +="<link rel=\"icon\" href=\"resources/imagens/favicon.ico\" type=\"image/x-icon\">"
-            textHTML +="<link rel=\"stylesheet\" type='text/css' href=\"view/component/css/styleVerArtigo.css\">"
+            textHTML +="<link rel=\"stylesheet\" type='text/css' href=\"view/component/css/styleVerEvento.css\">"
             textHTML +="<script src=\"http://code.jquery.com/jquery-1.11.0.min.js/%22%3E\"</script>"
             textHTML +="<script src=\"../../presenter/JavaScript/linkBDVerArtigo.js\"></script>"
             textHTML +="</head>"
             textHTML +="<body>"
             textHTML +="<div class=\"sidenav\">"
             textHTML +="<img src=\"resources/imagens/icone_artigo.png\" alt=\"Articles Center\">"
+            textHTML +="</div>"
+            textHTML +="<form action='deletarEvento' method='POST'>"
+            textHTML +="<input type='submit' class='sombra' value='Deletar Evento'>"
+            textHTML +="</form>"
+            textHTML +="<form action='/editarEvento' method='GET'>"
+            textHTML +="<input type='submit' class='sombra' value='Editar Evento'>"
+            textHTML +="</form>"
             textHTML +="</div>"
             textHTML +="<div class=\"content\">"
             textHTML +="<h1>Evento</h1>"
@@ -366,6 +374,14 @@ app.post('/cadasE', function (req, res) {
     var situacao = req.body.situaco;
 
     connection.query("INSERT INTO `eventos` (nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao) VALUES (?,?,?,?,?,?,?,?)", [nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao], function (err, result) {
+        if (err) throw err;
+    });
+
+    res.redirect('/homeAdmin');
+});
+
+app.post('/cadasE', function (req, res) {
+    connection.query("DELELTE FROM `eventos` (nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao) WHERE nome =   VALUES (?,?,?,?,?,?,?,?)", [nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao], function (err, result) {
         if (err) throw err;
     });
 
