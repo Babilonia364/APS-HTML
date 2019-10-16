@@ -354,9 +354,10 @@ app.post('/tonarAdmin', function (req, res) {
     res.redirect('/login');
 })
 
-app.post('/subArtigo', function (req, res) {
+app.post('/subArtigo', async function (req, res) {
 
     var titulo = req.body.titulo;
+	var nome = req.body.eventoNome;
     var nome = req.body.nome;
     var email = req.body.email;
     var resumo = req.body.resumo;
@@ -364,6 +365,15 @@ app.post('/subArtigo', function (req, res) {
     connection.query("INSERT INTO `artigo` (titulo,nome,email,resumo,login) VALUES (?,?,?,?,?)", [titulo, nome, email, resumo, login], function (err, result) {
         if (err) throw err;
     });
+	
+	await sleep(5);
+	
+	connection.query("SELECT idArtigo"{
+		
+	});
+	
+	await sleep(5);
+	
     if (tipo_user_atual == "aluno") {
         res.redirect('/homeAluno');
     } else if (tipo_user_atual == "professor") {
