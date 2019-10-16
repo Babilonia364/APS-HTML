@@ -113,6 +113,7 @@ function setNome1(nome) {
 app.post('/searchEvent', function (request, response) {
     var nome = request.body.nome;
 
+    // response.redirect
     console.log(nome);
 
     connection.query('SELECT * FROM eventos WHERE nome = ?', [nome], function (error, results, fields) {
@@ -125,6 +126,27 @@ app.post('/searchEvent', function (request, response) {
             setEvent = JSON.stringify(setEvent);
             setEvent = JSON.parse(setEvent);
             console.log(setEvent);
+
+            textHTML += "<!DOCTYPE html>";
+            textHTML +=    "<html>";
+            textHTML +="<head>"
+            textHTML +="<title>Lista Artigos</title>"
+            textHTML +="<meta charset=\"utf-8\">"
+            textHTML +="<link rel=\"icon\" href=\"resources/imagens/favicon.ico\" type=\"image/x-icon\">"
+            textHTML +="<link rel=\"stylesheet\" type='text/css' href=\"view/component/css/styleVerArtigo.css\">"
+            textHTML +="<script src=\"http://code.jquery.com/jquery-1.11.0.min.js/%22%3E\"</script>"
+            textHTML +="<script src=\"../../presenter/JavaScript/linkBDVerArtigo.js\"></script>"
+            textHTML +="</head>"
+            textHTML +="<body>"
+            textHTML +="<div class=\"sidenav\">"
+            textHTML +="<img src=\"resources/imagens/icone_artigo.png\" alt=\"Articles Center\">"
+            textHTML +="</div>"
+            textHTML +="<div class=\"content\">"
+            textHTML +="<h1>Evento</h1>"
+            textHTML += "</div>"
+            textHTML +="<div class=\"content2\">"
+            textHTML +="<p id=\"output\"><span></span></p>"
+            textHTML +="</div>"
 
             textHTML += "<table border='1'>\n"
             /* Creating table */
@@ -149,14 +171,14 @@ app.post('/searchEvent', function (request, response) {
             textHTML += "\t\t<td>" + setEvent.data_sub_fn + "</td>\n";
             textHTML += "\t\t<td>" + setEvent.area_conc + "</td>\n";
             textHTML += "\t</tr>\n"
-
-            /* End */
+         
             textHTML += "</table>\n"
-
-            console.log(textHTML);
+            textHTML += "</body>\n"
+            textHTML += "</html>\n"
 
             response.send(textHTML);
 
+            /* End */
         } else {
             response.send('Event not found.');
         }
