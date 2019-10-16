@@ -462,6 +462,7 @@ app.post('/verArtigo', function (request, response) {
 app.post('/indicarRC', async function (req, res) {
 
 	var idProfessor;
+	var nome = req.body.nome;
 	var idEvento = req.body.idEvento;
 	var emailProfessor = req.body.emailProfessor;
 	var erro = 0;
@@ -503,6 +504,17 @@ app.post('/indicarRC', async function (req, res) {
 	{
 		res.redirect('/indicarRevisorConferencia');
 	}
+});
+
+app.post('/indicarRA', async function (req, res) {
+	var nomeProfessor = req.body.nomeProfessor;
+	var emailProfessor = req.body.emailProfessor;
+	var nomeArtigo = req.body.nomeArtigo;
+	var idArtigo;
+	
+	connection.query("SELECT idArtigo FROM artigo"{
+		
+	});
 });
 
 //Functions
