@@ -116,11 +116,16 @@ function setNome1(nome) {
 }
 
 
+var nome_event;
+
+
+
 /* POST para efetuar uma busca no bd */
 
 app.post('/searchEvent', function (request, response) {
     var nome = request.body.nome;
-    
+    nome_event = nome;
+
     connection.query('SELECT * FROM eventos WHERE nome = ?', [nome], function (error, results, fields) {
         if (results.length > 0) {
             var textHTML = "";
@@ -384,8 +389,8 @@ app.post('/cadasE', function (req, res) {
     res.redirect('/homeAdmin');
 });
 
-app.post('/cadasE', function (req, res) {
-    connection.query("DELELTE FROM `eventos` (nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao) WHERE nome =   VALUES (?,?,?,?,?,?,?,?)", [nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao], function (err, result) {
+app.post('/deletarEvento', function (req, res) {    
+    connection.query("DELETE FROM `eventos` WHERE nome = ? ", [nome_event], function (err, result) {
         if (err) throw err;
     });
 
