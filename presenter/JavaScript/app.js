@@ -99,6 +99,10 @@ app.get("/indicarRevisorConferencia", function (req, res) {
     res.sendFile(path.resolve("../../view/indicarRevisorConferencia.html"));
 });
 
+app.get("/editarEvento", function (req, res) {
+    res.sendFile(path.resolve("../../view/editarEvento.html"));
+});
+
 app.get("/addTag", function (req, res) {
     res.sendFile(path.resolve("../../view/adicionarTag.html"));
 });
@@ -112,12 +116,15 @@ function setNome1(nome) {
 }
 
 
+var nome_event;
+
+
+
 /* POST para efetuar uma busca no bd */
 
 app.post('/searchEvent', function (request, response) {
     var nome = request.body.nome;
-
-    console.log(nome);
+    nome_event = nome;
 
     connection.query('SELECT * FROM eventos WHERE nome = ?', [nome], function (error, results, fields) {
         if (results.length > 0) {
@@ -129,6 +136,34 @@ app.post('/searchEvent', function (request, response) {
             setEvent = JSON.stringify(setEvent);
             setEvent = JSON.parse(setEvent);
             console.log(setEvent);
+
+            textHTML += "<!DOCTYPE html>";
+            textHTML +=    "<html>";
+            textHTML +="<head>"
+            textHTML +="<title>Lista Artigos</title>"
+            textHTML +="<meta charset=\"utf-8\">"
+            textHTML +="<link rel=\"icon\" href=\"resources/imagens/favicon.ico\" type=\"image/x-icon\">"
+            textHTML +="<link rel=\"stylesheet\" type='text/css' href=\"view/component/css/styleVerEvento.css\">"
+            textHTML +="<script src=\"http://code.jquery.com/jquery-1.11.0.min.js/%22%3E\"</script>"
+            textHTML +="<script src=\"../../presenter/JavaScript/linkBDVerArtigo.js\"></script>"
+            textHTML +="</head>"
+            textHTML +="<body>"
+            textHTML +="<div class=\"sidenav\">"
+            textHTML +="<img src=\"resources/imagens/icone_artigo.png\" alt=\"Articles Center\">"
+            textHTML +="</div>"
+            textHTML +="<form action='deletarEvento' method='POST'>"
+            textHTML +="<input type='submit' class='sombra' value='Deletar Evento'>"
+            textHTML +="</form>"
+            textHTML +="<form action='/editarEvento' method='GET'>"
+            textHTML +="<input type='submit' class='sombra' value='Editar Evento'>"
+            textHTML +="</form>"
+            textHTML +="</div>"
+            textHTML +="<div class=\"content\">"
+            textHTML +="<h1>Evento</h1>"
+            textHTML += "</div>"
+            textHTML +="<div class=\"content2\">"
+            textHTML +="<p id=\"output\"><span></span></p>"
+            textHTML +="</div>"
 
             textHTML += "<table border='1'>\n"
             /* Creating table */
@@ -153,14 +188,14 @@ app.post('/searchEvent', function (request, response) {
             textHTML += "\t\t<td>" + setEvent.data_sub_fn + "</td>\n";
             textHTML += "\t\t<td>" + setEvent.area_conc + "</td>\n";
             textHTML += "\t</tr>\n"
-
-            /* End */
+         
             textHTML += "</table>\n"
-
-            console.log(textHTML);
+            textHTML += "</body>\n"
+            textHTML += "</html>\n"
 
             response.send(textHTML);
 
+            /* End */
         } else {
             response.send('Event not found.');
         }
@@ -348,6 +383,14 @@ app.post('/cadasE', function (req, res) {
     var situacao = req.body.situaco;
 
     connection.query("INSERT INTO `eventos` (nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao) VALUES (?,?,?,?,?,?,?,?)", [nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao], function (err, result) {
+        if (err) throw err;
+    });
+
+    res.redirect('/homeAdmin');
+});
+
+app.post('/deletarEvento', function (req, res) {    
+    connection.query("DELETE FROM `eventos` WHERE nome = ? ", [nome_event], function (err, result) {
         if (err) throw err;
     });
 
