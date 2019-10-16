@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="view/component/css/styleHome.css">
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="../../presenter/JavaScript/linkBDAluno.js"></script>
-    
+
 
 </head>
 
@@ -33,20 +33,23 @@
             </div>
             <div class="sidenav">
                 <img src="../resources/imagens/icone_artigo.png" alt="Articles Center">
-
-
             </div>
-
-            <form class="pesquisa">
-                <input type="text" name="pesquisa" placeholder="Digite o nome do artigo:" />
-                <input type="submit" value="Pesquisar">
+            
+            <form action="/tonarAdmin" method="POST" class="tonar-admin">
+                <input type="submit" class="sombra " value="Tornar-se Admin">
             </form>
+
         </header>
+
+        <form class="pesquisa">
+            <input type="text" name="pesquisa" placeholder="Digite o nome do artigo:" />
+            <input type="submit" value="Pesquisar">
+        </form>
 
         <div class="content ">
             <h1>Eventos</h1>
         </div>
-    
+
         <div class="content2 ">
             <p id="output"><span></span></p>
         </div>
