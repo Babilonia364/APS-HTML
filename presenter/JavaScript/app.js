@@ -307,6 +307,13 @@ app.post('/editarP', function (req, res) {
     res.redirect('/homeProf');
 });
 
+app.post('/tonarAdmin', function (req, res) {
+    connection.query("UPDATE login SET tipo_user = ? WHERE usuario = ? ", ["admin", nome_usuario.toString()], function (err, result) {
+        if (err) throw err;
+    });
+    res.redirect('/login');
+})
+
 app.post('/subArtigo', function (req, res) {
 
     var titulo = req.body.titulo;
