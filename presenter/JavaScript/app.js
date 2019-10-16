@@ -357,20 +357,52 @@ app.post('/tonarAdmin', function (req, res) {
 app.post('/subArtigo', async function (req, res) {
 
     var titulo = req.body.titulo;
-	var nome = req.body.eventoNome;
+	var nomeEvento = req.body.eventoNome;
     var nome = req.body.nome;
     var email = req.body.email;
     var resumo = req.body.resumo;
+	var idArtigo;
+	var idEvento;
+	var erro=0;
 
-    connection.query("INSERT INTO `artigo` (titulo,nome,email,resumo,login) VALUES (?,?,?,?,?)", [titulo, nome, email, resumo, login], function (err, result) {
+    connection.query("INSERT INTO `artigo` (titulo,nome,email,resumo,status,login) VALUES (?,?,?,?,?,?)", [titulo, nome, email, resumo, "aguardando revisão", login], function (err, result) {
         if (err) throw err;
     });
 	
 	await sleep(5);
 	
-	connection.query("SELECT idArtigo"{
-		
+	connection.query("SELECT idArtigo FROM artigo WHERE titulo = ?", [titulo], function(err, result) {
+		idArtigo = result[0].idArtigo;
+		if (err) throw err;
 	});
+	
+	await sleep(5);
+	
+	connection.query("SELECT idEvento FROM eventos WHERE nome = ?", [nomeEvento], function(err, result) {
+		if(result[0].length > 0)
+		{
+			idEvento = result[0].idEvento;
+		}else if(err)
+		{
+			erro = 1;
+		}
+	});
+	
+	await sleep(5);
+	
+	if(erro == 0)
+	{
+		console.log("fkArtigo: " + idArtigo);
+		console.log("fkEvento: " + idEvento);
+		connection.query("INSERT INTO artigo_evento (fkArtigo, fkEvento) VALUES (?,?)", [idArtigo, idEvento], function(err, result) {
+			if (err) throw err;
+		});
+	}else if(erro == 1)
+	{
+		connection.query("DELETE FROM artigo WHERE idArtigo = ?", [idArtigo], function(err, result) {
+			if (err) throw err;
+		});
+	}
 	
 	await sleep(5);
 	
