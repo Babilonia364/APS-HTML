@@ -487,7 +487,7 @@ app.post('/verEventos', function (request, response) {
 
                 /* End */
 
-                //console.log(textHTML[0]);
+                console.log(textHTML[0]);
             }
 
             response.send(textHTML[0]);

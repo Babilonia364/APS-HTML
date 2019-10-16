@@ -33,11 +33,11 @@ input[type=password], select {
 }
 
 input[type=submit] {
- 
-  background-image: linear-gradient(to left, #a8ff78, #78ffd6);
+
+  background-image: white;
   border: none;
   color: black;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -47,11 +47,12 @@ input[type=submit] {
   border-radius: 12px;
   font-family: walknegrito;
   font-size: 20px;
-}
+  }
 
-input[type=submit]:hover {
-  background-color: #45a049;
-}
+
+  input[type=submit]:hover {
+    background-color: #bdc3c7;
+  }
 
 
 .sidenav {
@@ -62,7 +63,7 @@ input[type=submit]:hover {
   top: 0;
   left: 0;
   right: 0;
-  background-image: linear-gradient(to left, #a8ff78, #78ffd6);
+  background-image: linear-gradient(to right, #bdc3c7, #2c3e50); 
   overflow-x: hidden;
 }
 
@@ -125,20 +126,29 @@ input[type=submit]:hover {
 }
 
 table {
-border-collapse: collapse;
-width: 100%;
-}
-
-th, td {
-text-align: left;
-padding: 8px;
-}
-
-tr:nth-child(even){background-color: #f2f2f2}
-
-th {
-background-color: #4CAF50;
-color: white;
-}
+  /* padding-top: 200px; */
+  /* border: 1px solid red; */
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 25px;
+  }
+  
+  td{
+      width: 20em;
+      text-align: center;
+      
+  }
+  
+  th {
+      text-align: center;
+      padding: 8px;
+  }
+      
+  tr:nth-child(even){background-color: #f2f2f2}
+  
+  th {
+  background-color: #2c3e50;
+  color: white;
+  }
 
 

@@ -5,7 +5,7 @@
     <title>Home</title>
     <meta charset="utf-8">
     <link rel="icon" href="resources/imagens/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="view/component/css/styleHome.css">
+    <link rel="stylesheet" href="view/component/css/styleHomeAlu.css">
     <script src="../../model/eventModel.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="../../presenter/JavaScript/linkBDAluno.js"></script>
@@ -23,33 +23,37 @@
                     </div>
                 </label>
                 <ul>
-                    <li><a href=''>Home</a></li>
-                    <li><a href=#></a></li>
-                    <li><a href='cadastrarEvento'>Cadastrar Evento</a></li>
-                    <li><a href='indicarRevisorArtigo'>Indicar revisor de artigo</a></li>
-					<li><a href='indicarRevisorConferencia'>Indicar revisor de conferencia</a></li>
-					<li><a href='addTag'>Adicionar tag a evento</a></li>
+                    <li><a href=''>Home</a></li><br>
+                    <li><a href='cadastrarEvento'>Cadastrar Evento</a></li><br>
+                    <li><a href='indicarRevisorArtigo'>Indicar revisor de artigo</a></li><br>
+					<li><a href='indicarRevisorConferencia'>Indicar revisor de conferencia</a></li><br>
+					<li><a href='addTag'>Adicionar tag a evento</a></li><br>
                 </ul>
             </div>
             <div class="sidenav">
                 <img src="../resources/imagens/icone_artigo.png" alt="Articles Center">
             </div>
+            
+        </header>
 
+            <br>
             <div class="content ">
                 <h1>Eventos</h1>
                 
             </div>
         
-                <div class="content2 ">
-                    <p id="output"><span></span></p>
-                </div>
-                <div class="content4">
-                    <form action="searchEvent" method="POST">
-                        <input type="text" name="nome" placeholder="Digite o nome do evento:" />    
-                    </form>
-                </div>
+            <div class="content2 ">
+                <p id="output"><span></span></p>
+            </div>
             
-                    <div class="content3"><input type="submit" class="sombra " value="Pesquisar"></div>
+            <div class="content4">
+                <form action="searchEvent" method="POST">
+                    <input type="text" name="nome" placeholder="Digite o nome do evento:" />   
+                    <div class="content3"><input type="submit" class="sombra " value="Pesquisar"></div> 
+                </form>
+            </div>
+        
+                    
 
 
         
