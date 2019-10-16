@@ -6,11 +6,11 @@
         box-sizing: border-box;
     }
 
+
     .menu {
         background:  #78ffd6;
-        /* border-radius: 50%; */
         width: 10%;
-        height: 8.9%;
+        height: 9.5%;
         position: fixed;
         top: 0;
         left: 0;
@@ -81,6 +81,7 @@
  
     input:checked ~ ul {
         opacity: 1;
+        visibility: visible;
     }
 
     ul {
@@ -92,6 +93,7 @@
         font-size: 30px;
         opacity: 0;
         transition: .25s .1s cubic-bezier(0, 1.07, 0, 1.02);
+        visibility: hidden;
         z-index: 2;
     }
     
@@ -105,23 +107,25 @@
     .sidenav img {
         max-width: 5%;
         height: auto;
-        position:relative;
+        position: relative;
         left:0%;
         top:20%;
       
       }
 
-.sidenav {
-    height: 10%;
-    max-width: 100%;
-    z-index: 1;
-    position:relative;
-    left:5%;
-    top:20%;
-    background-image: linear-gradient(to left, #a8ff78, #78ffd6);
-    overflow-x: hidden;
+    .sidenav {
+        height: 10%;
+        max-width: 100%;
+        z-index: 1;
+        position:relative;
+        left:5%;
+        top:20%;
+        background-image: linear-gradient(to left, #a8ff78, #78ffd6);
+        overflow-x: hidden;
 
-}
+    }
+
+
 
 input[type=text], select {
     width: 500px;
@@ -195,11 +199,10 @@ color: white;
   background-color: white;
   font-family: myFirstFont;
 }
-.sidenav img {
-  max-width: 8%;
-  height: auto;
-  position:relative;
-  left:10%;
-  top:20%;
 
-}
+.content3 {
+    margin-left: 40%;
+    margin-top: -3%;
+    background-color: white;
+    font-family: myFirstFont;
+  }
