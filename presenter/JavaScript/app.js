@@ -356,14 +356,14 @@ app.post('/subArtigo', async function (req, res) {
 
     var titulo = req.body.titulo;
 	var nomeEvento = req.body.eventoNome;
-    var nome = req.body.nome;
+    var nomeAutor = req.body.nome;
     var email = req.body.email;
     var resumo = req.body.resumo;
 	var idArtigo;
 	var idEvento;
 	var erro=0;
 
-    connection.query("INSERT INTO `artigo` (titulo,nome,email,resumo,status,login) VALUES (?,?,?,?,?,?)", [titulo, nome, email, resumo, "aguardando revisão", login], function (err, result) {
+    connection.query("INSERT INTO `artigo` (titulo,nome,email,resumo,status,login) VALUES (?,?,?,?,?,?)", [titulo, nomeAutor, email, resumo, "aguardando revisão", login], function (err, result) {
         if (err) throw err;
     });
 	
@@ -375,12 +375,12 @@ app.post('/subArtigo', async function (req, res) {
 	});
 	
 	await sleep(5);
-	
-	connection.query("SELECT idEvento FROM eventos WHERE nome = ?", [nomeEvento], function(err, result) {
-		if(result[0].length > 0)
+
+	connection.query("SELECT idEvento FROM eventos WHERE eventos.nome = ?", [nomeEvento], function (error, results, fields){
+		if(results.length > 0)
 		{
-			idEvento = result[0].idEvento;
-		}else if(err)
+			idEvento = results[0].idEvento;
+		}else if(error)
 		{
 			erro = 1;
 		}
@@ -390,8 +390,6 @@ app.post('/subArtigo', async function (req, res) {
 	
 	if(erro == 0)
 	{
-		console.log("fkArtigo: " + idArtigo);
-		console.log("fkEvento: " + idEvento);
 		connection.query("INSERT INTO artigo_evento (fkArtigo, fkEvento) VALUES (?,?)", [idArtigo, idEvento], function(err, result) {
 			if (err) throw err;
 		});
