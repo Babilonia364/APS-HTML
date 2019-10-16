@@ -103,6 +103,10 @@ app.get("/editarEvento", function (req, res) {
     res.sendFile(path.resolve("../../view/editarEvento.html"));
 });
 
+app.get("/addTag", function (req, res) {
+    res.sendFile(path.resolve("../../view/adicionarTag.html"));
+});
+
 /* End */
 
 
@@ -491,10 +495,18 @@ app.post('/verArtigo', function (request, response) {
 
 app.post('/indicarRC', async function (req, res) {
 
-    var idProfessor;
-    var idEvento = req.body.idEvento;
-    var emailProfessor = req.body.emailProfessor;
-    var erro = 0;
+	var idProfessor;
+	var nome = req.body.nome;
+	var idEvento = req.body.idEvento;
+	var emailProfessor = req.body.emailProfessor;
+	var erro = 0;
+	
+	console.log("email do professor: " + emailProfessor);
+	
+	connection.query('SELECT idprofessor FROM professor WHERE email = ?', [emailProfessor], function (error, results, fields){
+		idProfessor = results[0].idprofessor;
+		if(error) throw error;
+	});
 
     console.log("email do professor: " + emailProfessor);
 
@@ -530,6 +542,114 @@ app.post('/indicarRC', async function (req, res) {
     } else {
         res.redirect('/indicarRevisorConferencia');
     }
+});
+
+app.post('/indicarRA', async function (req, res) {
+	var nomeProfessor = req.body.nomeProfessor;
+	var emailProfessor = req.body.emailProfessor;
+	var nomeArtigo = req.body.nomeArtigo;
+	var idArtigo;
+	var idProfessor;
+	var erro = 0;
+	
+	connection.query("SELECT idArtigo FROM artigo WHERE titulo = ?", [nomeArtigo], function (error, results, fields){
+		if(results.length > 0)
+		{
+			idArtigo = results[0].idArtigo;
+		}else
+		{
+			erro = 1;
+		}
+		
+		if(error) throw error;
+	});
+	
+	await sleep(5);
+	
+	if(erro == 0)
+	{
+		connection.query("SELECT idprofessor FROM professor WHERE email = ?", [emailProfessor], function (error, results, fields){
+			if(results.length > 0)
+			{
+				idProfessor = results[0].idprofessor;
+			}else
+			{
+				erro = 2;
+			}
+		});
+	}
+	
+	await sleep(5);
+	
+	if(erro == 0)
+	{
+		connection.query("SELECT rProfessor FROM revisor_artigo WHERE rArtigo = ?", [idArtigo], function(error, results, fields){
+			if(results.length > 0)
+			{
+				erro = 3;
+			}
+			
+			if(error) throw error;
+		});
+	}
+	
+	await sleep(5);
+	
+	if(erro == 0)
+	{
+		connection.query("INSERT INTO `revisor_artigo` (rArtigo, rProfessor) VALUES (?,?)", [idArtigo, idProfessor], function (error, results, fields){
+			if (error) throw error;
+		});
+	}
+	
+	await sleep(5);
+	
+	if(erro == 0)
+	{
+		res.redirect('/indicarRevisorArtigo')
+	}else if(erro == 1)
+	{
+		res.send('Article not found.');
+	}else if(erro == 2)
+	{
+		res.send('Professor not found.');
+	}else if(erro == 3)
+	{
+		res.send('Article already have a Professor');
+	}
+});
+
+app.post('/addOneTag', async function (req, res) {
+	var nomeEvento = req.body.nomeEvento;
+	var tag = req.body.tag;
+	var erro = 0;
+	var idEvento
+	
+	connection.query("SELECT idEvento FROM eventos WHERE nome = ?", [nomeEvento], function (error, results, fields){
+		if(results.length > 0)
+		{
+			idEvento = results[0].idEvento;
+		}else if (error)
+		{
+			erro = 1;
+		}
+	});
+	
+	await sleep(5);
+	
+	connection.query("INSERT INTO tag (tag, tEventos) VALUES (?,?)", [tag, idEvento], function (error, results, fields) {
+		if (error) throw error;
+	});
+	
+	await sleep(5);
+	
+	if(erro == 0)
+	{
+		res.redirect('/addTag')
+	}else if(erro == 1)
+	{
+		res.send('Event not found.');
+	}
 });
 
 //Functions
