@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<!-- Início do cabeçalho -->
+
+<head>
+	<title>Cadastro</title>
+	<meta charset="utf-8">
+
+    <!-- Linkando as tagas a pasta css que conterá os estilos.css -->
+		<link rel="stylesheet" type='text/css' href="view/component/css/styleProf.css">
+		<link rel="icon" href="resources/imagens/favicon.ico" type="image/x-icon">
+</head>
+
+<!-- Fim do cabeçalho -->
+
+<!-- Início do corpo -->
+
+<body>
+
+	<div class="sidenav">
+		<img src="../resources/imagens/icone_artigo.png" alt="Articles Center">
+	</div>
+
+	<div class="content">
+		<h1>Editar Evento</h1>
+
+		<form action="/editarE" method="POST" class="form">
+			<label>Nome:</label><br>
+			<input type="text" name="nome" value="" required><br>
+			<label>Sigla:</label><br>
+			<input type="text" name="sigla" value="" required><br>
+			<label>Data de início:</label><br>
+			<input type="date" name="data_in" value=""><br>
+			<label>Data de término:</label><br>
+			<input type="date" name="data_fn" value="" required><br>
+			<label>Data de início de submissão:</label><br>
+			<input type="date" name="data_sub_in" value="" required><br>
+			<label>Data de término de submissão:</label><br>
+			<input type="date" name="data_sub_fn" value="" required><br><br>
+			<label>Área de concentração:</label><br>
+			<input type="text" name="area_conc" value="" required><br>
+			<input type="submit" class="sombra " value="Editar">
+
+		</form>
+	</div>
+
+	<br>
+
+</body>
+<!-- Fim do corpo -->
+
+</html>

@@ -372,7 +372,6 @@ app.post('/subArtigo', function (req, res) {
 });
 
 app.post('/cadasE', function (req, res) {
-
     var nome = req.body.nome;
     var sigla = req.body.sigla;
     var data_in = req.body.data_in;
@@ -391,6 +390,23 @@ app.post('/cadasE', function (req, res) {
 
 app.post('/deletarEvento', function (req, res) {    
     connection.query("DELETE FROM `eventos` WHERE nome = ? ", [nome_event], function (err, result) {
+        if (err) throw err;
+    });
+
+    res.redirect('/homeAdmin');
+});
+
+app.post('/editarE', function (req, res) {    
+    var nome = req.body.nome;
+    var sigla = req.body.sigla;
+    var data_in = req.body.data_in;
+    var data_fn = req.body.data_fn;
+    var data_sub_in = req.body.data_sub_in;
+    var data_sub_fn = req.body.data_sub_fn;
+    var area_conc = req.body.area_conc;
+    // var situacao = req.body.situaco;
+
+    connection.query("UPDATE `eventos` SET nome =?, sigla =?, data_in =?, data_fn =?, data_sub_in =?, data_sub_fn =?, area_conc=? WHERE nome = ?", [nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, nome_event], function (err, result) {
         if (err) throw err;
     });
 
