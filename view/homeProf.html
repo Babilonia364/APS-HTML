@@ -24,36 +24,39 @@
                     </div>
                 </label>
                 <ul>
-                    <li><a href=''>Home</a></li>
-                    <li><a href="editarCadastroP">Editar cadastro</a></li>
-                    <li><a href='subArtigo'>Submeter artigo</a></li>
-                    <li><a href='#'>Revisar Artigos</a></li>
+                    <li><a href=''>Home</a></li><br>
+                    <li><a href="editarCadastroP">Editar cadastro</a></li><br>
+                    <li><a href='subArtigo'>Submeter artigo</a></li><br>
+                    <li><a href='#'>Revisar Artigos</a></li><br>
                     <li><a href='#'>Lista de artigos</a></li>
                 </ul>
             </div>
             <div class="sidenav">
                 <img src="../resources/imagens/icone_artigo.png" alt="Articles Center">
             </div>
-            
+            <br>
             <form action="/tonarAdmin" method="POST" class="tonar-admin">
                 <input type="submit" class="sombra " value="Tornar-se Admin">
             </form>
 
         </header>
 
-        <form action="searchEvent" method="POST">
-            <input type="text" name="nome" placeholder="Digite o nome do evento:" />
-            <div class="content3"><input type="submit" class="sombra " value="Pesquisar"></div>
-        </form>
-
-
-        <div class="content ">
-            <h1>Eventos</h1>
-        </div>
+    <div class="content ">
+        <h1>Eventos</h1>
+        
+    </div>
 
         <div class="content2 ">
             <p id="output"><span></span></p>
         </div>
+        <div class="content4">
+            <form action="searchEvent" method="POST">
+                <input type="text" name="nome" placeholder="Digite o nome do evento:" />   
+                <div class="content3"><input type="submit" class="sombra " value="Pesquisar"></div> 
+            </form>
+        </div>
+    
+            
 
     </body>
 
