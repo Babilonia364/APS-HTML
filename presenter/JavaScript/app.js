@@ -107,6 +107,10 @@ app.get("/addTag", function (req, res) {
     res.sendFile(path.resolve("../../view/adicionarTag.html"));
 });
 
+app.get("/verArtigoRev", function (req, res) {
+    res.sendFile(path.resolve("../../view/verArtigoASerRevisado.html"));
+});
+
 /* End */
 
 
@@ -768,6 +772,195 @@ app.post('/addOneTag', async function (req, res) {
 	{
 		res.send('Event not found.');
 	}
+});
+
+app.post('/verArtigoASerR', function (request, response) {
+    var textHTML = [""];
+    connection.query('SELECT * FROM artigo JOIN revisor_artigo ON artigo.idArtigo =  revisor_artigo.rArtigo JOIN professor ON professor.idprofessor = revisor_artigo.rProfessor JOIN login ON login.idUser =  professor.pLogin AND login.usuario = ?', [login], function (error, results, fields) {
+
+        if (results.length > 0) {
+            for (var i = 0; i < results.length; i++) {
+
+                var setEvent = require("../../model/verArtigoModel");
+                setEvent = setEvent(results[i].idArtigo, results[i].titulo, results[i].nome, results[i].email,
+                    results[i].resumo, results[i].arquivo, results[i].status);
+                setEvent = JSON.stringify(setEvent);
+                setEvent = JSON.parse(setEvent);
+
+                textHTML[0] += "<table>"
+                /* Creating table */
+
+                textHTML[0] += "<tr><th>" + "idArtigo" + "</th>";
+                textHTML[0] += "<th>" + "Titulo" + "</th>";
+                textHTML[0] += "<th>" + "Nome" + "</th>";
+                textHTML[0] += "<th>" + "Email" + "</th>";
+                textHTML[0] += "<th>" + "Resumo" + "</th>";
+                textHTML[0] += "<th>" + "Arquivo" + "</th>";
+                textHTML[0] += "<th>" + "Status" + "</th></tr>";
+
+                textHTML[0] += "<tr><td>" + setEvent.idArtigo + "</td>";
+                textHTML[0] += "<td>" + setEvent.titulo + "</td>";
+                textHTML[0] += "<td>" + setEvent.nome + "</td>";
+                textHTML[0] += "<td>" + setEvent.email + "</td>";
+                textHTML[0] += "<td>" + setEvent.resumo + "</td>";
+                textHTML[0] += "<td>" + setEvent.arquivo + "</td>";
+                textHTML[0] += "<td>" + setEvent.status + "</td></tr>";
+                textHTML[0] += "</table>"
+                textHTML[i + 1] += "<table>"
+                textHTML[i + 1] += "<tr><td>" + setEvent.idArtigo + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.titulo + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.nome + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.email + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.resumo + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.arquivo + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.status + "</td></tr>";
+                textHTML[i + 1] += "</table>"
+
+                /* End */
+
+                console.log(textHTML[0]);
+            }
+
+            response.send(textHTML[0]);
+
+        } else {
+            response.send('Event not found.');
+        }
+
+    });
+});
+
+app.post('/searchEvent', async function (request, response) {
+    var nome = request.body.nome;
+	var textHTML = "";
+    var setEvent = require("../../model/eventModel");
+	var erro = 0;
+	
+    nome_event = nome;	//tipo_user_atual
+	nome = nome.replace(/-/g, '');
+	var intDate = 20191103;
+	
+	console.log("intDate: " + intDate)
+
+	if((tipo_user_atual == "aluno") || (tipo_user_atual == "professor"))
+	{
+		connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ?', [nome,nome,nome], function (error, results, fields) {
+			if (results.length > 0) {
+				setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
+					results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
+				setEvent = JSON.stringify(setEvent);
+				setEvent = JSON.parse(setEvent);
+				/* End */
+			}else {
+				erro = 2;
+			}
+		});
+		
+		await sleep(5)
+		console.log("erro: " + erro);
+		if(erro == 2)
+		{
+			console.log("VAI TOMAR NO CU FILHO DA PUTA");
+			connection.query('SELECT * FROM eventos WHERE data_in_comp <= ?', [intDate], function (error, results, fields) {
+				console.log("results.length: " + results.length)
+				if (results.length > 0) {
+					setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
+						results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
+					setEvent = JSON.stringify(setEvent);
+					setEvent = JSON.parse(setEvent);
+					erro = 0;
+					/* End */
+				}else {
+					console.log("To na excecao")
+					erro = 1;
+				}
+			});
+		}
+		console.log("erro: " + erro);
+	}else
+	{
+		
+		connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ? ', [nome,nome,nome], function (error, results, fields) {
+			if (results.length > 0) {
+				setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
+					results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
+				setEvent = JSON.stringify(setEvent);
+				setEvent = JSON.parse(setEvent);
+				/* End */
+			} else {
+				erro=1;
+			}
+		});
+	}
+	
+	await sleep(5)
+	
+	if(erro == 0)
+	{
+		/* Generate html */
+		textHTML += "<!DOCTYPE html>";
+		textHTML +=    "<html>";
+		textHTML +="<head>"
+		textHTML +="<title>Lista Artigos</title>"
+		textHTML +="<meta charset=\"utf-8\">"
+		textHTML +="<link rel=\"icon\" href=\"resources/imagens/favicon.ico\" type=\"image/x-icon\">"
+		textHTML +="<link rel=\"stylesheet\" type='text/css' href=\"view/component/css/styleVerEvento.css\">"
+		textHTML +="<script src=\"http://code.jquery.com/jquery-1.11.0.min.js/%22%3E\"</script>"
+		textHTML +="<script src=\"../../presenter/JavaScript/linkBDVerArtigo.js\"></script>"
+		textHTML +="</head>"
+		textHTML +="<body>"
+		textHTML +="<div class=\"sidenav\">"
+		textHTML +="<img src=\"resources/imagens/icone_artigo.png\" alt=\"Articles Center\">"
+		textHTML +="</div>"
+		textHTML +="<form action='deletarEvento' method='POST'>"
+		textHTML +="<input type='submit' class='sombra' value='Deletar Evento'>"
+		textHTML +="</form>"
+		textHTML +="<form action='/editarEvento' method='GET'>"
+		textHTML +="<input type='submit' class='sombra' value='Editar Evento'>"
+		textHTML +="</form>"
+		textHTML +="</div>"
+		textHTML +="<div class=\"content\">"
+		textHTML +="<h1>Evento</h1>"
+		textHTML += "</div>"
+		textHTML +="<div class=\"content2\">"
+		textHTML +="<p id=\"output\"><span></span></p>"
+		textHTML +="</div>"
+
+		textHTML += "<table border='1'>\n"
+		/* Creating table */
+		/* Creating index */
+		textHTML += "\t<tr>\n"
+		textHTML += "\t\t<th>" + "Nome" + "</th>\n";
+		textHTML += "\t\t<th>" + "Sigla" + "</th>\n";
+		textHTML += "\t\t<th>" + "Data de inicio" + "</th>\n";
+		textHTML += "\t\t<th>" + "Data de final" + "</th>\n";
+		textHTML += "\t\t<th>" + "Data de inicio das submissões" + "</th>\n";
+		textHTML += "\t\t<th>" + "Data de fim das submissões" + "</th>\n";
+		textHTML += "\t\t<th>" + "Área de concentração" + "</th>\n";
+		textHTML += "\t</tr>\n"
+
+		/* Creating body */
+		textHTML += "\t<tr>\n"
+		textHTML += "\t\t<td>" + setEvent.nome + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.sigla + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.data_in + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.data_fn + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.data_sub_in + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.data_sub_fn + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.area_conc + "</td>\n";
+		textHTML += "\t</tr>\n"
+		 
+		textHTML += "</table>\n"
+		textHTML += "</body>\n"
+		textHTML += "</html>\n"
+
+		response.send(textHTML);
+	}else
+	{
+		response.send('Event not found.');
+	}
+	
+	/* End */
 });
 
 //Functions
