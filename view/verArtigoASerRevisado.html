@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Revisar Artigos</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="resources/imagens/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type='text/css' href="view/component/css/styleVerArtigo.css">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="../../presenter/JavaScript/linkBDVerArtigoASerRevisado.js"></script>
+    
+
+</head>
+
+<body>
+    <div class="sidenav">
+        <img src="resources/imagens/icone_artigo.png" alt="Articles Center">
+    </div>
+    <div class="content ">
+        <h1>Artigos a serem revisados</h1>
+    </div>
+	
+	<div class="content4">
+		<form action="searchArticle" method="POST">
+			<input type="text" name="nome" placeholder="Digite o nome do artigo revisado:" />   
+			<div class="content3"><input type="submit" class="sombra " value="Revisar Artigo"></div> 
+		</form>
+	</div>
+	
+    <div class="content2 ">
+            <p id="output"><span></span></p>
+       
+    </div>
+
+</body>
+
+</html>

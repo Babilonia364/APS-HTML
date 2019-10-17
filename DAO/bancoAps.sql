@@ -64,7 +64,7 @@ CREATE TABLE `artigo` (
   `status` varchar(45) DEFAULT NULL,
   `login` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idArtigo`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `artigo` (
 
 LOCK TABLES `artigo` WRITE;
 /*!40000 ALTER TABLE `artigo` DISABLE KEYS */;
-INSERT INTO `artigo` VALUES (1,'jv piroca de gato','Lima@gmail.com','Prova de que o jv tem piroca de gato','Mateus',NULL,NULL,NULL),(2,'Por que a camila tem o rabão?','Incognito','Incog@hotmail.com','Neste artigo nos questionamos por que a camila tem o rabão.',NULL,NULL,'phnegao@hotmail.com'),(3,'Titulo','Biroliro','biroliro@hotmail.com','Resumo',NULL,'aguardando revisão','Comitador@yahoo.com');
+INSERT INTO `artigo` VALUES (1,'jv piroca de gato','Lima@gmail.com','Prova de que o jv tem piroca de gato','Mateus',NULL,NULL,NULL),(2,'Por que a camila tem o rabão?','Incognito','Incog@hotmail.com','Neste artigo nos questionamos por que a camila tem o rabão.',NULL,NULL,'phnegao@hotmail.com'),(3,'Titulo','Biroliro','biroliro@hotmail.com','Resumo',NULL,'aguardando revisão','Comitador@yahoo.com'),(4,'Titulo2','Incognito','Incog@hotmail.com','Qualquer coisa aqui',NULL,'aguardando revisão',NULL),(5,'Titulo3','Incognito','Incog@hotmail.com','Qualquer coisa aqui',NULL,'aguardando revisão',NULL),(6,'Titulo4','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(7,'Titulo5','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(8,'Titulo6','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(9,'Titulo7','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(10,'Titulo9','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(11,'Titulo10','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(12,'Tit1','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(13,'Tit2','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(14,'Tit3','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(15,'Tit4','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(16,'Titulo11','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(17,'Titulo111','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(18,'Titulo21','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(19,'Titulo211','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'aguardando revisão','Comitador@yahoo.com'),(20,'Titulo22','Verbena Lucia','verbena2@uece.br','Qualquer coisa aqui',NULL,'Rejeitado','Comitador@yahoo.com');
 /*!40000 ALTER TABLE `artigo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +91,7 @@ CREATE TABLE `artigo_evento` (
   PRIMARY KEY (`idArtigoEvento`),
   KEY `fk_artigo_idx` (`fkArtigo`),
   KEY `fk_evento_idx` (`fkEvento`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE `artigo_evento` (
 
 LOCK TABLES `artigo_evento` WRITE;
 /*!40000 ALTER TABLE `artigo_evento` DISABLE KEYS */;
-INSERT INTO `artigo_evento` VALUES (1,3,NULL),(2,4,NULL),(3,NULL,NULL),(4,6,NULL),(5,NULL,NULL);
+INSERT INTO `artigo_evento` VALUES (1,3,NULL),(2,4,NULL),(3,NULL,NULL),(4,6,NULL),(5,NULL,NULL),(6,4,NULL),(7,NULL,NULL),(8,6,NULL),(9,NULL,NULL),(10,8,NULL),(11,NULL,NULL),(12,10,NULL),(13,NULL,NULL),(14,12,NULL),(15,13,NULL),(16,14,NULL),(17,15,NULL),(18,NULL,NULL),(19,NULL,NULL),(20,18,NULL),(21,19,NULL),(22,20,1);
 /*!40000 ALTER TABLE `artigo_evento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,15 +115,17 @@ CREATE TABLE `eventos` (
   `idEvento` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   `sigla` varchar(45) DEFAULT NULL,
-  `data_in` date DEFAULT NULL,
-  `data_fn` date DEFAULT NULL,
-  `data_sub_in` date DEFAULT NULL,
-  `data_sub_fn` date DEFAULT NULL,
+  `data_in` varchar(45) DEFAULT NULL,
+  `data_fn` varchar(45) DEFAULT NULL,
+  `data_sub_in` varchar(45) DEFAULT NULL,
+  `data_sub_fn` varchar(45) DEFAULT NULL,
   `area_conc` varchar(45) DEFAULT NULL,
   `situacao` varchar(45) DEFAULT NULL,
   `login` varchar(45) DEFAULT NULL,
+  `data_in_comp` int(11) DEFAULT NULL,
+  `data_out_comp` int(11) DEFAULT NULL,
   PRIMARY KEY (`idEvento`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,7 +134,7 @@ CREATE TABLE `eventos` (
 
 LOCK TABLES `eventos` WRITE;
 /*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
-INSERT INTO `eventos` VALUES (1,'Balbúrdia','BBD','2019-10-15','2019-10-31','2019-10-17','2019-10-29',NULL,NULL,NULL),(2,'Comer pizza na casa do Mateus','CPncdM','2019-10-30','2019-10-31','2019-10-25','2019-10-27','Casa do lima',NULL,NULL),(3,'Sacudir o JV na porrada','SJVP','2019-10-31','2019-11-02','2019-10-27','2019-10-29','Casa do JV',NULL,NULL),(4,'Rodar caixinha no cdz','RcnCDZ','2019-11-03','2019-11-09','2019-10-30','2019-11-01','UECE',NULL,NULL),(5,'Rodar 37 caixinhas e tirar só o sorento','R37CetsS','2019-10-30','2019-10-31','2019-10-23','2019-10-24','Lixo',NULL,NULL),(6,'Rodar 45 caixinhas e tirar só cavaleiro negro','R45ctsCN','2019-11-06','2019-11-07','2019-10-25','2019-10-26','Casa do lima',NULL,NULL);
+INSERT INTO `eventos` VALUES (1,'Balbúrdia','BBD','2019-10-15','2019-10-31','2019-10-17','2019-10-29',NULL,NULL,NULL,NULL,NULL),(2,'Comer pizza na casa do Mateus','CPncdM','2019-10-30','2019-10-31','2019-10-25','2019-10-27','Casa do lima',NULL,NULL,NULL,NULL),(3,'Sacudir o JV na porrada','SJVP','2019-10-31','2019-11-02','2019-10-27','2019-10-29','Casa do JV',NULL,NULL,NULL,NULL),(4,'Rodar caixinha no cdz','RcnCDZ','2019-11-03','2019-11-09','2019-10-30','2019-11-01','UECE',NULL,NULL,NULL,NULL),(5,'Rodar 37 caixinhas e tirar só o sorento','R37CetsS','2019-10-30','2019-10-31','2019-10-23','2019-10-24','Lixo',NULL,NULL,NULL,NULL),(6,'Rodar 45 caixinhas e tirar só cavaleiro negro','R45ctsCN','2019-11-06','2019-11-07','2019-10-25','2019-10-26','Casa do lima',NULL,NULL,NULL,NULL),(7,'Quebrar o PH na porrada','QPHP','2019-10-23','2019-10-25','2019-10-18','2019-10-21','UECE',NULL,NULL,NULL,NULL),(8,'Correr pelado na praia','CPnP','2019-10-29','2019-10-31','2019-10-26','2019-10-27','Praia do oi',NULL,NULL,NULL,NULL),(9,'Irru','IRRU','2019-11-07','2019-11-08','2019-10-31','2019-11-01','Casa do lima',NULL,NULL,NULL,NULL),(11,'Chorar muito','CM','2019-11-03','2019-11-04','2019-10-27','2019-10-28','UECE',NULL,NULL,20191103,20191104);
 /*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,7 +210,7 @@ CREATE TABLE `revisor_artigo` (
   PRIMARY KEY (`idRevisorArtigo`),
   KEY `fk_artigo_idx` (`rArtigo`),
   KEY `fk_professor_idx` (`rProfessor`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +219,7 @@ CREATE TABLE `revisor_artigo` (
 
 LOCK TABLES `revisor_artigo` WRITE;
 /*!40000 ALTER TABLE `revisor_artigo` DISABLE KEYS */;
-INSERT INTO `revisor_artigo` VALUES (1,2,20),(2,2,20),(3,2,19),(4,2,19),(5,2,20),(6,2,20),(7,2,20),(8,2,20),(9,2,20),(10,2,20);
+INSERT INTO `revisor_artigo` VALUES (1,2,20),(2,2,20),(3,2,19),(4,2,19),(5,2,20),(6,2,20),(7,2,20),(8,2,20),(9,2,20),(10,2,20),(11,20,20);
 /*!40000 ALTER TABLE `revisor_artigo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -283,4 +285,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-16 20:18:36
+-- Dump completed on 2019-10-17  0:48:23
