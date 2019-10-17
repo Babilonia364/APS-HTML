@@ -133,9 +133,7 @@ app.post('/searchEvent', async function (request, response) {
 	
     nome_event = nome;	//tipo_user_atual
 	nome = nome.replace(/-/g, '');
-	var intDate = 20191103;
-	
-	console.log("intDate: " + intDate)
+	var intDate = parseInt(nome, 10);
 
 	if((tipo_user_atual == "aluno") || (tipo_user_atual == "professor"))
 	{
@@ -152,12 +150,9 @@ app.post('/searchEvent', async function (request, response) {
 		});
 		
 		await sleep(5)
-		console.log("erro: " + erro);
 		if(erro == 2)
 		{
-			console.log("VAI TOMAR NO CU FILHO DA PUTA");
-			connection.query('SELECT * FROM eventos WHERE data_in_comp <= ?', [intDate], function (error, results, fields) {
-				console.log("results.length: " + results.length)
+			connection.query('SELECT * FROM eventos WHERE data_in_comp <= ? AND  data_out_comp >= ?', [intDate, intDate], function (error, results, fields) {
 				if (results.length > 0) {
 					setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
 						results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
@@ -166,26 +161,41 @@ app.post('/searchEvent', async function (request, response) {
 					erro = 0;
 					/* End */
 				}else {
-					console.log("To na excecao")
 					erro = 1;
 				}
 			});
 		}
-		console.log("erro: " + erro);
 	}else
 	{
 		
-		connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ? ', [nome,nome,nome], function (error, results, fields) {
+		connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ?', [nome,nome,nome], function (error, results, fields) {
 			if (results.length > 0) {
 				setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
 					results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
 				setEvent = JSON.stringify(setEvent);
 				setEvent = JSON.parse(setEvent);
 				/* End */
-			} else {
-				erro=1;
+			}else {
+				erro = 2;
 			}
 		});
+		
+		await sleep(5)
+		if(erro == 2)
+		{
+			connection.query('SELECT * FROM eventos WHERE data_in_comp <= ? AND  data_out_comp >= ?', [intDate, intDate], function (error, results, fields) {
+				if (results.length > 0) {
+					setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
+						results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
+					setEvent = JSON.stringify(setEvent);
+					setEvent = JSON.parse(setEvent);
+					erro = 0;
+					/* End */
+				}else {
+					erro = 1;
+				}
+			});
+		}
 	}
 	
 	await sleep(5)
@@ -700,6 +710,15 @@ app.post('/indicarRA', async function (req, res) {
 			}
 			
 			if(error) throw error;
+		});
+	}
+	
+	await sleep(5);
+	
+	if(erro == 0)
+	{
+		connection.query("SELECT * FROM professor JOIN revisor_evento ON professor.idprofessor = revisor_evento.rProfessor JOIN artigo_evento ON revisor_artigo.rEventos = artigo_evento.fkEvento JOIN artigo ON artigo.fkArtigo = artigo.idArtigo AND artigo.idArtigo = ? AND professor.idprofessor = ?", [idArtigo, idProfessor], function(error, results, fields){
+			
 		});
 	}
 	
