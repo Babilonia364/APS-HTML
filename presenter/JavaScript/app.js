@@ -120,12 +120,7 @@ var nome_event;
 
 
 /* POST para efetuar uma busca no bd */
-<<<<<<< HEAD
-app.post('/searchEvent', function (request, response) {
-=======
-
 app.post('/searchEvent', async function (request, response) {
->>>>>>> developer
     var nome = request.body.nome;
 	var textHTML = "";
     var setEvent = require("../../model/eventModel");
@@ -137,80 +132,6 @@ app.post('/searchEvent', async function (request, response) {
 	
 	console.log("intDate: " + intDate)
 
-<<<<<<< HEAD
-    connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ? ', [nome, nome, nome], function (error, results, fields) {
-        if (results.length > 0) {
-            var textHTML = "";
-            var setEvent = require("../../model/eventModel");
-            setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
-                results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
-            setEvent = JSON.stringify(setEvent);
-            setEvent = JSON.parse(setEvent);
-
-            textHTML += "<!DOCTYPE html>";
-            textHTML += "<html>";
-            textHTML += "<head>"
-            textHTML += "<title>Lista Artigos</title>"
-            textHTML += "<meta charset=\"utf-8\">"
-            textHTML += "<link rel=\"icon\" href=\"resources/imagens/favicon.ico\" type=\"image/x-icon\">"
-            textHTML += "<link rel=\"stylesheet\" type='text/css' href=\"view/component/css/styleVerEvento.css\">"
-            textHTML += "<script src=\"http://code.jquery.com/jquery-1.11.0.min.js/%22%3E\"</script>"
-            textHTML += "<script src=\"../../presenter/JavaScript/linkBDVerArtigo.js\"></script>"
-            textHTML += "</head>"
-            textHTML += "<body>"
-            textHTML += "<div class=\"sidenav\">"
-            textHTML += "<img src=\"resources/imagens/icone_artigo.png\" alt=\"Articles Center\">"
-            textHTML += "</div>"
-            textHTML += "<form action='deletarEvento' method='POST'>"
-            textHTML += "<input type='submit' class='sombra' value='Deletar Evento'>"
-            textHTML += "</form>"
-            textHTML += "<form action='/editarEvento' method='GET'>"
-            textHTML += "<input type='submit' class='sombra' value='Editar Evento'>"
-            textHTML += "</form>"
-            textHTML += "</div>"
-            textHTML += "<div class=\"content\">"
-            textHTML += "<h1>Evento</h1>"
-            textHTML += "</div>"
-            textHTML += "<div class=\"content2\">"
-            textHTML += "<p id=\"output\"><span></span></p>"
-            textHTML += "</div>"
-
-            textHTML += "<table border='1'>\n"
-            /* Creating table */
-            /* Creating index */
-            textHTML += "\t<tr>\n"
-            textHTML += "\t\t<th>" + "Nome" + "</th>\n";
-            textHTML += "\t\t<th>" + "Sigla" + "</th>\n";
-            textHTML += "\t\t<th>" + "Data de inicio" + "</th>\n";
-            textHTML += "\t\t<th>" + "Data de final" + "</th>\n";
-            textHTML += "\t\t<th>" + "Data de inicio das submissões" + "</th>\n";
-            textHTML += "\t\t<th>" + "Data de fim das submissões" + "</th>\n";
-            textHTML += "\t\t<th>" + "Área de concentração" + "</th>\n";
-            textHTML += "\t</tr>\n"
-
-            /* Creating body */
-            textHTML += "\t<tr>\n"
-            textHTML += "\t\t<td>" + setEvent.nome + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.sigla + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.data_in + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.data_fn + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.data_sub_in + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.data_sub_fn + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.area_conc + "</td>\n";
-            textHTML += "\t</tr>\n"
-
-            textHTML += "</table>\n"
-            textHTML += "</body>\n"
-            textHTML += "</html>\n"
-
-            response.send(textHTML);
-
-            /* End */
-        } else {
-            response.send('Event not found.');
-        }
-    });
-=======
 	if((tipo_user_atual == "aluno") || (tipo_user_atual == "professor"))
 	{
 		connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ?', [nome,nome,nome], function (error, results, fields) {
@@ -330,7 +251,6 @@ app.post('/searchEvent', async function (request, response) {
 	}
 	
 	/* End */
->>>>>>> developer
 });
 /* END */
 
