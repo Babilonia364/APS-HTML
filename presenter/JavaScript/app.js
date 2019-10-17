@@ -650,68 +650,6 @@ app.post('/indicarRC', async function (req, res) {
 });
 
 app.post('/indicarRA', async function (req, res) {
-<<<<<<< HEAD
-    var nomeProfessor = req.body.nomeProfessor;
-    var emailProfessor = req.body.emailProfessor;
-    var nomeArtigo = req.body.nomeArtigo;
-    var idArtigo;
-    var idProfessor;
-    var erro = 0;
-
-    connection.query("SELECT idArtigo FROM artigo WHERE titulo = ?", [nomeArtigo], function (error, results, fields) {
-        if (results.length > 0) {
-            idArtigo = results[0].idArtigo;
-        } else {
-            erro = 1;
-        }
-
-        if (error) throw error;
-    });
-
-    await sleep(5);
-
-    if (erro == 0) {
-        connection.query("SELECT idprofessor FROM professor WHERE email = ?", [emailProfessor], function (error, results, fields) {
-            if (results.length > 0) {
-                idProfessor = results[0].idprofessor;
-            } else {
-                erro = 2;
-            }
-        });
-    }
-
-    await sleep(5);
-
-    if (erro == 0) {
-        connection.query("SELECT rProfessor FROM revisor_artigo WHERE rArtigo = ?", [idArtigo], function (error, results, fields) {
-            if (results.length > 0) {
-                erro = 3;
-            }
-
-            if (error) throw error;
-        });
-    }
-
-    await sleep(5);
-
-    if (erro == 0) {
-        connection.query("INSERT INTO `revisor_artigo` (rArtigo, rProfessor) VALUES (?,?)", [idArtigo, idProfessor], function (error, results, fields) {
-            if (error) throw error;
-        });
-    }
-
-    await sleep(5);
-
-    if (erro == 0) {
-        res.redirect('/indicarRevisorArtigo')
-    } else if (erro == 1) {
-        res.send('Article not found.');
-    } else if (erro == 2) {
-        res.send('Professor not found.');
-    } else if (erro == 3) {
-        res.send('Article already have a Professor');
-    }
-=======
 	var nomeProfessor = req.body.nomeProfessor;
 	var emailProfessor = req.body.emailProfessor;
 	var nomeArtigo = req.body.nomeArtigo;
@@ -793,7 +731,6 @@ app.post('/indicarRA', async function (req, res) {
 	{
 		res.send('Article already have a Professor');
 	}
->>>>>>> developer
 });
 
 app.post('/addOneTag', async function (req, res) {
