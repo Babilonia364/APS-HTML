@@ -122,82 +122,137 @@ var nome_event;
 
 /* POST para efetuar uma busca no bd */
 
-app.post('/searchEvent', function (request, response) {
+app.post('/searchEvent', async function (request, response) {
     var nome = request.body.nome;
-    nome_event = nome;
+	var textHTML = "";
+    var setEvent = require("../../model/eventModel");
+	var erro = 0;
+	
+    nome_event = nome;	//tipo_user_atual
+	nome = nome.replace(/-/g, '');
+	var intDate = 20191103;
+	
+	console.log("intDate: " + intDate)
 
-    connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ? ', [nome,nome,nome], function (error, results, fields) {
-        if (results.length > 0) {
-            var textHTML = "";
-            var setEvent = require("../../model/eventModel");
-            setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
-                results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
-            setEvent = JSON.stringify(setEvent);
-            setEvent = JSON.parse(setEvent);
+	if((tipo_user_atual == "aluno") || (tipo_user_atual == "professor"))
+	{
+		connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ?', [nome,nome,nome], function (error, results, fields) {
+			if (results.length > 0) {
+				setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
+					results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
+				setEvent = JSON.stringify(setEvent);
+				setEvent = JSON.parse(setEvent);
+				/* End */
+			}else {
+				erro = 2;
+			}
+		});
+		
+		await sleep(5)
+		console.log("erro: " + erro);
+		if(erro == 2)
+		{
+			console.log("VAI TOMAR NO CU FILHO DA PUTA");
+			connection.query('SELECT * FROM eventos WHERE data_in_comp <= ?', [intDate], function (error, results, fields) {
+				console.log("results.length: " + results.length)
+				if (results.length > 0) {
+					setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
+						results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
+					setEvent = JSON.stringify(setEvent);
+					setEvent = JSON.parse(setEvent);
+					erro = 0;
+					/* End */
+				}else {
+					console.log("To na excecao")
+					erro = 1;
+				}
+			});
+		}
+		console.log("erro: " + erro);
+	}else
+	{
+		
+		connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ? ', [nome,nome,nome], function (error, results, fields) {
+			if (results.length > 0) {
+				setEvent = setEvent(results[0].nome, results[0].sigla, results[0].data_in, results[0].data_fn,
+					results[0].data_sub_in, results[0].data_sub_fn, results[0].area_conc);
+				setEvent = JSON.stringify(setEvent);
+				setEvent = JSON.parse(setEvent);
+				/* End */
+			} else {
+				erro=1;
+			}
+		});
+	}
+	
+	await sleep(5)
+	
+	if(erro == 0)
+	{
+		/* Generate html */
+		textHTML += "<!DOCTYPE html>";
+		textHTML +=    "<html>";
+		textHTML +="<head>"
+		textHTML +="<title>Lista Artigos</title>"
+		textHTML +="<meta charset=\"utf-8\">"
+		textHTML +="<link rel=\"icon\" href=\"resources/imagens/favicon.ico\" type=\"image/x-icon\">"
+		textHTML +="<link rel=\"stylesheet\" type='text/css' href=\"view/component/css/styleVerEvento.css\">"
+		textHTML +="<script src=\"http://code.jquery.com/jquery-1.11.0.min.js/%22%3E\"</script>"
+		textHTML +="<script src=\"../../presenter/JavaScript/linkBDVerArtigo.js\"></script>"
+		textHTML +="</head>"
+		textHTML +="<body>"
+		textHTML +="<div class=\"sidenav\">"
+		textHTML +="<img src=\"resources/imagens/icone_artigo.png\" alt=\"Articles Center\">"
+		textHTML +="</div>"
+		textHTML +="<form action='deletarEvento' method='POST'>"
+		textHTML +="<input type='submit' class='sombra' value='Deletar Evento'>"
+		textHTML +="</form>"
+		textHTML +="<form action='/editarEvento' method='GET'>"
+		textHTML +="<input type='submit' class='sombra' value='Editar Evento'>"
+		textHTML +="</form>"
+		textHTML +="</div>"
+		textHTML +="<div class=\"content\">"
+		textHTML +="<h1>Evento</h1>"
+		textHTML += "</div>"
+		textHTML +="<div class=\"content2\">"
+		textHTML +="<p id=\"output\"><span></span></p>"
+		textHTML +="</div>"
 
-            textHTML += "<!DOCTYPE html>";
-            textHTML +=    "<html>";
-            textHTML +="<head>"
-            textHTML +="<title>Lista Artigos</title>"
-            textHTML +="<meta charset=\"utf-8\">"
-            textHTML +="<link rel=\"icon\" href=\"resources/imagens/favicon.ico\" type=\"image/x-icon\">"
-            textHTML +="<link rel=\"stylesheet\" type='text/css' href=\"view/component/css/styleVerEvento.css\">"
-            textHTML +="<script src=\"http://code.jquery.com/jquery-1.11.0.min.js/%22%3E\"</script>"
-            textHTML +="<script src=\"../../presenter/JavaScript/linkBDVerArtigo.js\"></script>"
-            textHTML +="</head>"
-            textHTML +="<body>"
-            textHTML +="<div class=\"sidenav\">"
-            textHTML +="<img src=\"resources/imagens/icone_artigo.png\" alt=\"Articles Center\">"
-            textHTML +="</div>"
-            textHTML +="<form action='deletarEvento' method='POST'>"
-            textHTML +="<input type='submit' class='sombra' value='Deletar Evento'>"
-            textHTML +="</form>"
-            textHTML +="<form action='/editarEvento' method='GET'>"
-            textHTML +="<input type='submit' class='sombra' value='Editar Evento'>"
-            textHTML +="</form>"
-            textHTML +="</div>"
-            textHTML +="<div class=\"content\">"
-            textHTML +="<h1>Evento</h1>"
-            textHTML += "</div>"
-            textHTML +="<div class=\"content2\">"
-            textHTML +="<p id=\"output\"><span></span></p>"
-            textHTML +="</div>"
+		textHTML += "<table border='1'>\n"
+		/* Creating table */
+		/* Creating index */
+		textHTML += "\t<tr>\n"
+		textHTML += "\t\t<th>" + "Nome" + "</th>\n";
+		textHTML += "\t\t<th>" + "Sigla" + "</th>\n";
+		textHTML += "\t\t<th>" + "Data de inicio" + "</th>\n";
+		textHTML += "\t\t<th>" + "Data de final" + "</th>\n";
+		textHTML += "\t\t<th>" + "Data de inicio das submissões" + "</th>\n";
+		textHTML += "\t\t<th>" + "Data de fim das submissões" + "</th>\n";
+		textHTML += "\t\t<th>" + "Área de concentração" + "</th>\n";
+		textHTML += "\t</tr>\n"
 
-            textHTML += "<table border='1'>\n"
-            /* Creating table */
-            /* Creating index */
-            textHTML += "\t<tr>\n"
-            textHTML += "\t\t<th>" + "Nome" + "</th>\n";
-            textHTML += "\t\t<th>" + "Sigla" + "</th>\n";
-            textHTML += "\t\t<th>" + "Data de inicio" + "</th>\n";
-            textHTML += "\t\t<th>" + "Data de final" + "</th>\n";
-            textHTML += "\t\t<th>" + "Data de inicio das submissões" + "</th>\n";
-            textHTML += "\t\t<th>" + "Data de fim das submissões" + "</th>\n";
-            textHTML += "\t\t<th>" + "Área de concentração" + "</th>\n";
-            textHTML += "\t</tr>\n"
+		/* Creating body */
+		textHTML += "\t<tr>\n"
+		textHTML += "\t\t<td>" + setEvent.nome + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.sigla + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.data_in + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.data_fn + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.data_sub_in + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.data_sub_fn + "</td>\n";
+		textHTML += "\t\t<td>" + setEvent.area_conc + "</td>\n";
+		textHTML += "\t</tr>\n"
+		 
+		textHTML += "</table>\n"
+		textHTML += "</body>\n"
+		textHTML += "</html>\n"
 
-            /* Creating body */
-            textHTML += "\t<tr>\n"
-            textHTML += "\t\t<td>" + setEvent.nome + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.sigla + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.data_in + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.data_fn + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.data_sub_in + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.data_sub_fn + "</td>\n";
-            textHTML += "\t\t<td>" + setEvent.area_conc + "</td>\n";
-            textHTML += "\t</tr>\n"
-         
-            textHTML += "</table>\n"
-            textHTML += "</body>\n"
-            textHTML += "</html>\n"
-
-            response.send(textHTML);
-
-            /* End */
-        } else {
-            response.send('Event not found.');
-        }
-    });
+		response.send(textHTML);
+	}else
+	{
+		response.send('Event not found.');
+	}
+	
+	/* End */
 });
 
 /* END */
@@ -418,8 +473,10 @@ app.post('/cadasE', function (req, res) {
     var data_sub_fn = req.body.data_sub_fn;
     var area_conc = req.body.area_conc;
     var situacao = req.body.situaco;
+	var data_in_comp = req.body.data_sub_in.replace(/-/g, '');
+	var data_out_comp = req.body.data_fn.replace(/-/g, '');
 
-    connection.query("INSERT INTO `eventos` (nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao) VALUES (?,?,?,?,?,?,?,?)", [nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao], function (err, result) {
+    connection.query("INSERT INTO `eventos` (nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao, data_in_comp, data_out_comp) VALUES (?,?,?,?,?,?,?,?,?,?)", [nome, sigla, data_in, data_fn, data_sub_in, data_sub_fn, area_conc, situacao, data_in_comp, data_out_comp], function (err, result) {
         if (err) throw err;
     });
 
