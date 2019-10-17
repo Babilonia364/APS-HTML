@@ -654,6 +654,15 @@ app.post('/indicarRA', async function (req, res) {
 		});
 	}
 	
+    await sleep(5);
+    
+    if(erro == 0)
+	{
+		connection.query("UPDATE artigo SET status = ? WHERE titulo = ? ", ["Em revisão", nomeArtigo], function (err, result) {
+            if (err) throw err;
+		});
+	}
+	
 	await sleep(5);
 	
 	if(erro == 0)
