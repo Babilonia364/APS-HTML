@@ -115,18 +115,16 @@ function setNome1(nome) {
     nome_usuario = nome;
 }
 
-
+//seta nome do evento global
 var nome_event;
 
 
-
 /* POST para efetuar uma busca no bd */
-
 app.post('/searchEvent', function (request, response) {
     var nome = request.body.nome;
     nome_event = nome;
 
-    connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ? ', [nome,nome,nome], function (error, results, fields) {
+    connection.query('SELECT * FROM eventos WHERE nome = ? or sigla  = ? or situacao = ? ', [nome, nome, nome], function (error, results, fields) {
         if (results.length > 0) {
             var textHTML = "";
             var setEvent = require("../../model/eventModel");
@@ -136,32 +134,32 @@ app.post('/searchEvent', function (request, response) {
             setEvent = JSON.parse(setEvent);
 
             textHTML += "<!DOCTYPE html>";
-            textHTML +=    "<html>";
-            textHTML +="<head>"
-            textHTML +="<title>Lista Artigos</title>"
-            textHTML +="<meta charset=\"utf-8\">"
-            textHTML +="<link rel=\"icon\" href=\"resources/imagens/favicon.ico\" type=\"image/x-icon\">"
-            textHTML +="<link rel=\"stylesheet\" type='text/css' href=\"view/component/css/styleVerEvento.css\">"
-            textHTML +="<script src=\"http://code.jquery.com/jquery-1.11.0.min.js/%22%3E\"</script>"
-            textHTML +="<script src=\"../../presenter/JavaScript/linkBDVerArtigo.js\"></script>"
-            textHTML +="</head>"
-            textHTML +="<body>"
-            textHTML +="<div class=\"sidenav\">"
-            textHTML +="<img src=\"resources/imagens/icone_artigo.png\" alt=\"Articles Center\">"
-            textHTML +="</div>"
-            textHTML +="<form action='deletarEvento' method='POST'>"
-            textHTML +="<input type='submit' class='sombra' value='Deletar Evento'>"
-            textHTML +="</form>"
-            textHTML +="<form action='/editarEvento' method='GET'>"
-            textHTML +="<input type='submit' class='sombra' value='Editar Evento'>"
-            textHTML +="</form>"
-            textHTML +="</div>"
-            textHTML +="<div class=\"content\">"
-            textHTML +="<h1>Evento</h1>"
+            textHTML += "<html>";
+            textHTML += "<head>"
+            textHTML += "<title>Lista Artigos</title>"
+            textHTML += "<meta charset=\"utf-8\">"
+            textHTML += "<link rel=\"icon\" href=\"resources/imagens/favicon.ico\" type=\"image/x-icon\">"
+            textHTML += "<link rel=\"stylesheet\" type='text/css' href=\"view/component/css/styleVerEvento.css\">"
+            textHTML += "<script src=\"http://code.jquery.com/jquery-1.11.0.min.js/%22%3E\"</script>"
+            textHTML += "<script src=\"../../presenter/JavaScript/linkBDVerArtigo.js\"></script>"
+            textHTML += "</head>"
+            textHTML += "<body>"
+            textHTML += "<div class=\"sidenav\">"
+            textHTML += "<img src=\"resources/imagens/icone_artigo.png\" alt=\"Articles Center\">"
             textHTML += "</div>"
-            textHTML +="<div class=\"content2\">"
-            textHTML +="<p id=\"output\"><span></span></p>"
-            textHTML +="</div>"
+            textHTML += "<form action='deletarEvento' method='POST'>"
+            textHTML += "<input type='submit' class='sombra' value='Deletar Evento'>"
+            textHTML += "</form>"
+            textHTML += "<form action='/editarEvento' method='GET'>"
+            textHTML += "<input type='submit' class='sombra' value='Editar Evento'>"
+            textHTML += "</form>"
+            textHTML += "</div>"
+            textHTML += "<div class=\"content\">"
+            textHTML += "<h1>Evento</h1>"
+            textHTML += "</div>"
+            textHTML += "<div class=\"content2\">"
+            textHTML += "<p id=\"output\"><span></span></p>"
+            textHTML += "</div>"
 
             textHTML += "<table border='1'>\n"
             /* Creating table */
@@ -186,7 +184,7 @@ app.post('/searchEvent', function (request, response) {
             textHTML += "\t\t<td>" + setEvent.data_sub_fn + "</td>\n";
             textHTML += "\t\t<td>" + setEvent.area_conc + "</td>\n";
             textHTML += "\t</tr>\n"
-         
+
             textHTML += "</table>\n"
             textHTML += "</body>\n"
             textHTML += "</html>\n"
@@ -199,7 +197,6 @@ app.post('/searchEvent', function (request, response) {
         }
     });
 });
-
 /* END */
 
 
@@ -293,20 +290,6 @@ app.post('/cadasP', async function (req, res) {
     res.redirect('/login');
 });
 
-app.post('/cadasADM', function (req, res) {
-    var nome = req.body.nome;
-    var email = req.body.email;
-
-    connection.query("INSERT INTO `admin` (nome, email) VALUES (?,?)", [nome, email], function (err, result) {
-        if (err) throw err;
-    });
-
-    connection.query("INSERT INTO `login` (usuario, senha, tipo_user) VALUES (?,?, ?)", [email.toString(), senha.toString(), "admin"], function (err, result) {
-        if (err) throw err;
-    });
-
-    res.redirect('/login');
-});
 
 // EDIT
 
@@ -355,53 +338,49 @@ app.post('/tonarAdmin', function (req, res) {
 app.post('/subArtigo', async function (req, res) {
 
     var titulo = req.body.titulo;
-	var nomeEvento = req.body.eventoNome;
+    var nomeEvento = req.body.eventoNome;
     var nomeAutor = req.body.nome;
     var email = req.body.email;
     var resumo = req.body.resumo;
-	var idArtigo;
-	var idEvento;
-	var erro=0;
+    var idArtigo;
+    var idEvento;
+    var erro = 0;
 
     connection.query("INSERT INTO `artigo` (titulo,nome,email,resumo,status,login) VALUES (?,?,?,?,?,?)", [titulo, nomeAutor, email, resumo, "aguardando revisão", login], function (err, result) {
         if (err) throw err;
     });
-	
-	await sleep(5);
-	
-	connection.query("SELECT idArtigo FROM artigo WHERE titulo = ?", [titulo], function(err, result) {
-		idArtigo = result[0].idArtigo;
-		if (err) throw err;
-	});
-	
-	await sleep(5);
 
-	connection.query("SELECT idEvento FROM eventos WHERE eventos.nome = ?", [nomeEvento], function (error, results, fields){
-		if(results.length > 0)
-		{
-			idEvento = results[0].idEvento;
-		}else if(error)
-		{
-			erro = 1;
-		}
-	});
-	
-	await sleep(5);
-	
-	if(erro == 0)
-	{
-		connection.query("INSERT INTO artigo_evento (fkArtigo, fkEvento) VALUES (?,?)", [idArtigo, idEvento], function(err, result) {
-			if (err) throw err;
-		});
-	}else if(erro == 1)
-	{
-		connection.query("DELETE FROM artigo WHERE idArtigo = ?", [idArtigo], function(err, result) {
-			if (err) throw err;
-		});
-	}
-	
-	await sleep(5);
-	
+    await sleep(5);
+
+    connection.query("SELECT idArtigo FROM artigo WHERE titulo = ?", [titulo], function (err, result) {
+        idArtigo = result[0].idArtigo;
+        if (err) throw err;
+    });
+
+    await sleep(5);
+
+    connection.query("SELECT idEvento FROM eventos WHERE eventos.nome = ?", [nomeEvento], function (error, results, fields) {
+        if (results.length > 0) {
+            idEvento = results[0].idEvento;
+        } else if (error) {
+            erro = 1;
+        }
+    });
+
+    await sleep(5);
+
+    if (erro == 0) {
+        connection.query("INSERT INTO artigo_evento (fkArtigo, fkEvento) VALUES (?,?)", [idArtigo, idEvento], function (err, result) {
+            if (err) throw err;
+        });
+    } else if (erro == 1) {
+        connection.query("DELETE FROM artigo WHERE idArtigo = ?", [idArtigo], function (err, result) {
+            if (err) throw err;
+        });
+    }
+
+    await sleep(5);
+
     if (tipo_user_atual == "aluno") {
         res.redirect('/homeAluno');
     } else if (tipo_user_atual == "professor") {
@@ -426,7 +405,7 @@ app.post('/cadasE', function (req, res) {
     res.redirect('/homeAdmin');
 });
 
-app.post('/deletarEvento', function (req, res) {    
+app.post('/deletarEvento', function (req, res) {
     connection.query("DELETE FROM `eventos` WHERE nome = ? ", [nome_event], function (err, result) {
         if (err) throw err;
     });
@@ -434,7 +413,7 @@ app.post('/deletarEvento', function (req, res) {
     res.redirect('/homeAdmin');
 });
 
-app.post('/editarE', function (req, res) {    
+app.post('/editarE', function (req, res) {
     var nome = req.body.nome;
     var sigla = req.body.sigla;
     var data_in = req.body.data_in;
@@ -490,10 +469,8 @@ app.post('/verEventos', function (request, response) {
         } else {
             response.send('Event not found.');
         }
-
     });
 });
-
 
 app.post('/verArtigo', function (request, response) {
     var textHTML = [""];
@@ -538,31 +515,50 @@ app.post('/verArtigo', function (request, response) {
                 textHTML[i + 1] += "</table>"
 
                 /* End */
-
-                //console.log(textHTML[0]);
             }
-
             response.send(textHTML[0]);
-
         } else {
-            response.send('Event not found.');
+            response.send('Você ainda não possui nenhum artigo submetido');
         }
+    });
+});
 
+app.post('/qtdArtigos', function (request, response) {
+    let numArtigos;
+    connection.query('SELECT * FROM artigo', function (request, results) {
+        numArtigos = results.length;
+        response.send(numArtigos.toString());
+    });
+});
+
+app.post('/qtdArtigosAceitos', function (request, response) {
+    let numArtigos;
+    connection.query('SELECT * FROM artigo WHERE status = "aceito"', function (request, results) {
+        numArtigos = results.length;
+        response.send(numArtigos.toString());
+    });
+});
+
+app.post('/qtdArtigosRejeitados', function (request, response) {
+    let numArtigos;
+    connection.query('SELECT * FROM artigo WHERE status = "rejeitado"', function (request, results) {
+        numArtigos = results.length;
+        response.send(numArtigos.toString());
     });
 });
 
 app.post('/indicarRC', async function (req, res) {
 
-	var idProfessor;
-	var nome = req.body.nome;
-	var idEvento = req.body.idEvento;
-	var emailProfessor = req.body.emailProfessor;
-	var erro = 0;
-	
-	connection.query('SELECT idprofessor FROM professor WHERE email = ?', [emailProfessor], function (error, results, fields){
-		idProfessor = results[0].idprofessor;
-		if(error) throw error;
-	});
+    var idProfessor;
+    var nome = req.body.nome;
+    var idEvento = req.body.idEvento;
+    var emailProfessor = req.body.emailProfessor;
+    var erro = 0;
+
+    connection.query('SELECT idprofessor FROM professor WHERE email = ?', [emailProfessor], function (error, results, fields) {
+        idProfessor = results[0].idprofessor;
+        if (error) throw error;
+    });
 
     connection.query('SELECT idprofessor FROM professor WHERE email = ?', [emailProfessor], function (error, results, fields) {
         idProfessor = results[0].idprofessor;
@@ -597,112 +593,98 @@ app.post('/indicarRC', async function (req, res) {
 });
 
 app.post('/indicarRA', async function (req, res) {
-	var nomeProfessor = req.body.nomeProfessor;
-	var emailProfessor = req.body.emailProfessor;
-	var nomeArtigo = req.body.nomeArtigo;
-	var idArtigo;
-	var idProfessor;
-	var erro = 0;
-	
-	connection.query("SELECT idArtigo FROM artigo WHERE titulo = ?", [nomeArtigo], function (error, results, fields){
-		if(results.length > 0)
-		{
-			idArtigo = results[0].idArtigo;
-		}else
-		{
-			erro = 1;
-		}
-		
-		if(error) throw error;
-	});
-	
-	await sleep(5);
-	
-	if(erro == 0)
-	{
-		connection.query("SELECT idprofessor FROM professor WHERE email = ?", [emailProfessor], function (error, results, fields){
-			if(results.length > 0)
-			{
-				idProfessor = results[0].idprofessor;
-			}else
-			{
-				erro = 2;
-			}
-		});
-	}
-	
-	await sleep(5);
-	
-	if(erro == 0)
-	{
-		connection.query("SELECT rProfessor FROM revisor_artigo WHERE rArtigo = ?", [idArtigo], function(error, results, fields){
-			if(results.length > 0)
-			{
-				erro = 3;
-			}
-			
-			if(error) throw error;
-		});
-	}
-	
-	await sleep(5);
-	
-	if(erro == 0)
-	{
-		connection.query("INSERT INTO `revisor_artigo` (rArtigo, rProfessor) VALUES (?,?)", [idArtigo, idProfessor], function (error, results, fields){
-			if (error) throw error;
-		});
-	}
-	
-	await sleep(5);
-	
-	if(erro == 0)
-	{
-		res.redirect('/indicarRevisorArtigo')
-	}else if(erro == 1)
-	{
-		res.send('Article not found.');
-	}else if(erro == 2)
-	{
-		res.send('Professor not found.');
-	}else if(erro == 3)
-	{
-		res.send('Article already have a Professor');
-	}
+    var nomeProfessor = req.body.nomeProfessor;
+    var emailProfessor = req.body.emailProfessor;
+    var nomeArtigo = req.body.nomeArtigo;
+    var idArtigo;
+    var idProfessor;
+    var erro = 0;
+
+    connection.query("SELECT idArtigo FROM artigo WHERE titulo = ?", [nomeArtigo], function (error, results, fields) {
+        if (results.length > 0) {
+            idArtigo = results[0].idArtigo;
+        } else {
+            erro = 1;
+        }
+
+        if (error) throw error;
+    });
+
+    await sleep(5);
+
+    if (erro == 0) {
+        connection.query("SELECT idprofessor FROM professor WHERE email = ?", [emailProfessor], function (error, results, fields) {
+            if (results.length > 0) {
+                idProfessor = results[0].idprofessor;
+            } else {
+                erro = 2;
+            }
+        });
+    }
+
+    await sleep(5);
+
+    if (erro == 0) {
+        connection.query("SELECT rProfessor FROM revisor_artigo WHERE rArtigo = ?", [idArtigo], function (error, results, fields) {
+            if (results.length > 0) {
+                erro = 3;
+            }
+
+            if (error) throw error;
+        });
+    }
+
+    await sleep(5);
+
+    if (erro == 0) {
+        connection.query("INSERT INTO `revisor_artigo` (rArtigo, rProfessor) VALUES (?,?)", [idArtigo, idProfessor], function (error, results, fields) {
+            if (error) throw error;
+        });
+    }
+
+    await sleep(5);
+
+    if (erro == 0) {
+        res.redirect('/indicarRevisorArtigo')
+    } else if (erro == 1) {
+        res.send('Article not found.');
+    } else if (erro == 2) {
+        res.send('Professor not found.');
+    } else if (erro == 3) {
+        res.send('Article already have a Professor');
+    }
 });
 
 app.post('/addOneTag', async function (req, res) {
-	var nomeEvento = req.body.nomeEvento;
-	var tag = req.body.tag;
-	var erro = 0;
-	var idEvento
-	
-	connection.query("SELECT idEvento FROM eventos WHERE nome = ?", [nomeEvento], function (error, results, fields){
-		if(results.length > 0)
-		{
-			idEvento = results[0].idEvento;
-		}else if (error)
-		{
-			erro = 1;
-		}
-	});
-	
-	await sleep(5);
-	
-	connection.query("INSERT INTO tag (tag, tEventos) VALUES (?,?)", [tag, idEvento], function (error, results, fields) {
-		if (error) throw error;
-	});
-	
-	await sleep(5);
-	
-	if(erro == 0)
-	{
-		res.redirect('/addTag')
-	}else if(erro == 1)
-	{
-		res.send('Event not found.');
-	}
+    var nomeEvento = req.body.nomeEvento;
+    var tag = req.body.tag;
+    var erro = 0;
+    var idEvento
+
+    connection.query("SELECT idEvento FROM eventos WHERE nome = ?", [nomeEvento], function (error, results, fields) {
+        if (results.length > 0) {
+            idEvento = results[0].idEvento;
+        } else if (error) {
+            erro = 1;
+        }
+    });
+
+    await sleep(5);
+
+    connection.query("INSERT INTO tag (tag, tEventos) VALUES (?,?)", [tag, idEvento], function (error, results, fields) {
+        if (error) throw error;
+    });
+
+    await sleep(5);
+
+    if (erro == 0) {
+        res.redirect('/addTag')
+    } else if (erro == 1) {
+        res.send('Event not found.');
+    }
 });
+
+
 
 //Functions
 //Sleep Function
@@ -711,7 +693,6 @@ function sleep(ms) {
         setTimeout(resolve, ms)
     })
 }
-
 
 // PORTA
 app.listen(8081, function () { console.log("Servidor ligado") });
