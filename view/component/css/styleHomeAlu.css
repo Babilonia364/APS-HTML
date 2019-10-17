@@ -247,17 +247,11 @@ color: white;
   
   label{font-family: walknegrito;font-size: 20px;}
   
-  
-  p.round1 {
-    border: 2px solid red;
-    border-radius: 5px;
+  p{
+    font-family: myFirstFont;
+    /* border-radius: 5px; */
+    font-size: 1.25em;
   }
-  
-  /*form {
-    width: 0%;
-    margin: auto;
-  }*/
-  
   
   input[type=text], select {
     width: 500px;
