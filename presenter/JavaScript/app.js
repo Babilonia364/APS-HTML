@@ -91,6 +91,10 @@ app.get("/verArtigo", function (req, res) {
     res.sendFile(path.resolve("../../view/verArtigo.html"));
 });
 
+app.get("/verArtigosRevisados", function (req, res) {
+    res.sendFile(path.resolve("../../view/verArtigosRevisados.html"));
+});
+
 app.get("/indicarRevisorArtigo", function (req, res) {
     res.sendFile(path.resolve("../../view/indicarRevisorArtigo.html"));
 });
@@ -584,6 +588,58 @@ app.post('/verArtigo', function (request, response) {
         }
     });
 });
+
+app.post('/verArtigoRev', function (request, response) {
+    var textHTML = [""];
+    connection.query('SELECT * FROM artigo JOIN revisor_artigo ON artigo.idArtigo = revisor_artigo.rArtigo JOIN professor ON professor.idprofessor = revisor_artigo.rProfessor JOIN login ON login.idUser = professor.pLogin AND login.usuario = ? AND artigo.status = ? or artigo.status = ?', [login, "aceito", "rejeitado"], function (error, results, fields) {
+
+        if (results.length > 0) {
+            for (var i = 0; i < results.length; i++) {
+
+                var setEvent = require("../../model/verArtigoModel");
+                setEvent = setEvent(results[i].idArtigo, results[i].titulo, results[i].nome, results[i].email,
+                    results[i].resumo, results[i].arquivo, results[i].status);
+                setEvent = JSON.stringify(setEvent);
+                setEvent = JSON.parse(setEvent);
+
+                textHTML[0] += "<table>"
+                /* Creating table */
+
+                textHTML[0] += "<tr><th>" + "idArtigo" + "</th>";
+                textHTML[0] += "<th>" + "Titulo" + "</th>";
+                textHTML[0] += "<th>" + "Nome" + "</th>";
+                textHTML[0] += "<th>" + "Email" + "</th>";
+                textHTML[0] += "<th>" + "Resumo" + "</th>";
+                textHTML[0] += "<th>" + "Arquivo" + "</th>";
+                textHTML[0] += "<th>" + "Status" + "</th></tr>";
+
+                textHTML[0] += "<tr><td>" + setEvent.idArtigo + "</td>";
+                textHTML[0] += "<td>" + setEvent.titulo + "</td>";
+                textHTML[0] += "<td>" + setEvent.nome + "</td>";
+                textHTML[0] += "<td>" + setEvent.email + "</td>";
+                textHTML[0] += "<td>" + setEvent.resumo + "</td>";
+                textHTML[0] += "<td>" + setEvent.arquivo + "</td>";
+                textHTML[0] += "<td>" + setEvent.status + "</td></tr>";
+                textHTML[0] += "</table>"
+                textHTML[i + 1] += "<table>"
+                textHTML[i + 1] += "<tr><td>" + setEvent.idArtigo + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.titulo + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.nome + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.email + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.resumo + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.arquivo + "</td>";
+                textHTML[i + 1] += "<td>" + setEvent.status + "</td></tr>";
+                textHTML[i + 1] += "</table>"
+
+                /* End */
+            }
+            response.send(textHTML[0]);
+        } else {
+            response.send('Você ainda não possui nenhum artigo revisado');
+        }
+    });
+});
+
 
 app.post('/qtdArtigos', function (request, response) {
     let numArtigos;
